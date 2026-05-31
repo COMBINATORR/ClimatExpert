@@ -70,7 +70,7 @@ function App() {
     
     // Service base prices in KZT
     if (calcService === 'clean') {
-      basePrice = 12000;
+      basePrice = 10000;
     } else if (calcService === 'repair') {
       basePrice = 15000;
     } else if (calcService === 'install') {
@@ -83,7 +83,9 @@ function App() {
     else if (calcArea === '50+') basePrice += 12000;
 
     // Extras
-    if (extraAntibacterial && calcService !== 'clean') basePrice += 4000; // cleaning already includes it
+    if (extraAntibacterial) {
+      basePrice += calcService === 'clean' ? 5000 : 4000;
+    }
     if (extraFreon) basePrice += 8000;
     if (extraHighWork) basePrice += 15000;
 
@@ -106,11 +108,17 @@ function App() {
       const serviceNames = { clean: 'Чистка', repair: 'Ремонт', install: 'Монтаж' };
       const areaNames = { '20': 'До 20 м²', '35': 'До 35 м²', '50': 'До 50 м²', '50+': 'Более 50 м²' };
       let extrasText = [];
-      if (extraAntibacterial) extrasText.push('Антибак');
       if (extraFreon) extrasText.push('Фреон');
       if (extraHighWork) extrasText.push('Высотные работы');
       
-      const whatsAppMsg = `Привет! Рассчитал цену на сайте Климат Эксперт.\nУслуга: ${serviceNames[calcService]}\nПлощадь: ${areaNames[calcArea]}${calcService === 'install' ? `\nЭтаж: ${calcFloor === '1' ? '1-й' : '2-й и выше'}` : ''}\nОпции: ${extrasText.join(', ') || 'нет'}\nОриентировочная цена: ${currentPrice.toLocaleString('ru-RU')} ₸.\nМой телефон: ${calcPhone}. Жду подтверждения сметы!`;
+      let serviceName = serviceNames[calcService];
+      if (calcService === 'clean') {
+        serviceName = extraAntibacterial ? 'Чистка с химией' : 'Чистка без химии';
+      } else {
+        if (extraAntibacterial) extrasText.push('Антибак');
+      }
+      
+      const whatsAppMsg = `Привет! Рассчитал цену на сайте Климат Эксперт.\nУслуга: ${serviceName}\nПлощадь: ${areaNames[calcArea]}${calcService === 'install' ? `\nЭтаж: ${calcFloor === '1' ? '1-й' : '2-й и выше'}` : ''}\nОпции: ${extrasText.join(', ') || 'нет'}\nОриентировочная цена: ${currentPrice.toLocaleString('ru-RU')} ₸.\nМой телефон: ${calcPhone}. Жду подтверждения сметы!`;
       setTimeout(() => {
         handleWhatsAppClick(whatsAppMsg);
       }, 1000);
@@ -127,13 +135,13 @@ function App() {
     {
       id: 'clean',
       title: 'Антибактериальная чистка',
-      price: 'от 12 000 ₸',
+      price: 'от 10 000 ₸',
       duration: '40-60 мин',
       bullets: [
         'Смывка грязи, жира и пыли испарителя под давлением',
         'Полная очистка крыльчатки внутреннего вентилятора',
         'Промывка и продувка дренажного канала (защита от течи)',
-        'Антибактериальная обработка сертифицированной химией Errecom',
+        'Антибактериальная обработка сертифицированной химией Errecom (опционально)',
         'Очистка фильтров грубой очистки и внешнего блока'
       ],
       result: 'Устранение запаха плесени, сырости и кашля. Риск протечки конденсата на обои снижается до 0%.',
@@ -599,13 +607,16 @@ function App() {
                       <input 
                         type="checkbox" 
                         checked={extraAntibacterial}
-                        disabled={calcService === 'clean'} // always true/included for cleaning
                         onChange={(e) => setExtraAntibacterial(e.target.checked)}
-                        className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500"
+                        className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
                       />
                       <div>
-                        <span className="text-xs font-bold text-slate-800 block">Антибактериальная обработка</span>
-                        <span className="text-[10px] text-slate-400">{calcService === 'clean' ? 'Входит в стоимость чистки' : '+ 4 000 ₸'}</span>
+                        <span className="text-xs font-bold text-slate-800 block">
+                          {calcService === 'clean' ? 'Использовать антибактериальную химию Errecom' : 'Антибактериальная обработка'}
+                        </span>
+                        <span className="text-[10px] text-slate-400">
+                          {calcService === 'clean' ? '+ 5 000 ₸ (Чистка с химией)' : '+ 4 000 ₸'}
+                        </span>
                       </div>
                     </div>
                   </label>
@@ -658,7 +669,7 @@ function App() {
                   <div className="flex justify-between items-center text-xs text-slate-500">
                     <span>Базовый тариф:</span>
                     <span className="font-bold text-slate-700">
-                      {calcService === 'clean' && '12 000 ₸'}
+                      {calcService === 'clean' && '10 000 ₸ (без химии)'}
                       {calcService === 'repair' && '15 000 ₸'}
                       {calcService === 'install' && (calcFloor === '1' ? '10 000 ₸ (1 этаж)' : '20 000 ₸ (2+ этаж)')}
                     </span>
@@ -673,10 +684,12 @@ function App() {
                       </span>
                     </div>
                   )}
-                  {(extraAntibacterial && calcService !== 'clean') && (
+                  {extraAntibacterial && (
                     <div className="flex justify-between items-center text-xs text-slate-500">
-                      <span>Антибактериальная:</span>
-                      <span className="font-bold text-slate-700">+ 4 000 ₸</span>
+                      <span>Антибактериальная химия:</span>
+                      <span className="font-bold text-slate-700">
+                        {calcService === 'clean' ? '+ 5 000 ₸' : '+ 4 000 ₸'}
+                      </span>
                     </div>
                   )}
                   {extraFreon && (
