@@ -19,7 +19,10 @@ import {
   Info,
   Menu,
   X,
-  AlertCircle
+  AlertCircle,
+  Sun,
+  Moon,
+  Monitor
 } from 'lucide-react';
 
 // Live mock data for Atyrau current date & slots
@@ -32,6 +35,9 @@ function App() {
   // Navigation Mobile state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
+  // Theme State (light, dark, system)
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'system');
+  
   // Interactive Calculator State
   const [calcService, setCalcService] = useState('clean'); // 'clean', 'repair', 'install'
   const [calcArea, setCalcArea] = useState('20'); // '20', '35', '50', '50+'
@@ -39,17 +45,52 @@ function App() {
   const [extraAntibacterial, setExtraAntibacterial] = useState(true);
   const [extraFreon, setExtraFreon] = useState(false);
   const [extraHighWork, setExtraHighWork] = useState(false);
+  
   // Repair-specific options
   const [repairCapacitor, setRepairCapacitor] = useState(false);
   const [repairRelay, setRepairRelay] = useState(false);
   const [repairBoard, setRepairBoard] = useState(false);
+
   const [calcSubmitted, setCalcSubmitted] = useState(false);
   const [calcPhone, setCalcPhone] = useState('');
+
+  // Theme Sync Effect
+  useEffect(() => {
+    const root = window.document.documentElement;
+    
+    const applyTheme = (currentTheme) => {
+      localStorage.setItem('theme', currentTheme);
+      
+      let isDark = false;
+      if (currentTheme === 'dark') {
+        isDark = true;
+      } else if (currentTheme === 'system') {
+        isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      
+      if (isDark) {
+        root.classList.add('dark');
+      } else {
+        root.classList.remove('dark');
+      }
+    };
+
+    applyTheme(theme);
+
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    const handleSystemChange = () => {
+      if (theme === 'system') {
+        applyTheme('system');
+      }
+    };
+    
+    mediaQuery.addEventListener('change', handleSystemChange);
+    return () => mediaQuery.removeEventListener('change', handleSystemChange);
+  }, [theme]);
 
   // Urgency Bar Live Slots Count
   const [slotsLeft, setSlotsLeft] = useState(3);
   useEffect(() => {
-    // Slowly simulate slots booking over time to increase FOMO
     const timer = setTimeout(() => {
       if (slotsLeft > 1) {
         setSlotsLeft(prev => prev - 1);
@@ -115,7 +156,6 @@ function App() {
     e.preventDefault();
     if (source === 'calc') {
       setCalcSubmitted(true);
-      // Format custom message for WhatsApp with choices
       const serviceNames = { clean: 'Чистка', repair: 'Ремонт', install: 'Монтаж' };
       const areaNames = { '20': 'До 20 м²', '35': 'До 35 м²', '50': 'До 50 м²', '50+': 'Более 50 м²' };
       let extrasText = [];
@@ -225,60 +265,99 @@ function App() {
   ];
 
   return (
-    <div className="bg-white min-h-screen text-slate-800 font-sans antialiased bg-grid-pattern relative">
+    <div className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative transition-colors duration-300">
       
-      {/* Decorative Vibrant Accent Blobs - Styling inspired by modern UI premium design */}
-      <div className="absolute top-24 -left-48 w-96 h-96 bg-cyan-100 rounded-full gradient-blob opacity-60 pointer-events-none"></div>
-      <div className="absolute top-[800px] -right-48 w-[400px] h-[400px] bg-sky-100 rounded-full gradient-blob opacity-40 pointer-events-none"></div>
-      <div className="absolute bottom-[600px] left-10 w-96 h-96 bg-indigo-50 rounded-full gradient-blob opacity-50 pointer-events-none"></div>
+      {/* Decorative Vibrant Accent Blobs */}
+      <div className="absolute top-24 -left-48 w-96 h-96 bg-cyan-100 dark:bg-cyan-950/20 rounded-full gradient-blob opacity-60 pointer-events-none"></div>
+      <div className="absolute top-[800px] -right-48 w-[400px] h-[400px] bg-sky-100 dark:bg-sky-950/10 rounded-full gradient-blob opacity-40 pointer-events-none"></div>
+      <div className="absolute bottom-[600px] left-10 w-96 h-96 bg-indigo-50 dark:bg-indigo-950/10 rounded-full gradient-blob opacity-50 pointer-events-none"></div>
 
       {/* HEADER / NAVIGATION */}
       <header className="sticky top-0 z-50 glass-nav shadow-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+          
           {/* Logo & Brand */}
           <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-cyan-400 flex items-center justify-center shadow-md shadow-sky-100">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-cyan-400 flex items-center justify-center shadow-md shadow-sky-100 dark:shadow-none">
               <Wind className="w-5 h-5 text-white" />
             </div>
             <div>
-              <span className="font-bold text-xl tracking-tight text-slate-900">Климат<span className="text-sky-600">Эксперт</span></span>
-              <p className="text-[10px] text-slate-400 tracking-wider uppercase font-semibold">Профессиональный сервис</p>
+              <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white">Климат<span className="text-sky-600">Эксперт</span></span>
+              <p className="text-[10px] text-slate-400 dark:text-slate-500 tracking-wider uppercase font-semibold">Профессиональный сервис</p>
             </div>
           </div>
 
           {/* Desktop Nav Items */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#services" className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">Услуги</a>
-            <a href="#calculator" className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">Калькулятор сметы</a>
-            <a href="#guarantees" className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">Гарантии</a>
-            <a href="#faq" className="text-sm font-medium text-slate-600 hover:text-sky-600 transition-colors">Частые вопросы</a>
+            <a href="#services" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Услуги</a>
+            <a href="#calculator" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Калькулятор сметы</a>
+            <a href="#guarantees" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Гарантии</a>
+            <a href="#faq" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">Частые вопросы</a>
           </nav>
 
-          {/* Contact Details & CTAs */}
+          {/* Theme Switcher & Contact details */}
           <div className="hidden lg:flex items-center space-x-6">
+            
+            {/* Theme switcher pill toggle */}
+            <div className="bg-slate-100 dark:bg-slate-800/80 p-1 rounded-xl flex items-center space-x-0.5 border border-slate-200/40 dark:border-slate-700/40">
+              {[
+                { id: 'light', icon: Sun },
+                { id: 'dark', icon: Moon },
+                { id: 'system', icon: Monitor }
+              ].map(item => {
+                const Icon = item.icon;
+                return (
+                  <button
+                    key={item.id}
+                    onClick={() => setTheme(item.id)}
+                    className={`p-1.5 rounded-lg transition-all cursor-pointer ${
+                      theme === item.id 
+                        ? 'bg-white dark:bg-slate-700 text-sky-600 dark:text-sky-400 shadow-xs' 
+                        : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-350'
+                    }`}
+                    title={item.id === 'light' ? 'Светлая тема' : item.id === 'dark' ? 'Темная тема' : 'Системная тема'}
+                  >
+                    <Icon className="w-3.5 h-3.5" />
+                  </button>
+                )
+              })}
+            </div>
+
             <div className="flex flex-col items-end">
-              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900 hover:text-sky-600 transition-colors">
+              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
                 <Phone className="w-4 h-4 text-sky-500 mr-2 animate-pulse" />
                 +7 (775) 432-35-61
               </a>
               <div className="flex items-center mt-1">
                 <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block animate-ping mr-1.5"></span>
-                <span className="text-[11px] text-emerald-600 font-semibold uppercase">Свободные мастера в Атырау</span>
+                <span className="text-[11px] text-emerald-600 dark:text-emerald-500 font-semibold uppercase">Свободные мастера в Атырау</span>
               </div>
             </div>
             <button 
               onClick={() => handleWhatsAppClick('Здравствуйте! Хочу вызвать мастера на диагностику сегодня.')}
-              className="bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-3 px-5 rounded-xl transition-all hover:shadow-lg hover:shadow-slate-200 active:scale-98 cursor-pointer"
+              className="bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white text-xs font-bold py-3 px-5 rounded-xl transition-all hover:shadow-lg cursor-pointer"
             >
               Связаться в WhatsApp
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden flex items-center">
+          {/* Mobile Menu & Theme Switcher Buttons */}
+          <div className="md:hidden flex items-center space-x-3">
+            
+            {/* Compact theme switch */}
+            <button
+              onClick={() => setTheme(theme === 'light' ? 'dark' : theme === 'dark' ? 'system' : 'light')}
+              className="text-slate-600 dark:text-slate-300 p-2 border border-slate-200/50 dark:border-slate-800/80 rounded-xl cursor-pointer"
+              title="Переключить тему"
+            >
+              {theme === 'light' && <Sun className="w-4 h-4" />}
+              {theme === 'dark' && <Moon className="w-4 h-4" />}
+              {theme === 'system' && <Monitor className="w-4 h-4" />}
+            </button>
+
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-slate-600 hover:text-slate-900 p-2 cursor-pointer"
+              className="text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white p-2 cursor-pointer"
             >
               {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
@@ -287,42 +366,53 @@ function App() {
 
         {/* Mobile Dropdown Nav */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white border-b border-slate-100 px-4 pt-2 pb-6 space-y-3 transition-all duration-300">
+          <div className="md:hidden bg-white dark:bg-[#080c14] border-b border-slate-100 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3 transition-all duration-300">
             <a 
               href="#services" 
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-sky-600"
+              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-sky-600 dark:hover:text-sky-400"
             >
               Услуги
             </a>
             <a 
               href="#calculator" 
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-sky-600"
+              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-sky-600 dark:hover:text-sky-400"
             >
               Калькулятор сметы
             </a>
             <a 
               href="#guarantees" 
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-sky-600"
+              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-sky-600 dark:hover:text-sky-400"
             >
               Гарантии
             </a>
             <a 
               href="#faq" 
               onClick={() => setMobileMenuOpen(false)}
-              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 hover:bg-slate-50 hover:text-sky-600"
+              className="block px-3 py-2 rounded-lg text-base font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-900 hover:text-sky-600 dark:hover:text-sky-400"
             >
               Частые вопросы
             </a>
             
-            <div className="pt-4 border-t border-slate-100 flex flex-col space-y-3 px-3">
-              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900">
+            <div className="pt-4 border-t border-slate-100 dark:border-slate-800 flex flex-col space-y-3 px-3">
+              
+              {/* Mobile theme choice */}
+              <div className="flex items-center justify-between text-xs text-slate-500 py-1">
+                <span>Тема оформления:</span>
+                <span className="font-bold capitalize text-slate-700 dark:text-slate-300">
+                  {theme === 'light' && 'Светлая'}
+                  {theme === 'dark' && 'Темная'}
+                  {theme === 'system' && 'Системная (Авто)'}
+                </span>
+              </div>
+
+              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900 dark:text-white">
                 <Phone className="w-4 h-4 text-sky-500 mr-2" />
                 +7 (775) 432-35-61
               </a>
-              <p className="text-xs text-emerald-600 font-medium">● Свободные мастера готовы к выезду сегодня</p>
+              <p className="text-xs text-emerald-600 dark:text-emerald-500 font-medium">● Свободные мастера готовы к выезду сегодня</p>
               <button 
                 onClick={() => {
                   setMobileMenuOpen(false);
@@ -338,21 +428,21 @@ function App() {
       </header>
 
       {/* DYNAMIC URGENCY SLOT BAR */}
-      <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-b border-amber-100 py-3">
+      <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/10 dark:to-orange-950/10 border-b border-amber-100 dark:border-amber-900/20 py-3 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-2">
           <div className="flex items-center space-x-2">
-            <Clock className="w-4 h-4 text-amber-600 shrink-0 animate-pulse" />
-            <span className="text-xs sm:text-sm text-amber-900 font-medium">
+            <Clock className="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0 animate-pulse" />
+            <span className="text-xs sm:text-sm text-amber-900 dark:text-amber-200 font-medium">
               Сегодня <strong>{CURRENT_DATE}</strong>: в Атырау прогнозируется сильная жара. Свободные слоты разбирают быстро.
             </span>
           </div>
           <div className="flex items-center space-x-3 shrink-0">
-            <span className="text-xs bg-amber-200 text-amber-900 px-2 py-0.5 rounded-full font-bold">
+            <span className="text-xs bg-amber-200 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 px-2 py-0.5 rounded-full font-bold">
               Осталось: {slotsLeft} слота на сегодня
             </span>
             <a 
               href="#booking-section" 
-              className="text-xs text-amber-950 font-bold underline hover:text-amber-800 transition-colors"
+              className="text-xs text-amber-950 dark:text-amber-400 font-bold underline hover:text-amber-800 transition-colors"
             >
               Занять ближайшее время →
             </a>
@@ -369,99 +459,99 @@ function App() {
             <div className="lg:col-span-7 space-y-8 text-left z-10">
               
               {/* Trust Badge */}
-              <div className="inline-flex items-center space-x-2 bg-sky-50 text-sky-700 px-3 py-1.5 rounded-full border border-sky-100 shadow-xs">
+              <div className="inline-flex items-center space-x-2 bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400 px-3 py-1.5 rounded-full border border-sky-100 dark:border-sky-900/30 shadow-xs">
                 <ShieldCheck className="w-4 h-4" />
                 <span className="text-xs font-semibold uppercase tracking-wider">Юридическая гарантия и чистый договор</span>
               </div>
               
               {/* Premium Heading */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-tight tracking-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight">
                 Ремонт кондиционеров в Атырау <span className="bg-gradient-to-r from-sky-600 to-cyan-500 bg-clip-text text-transparent">за 2 часа</span> без скрытых доплат
               </h1>
               
               {/* Subtitle closing key fears */}
-              <p className="text-lg text-slate-600 leading-relaxed max-w-xl">
-                <strong className="text-slate-900">Сначала диагностика и фиксация цены в WhatsApp — потом работа.</strong> Вы платите строго по согласованной смете. Никаких внезапных наценок за длину трассы, расходные материалы или срочность выезда.
+              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+                <strong className="text-slate-900 dark:text-white">Сначала диагностика и фиксация цены в WhatsApp — потом работа.</strong> Вы платите строго по согласованной смете. Никаких внезапных наценок за длину трассы, расходные материалы или срочность выезда.
               </p>
 
               {/* Call to Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 max-w-md sm:max-w-none">
                 <button 
                   onClick={() => handleWhatsAppClick('Здравствуйте! Хочу зафиксировать цену ремонта кондиционера.')}
-                  className="inline-flex items-center justify-center bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all shadow-md shadow-sky-100 hover:shadow-lg hover:shadow-sky-200 active:scale-98 cursor-pointer gap-2"
+                  className="inline-flex items-center justify-center bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer gap-2"
                 >
                   Рассчитать точную стоимость в WhatsApp
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <a 
                   href="#booking-section"
-                  className="inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all hover:shadow-lg hover:shadow-slate-200 active:scale-98 cursor-pointer text-center"
+                  className="inline-flex items-center justify-center bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all hover:shadow-lg active:scale-98 cursor-pointer text-center"
                 >
                   Забронировать слот на сегодня
                 </a>
               </div>
 
               {/* Instant Mini Trust Factors Grid */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-100">
+              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-100 dark:border-slate-800">
                 <div>
-                  <h4 className="text-slate-900 font-bold text-xl">За 2 часа</h4>
-                  <p className="text-slate-400 text-xs mt-1">Среднее время приезда мастера с деталями</p>
+                  <h4 className="text-slate-900 dark:text-white font-bold text-xl">За 2 часа</h4>
+                  <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">Среднее время приезда мастера с деталями</p>
                 </div>
                 <div>
-                  <h4 className="text-slate-900 font-bold text-xl">100% честно</h4>
-                  <p className="text-slate-400 text-xs mt-1">Диагностика перед согласованием цены</p>
+                  <h4 className="text-slate-900 dark:text-white font-bold text-xl">100% честно</h4>
+                  <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">Диагностика перед согласованием цены</p>
                 </div>
                 <div>
-                  <h4 className="text-slate-900 font-bold text-xl">до 3-х лет</h4>
-                  <p className="text-slate-400 text-xs mt-1">Официальная гарантия по договору</p>
+                  <h4 className="text-slate-900 dark:text-white font-bold text-xl">до 3-х лет</h4>
+                  <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">Официальная гарантия по договору</p>
                 </div>
               </div>
 
             </div>
 
-            {/* Right Interactive Card / visual focus inspired by layout guidelines */}
+            {/* Right Interactive Card */}
             <div className="lg:col-span-5 relative z-10">
-              <div className="bg-white/80 backdrop-blur-xl border border-slate-100 p-8 rounded-2xl shadow-xl shadow-slate-100 space-y-6 relative overflow-hidden">
+              <div className="bg-white/80 dark:bg-[#0f1624]/80 backdrop-blur-xl border border-slate-100 dark:border-white/5 p-8 rounded-2xl shadow-xl shadow-slate-100 dark:shadow-none space-y-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-full filter blur-xl"></div>
                 
                 {/* Visual Header */}
-                <div className="flex items-center space-x-3 pb-4 border-b border-slate-100">
-                  <div className="w-10 h-10 rounded-lg bg-sky-100 flex items-center justify-center text-sky-600">
+                <div className="flex items-center space-x-3 pb-4 border-b border-slate-100 dark:border-slate-800">
+                  <div className="w-10 h-10 rounded-lg bg-sky-100 dark:bg-sky-950/50 flex items-center justify-center text-sky-600 dark:text-sky-400">
                     <Thermometer className="w-5 h-5 animate-pulse" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-slate-900 text-sm sm:text-base">Экспресс-заявка в Атырау</h3>
-                    <p className="text-xs text-slate-400">Бронирование свободного мастера на сегодня</p>
+                    <h3 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">Экспресс-заявка в Атырау</h3>
+                    <p className="text-xs text-slate-400 dark:text-slate-500">Бронирование свободного мастера на сегодня</p>
                   </div>
                 </div>
 
                 <div className="space-y-4 text-left">
                   <div className="flex items-start space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-sky-500 mt-0.5 shrink-0" />
-                    <p className="text-xs text-slate-600">Мастер приедет со всеми расходниками и фреоном в машине.</p>
+                    <CheckCircle2 className="w-4 h-4 text-sky-500 dark:text-sky-400 mt-0.5 shrink-0" />
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Мастер приедет со всеми расходниками и фреоном в машине.</p>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-sky-500 mt-0.5 shrink-0" />
-                    <p className="text-xs text-slate-600">Бесплатный выезд при согласии на ремонт.</p>
+                    <CheckCircle2 className="w-4 h-4 text-sky-500 dark:text-sky-400 mt-0.5 shrink-0" />
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Бесплатный выезд при согласии на ремонт.</p>
                   </div>
                   <div className="flex items-start space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-sky-500 mt-0.5 shrink-0" />
-                    <p className="text-xs text-slate-600">Цены зафиксированы в договоре, никаких скрытых доплат.</p>
+                    <CheckCircle2 className="w-4 h-4 text-sky-500 dark:text-sky-400 mt-0.5 shrink-0" />
+                    <p className="text-xs text-slate-600 dark:text-slate-400">Цены зафиксированы в договоре, никаких скрытых доплат.</p>
                   </div>
                 </div>
 
                 {/* Urgency Badge */}
-                <div className="bg-amber-50 border border-amber-100 p-4 rounded-xl flex items-start space-x-3 text-left">
-                  <AlertCircle className="w-5 h-5 text-amber-600 shrink-0 mt-0.5" />
+                <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/20 p-4 rounded-xl flex items-start space-x-3 text-left">
+                  <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-bold text-amber-900">Главное опасение клиентов закрыто:</h4>
-                    <p className="text-[11px] text-amber-700 mt-0.5">Мы дорожим вашей техникой. Наш мастер несет полную материальную ответственность за сохранность вашего нового сплит-системы при монтаже.</p>
+                    <h4 className="text-xs font-bold text-amber-900 dark:text-amber-200">Главное опасение клиентов закрыто:</h4>
+                    <p className="text-[11px] text-amber-700 dark:text-amber-400 mt-0.5">Мы дорожим вашей техникой. Наш мастер несет полную материальную ответственность за сохранность вашей сплит-системы при монтаже.</p>
                   </div>
                 </div>
 
                 <a 
                   href="#calculator"
-                  className="w-full inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 px-6 rounded-xl transition-all shadow-md active:scale-98 text-xs cursor-pointer"
+                  className="w-full inline-flex items-center justify-center bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-bold py-3.5 px-6 rounded-xl transition-all active:scale-98 text-xs cursor-pointer"
                 >
                   Перейти к калькулятору стоимости
                 </a>
@@ -473,44 +563,44 @@ function App() {
       </section>
 
       {/* CORE TRUST STATS SECTION */}
-      <section className="py-16 bg-slate-50 border-y border-slate-100">
+      <section className="py-16 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             
             {/* Stat 1 */}
-            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xs flex items-start space-x-5">
-              <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+            <div className="bg-white dark:bg-[#0f1624] p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
                 <Sparkles className="w-6 h-6" />
               </div>
               <div className="text-left">
-                <h3 className="font-bold text-slate-900 text-lg">8+ лет на рынке Атырау</h3>
-                <p className="text-slate-500 text-xs sm:text-sm mt-2 leading-relaxed">
+                <h3 className="font-bold text-slate-900 dark:text-white text-lg">8+ лет на рынке Атырау</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
                   Сертифицированные инженеры компании обслужили и запустили более 6 500 сплит-систем. Опыт мастеров — от 3 до 10 лет.
                 </p>
               </div>
             </div>
 
             {/* Stat 2 */}
-            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xs flex items-start space-x-5">
-              <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+            <div className="bg-white dark:bg-[#0f1624] p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-955/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
                 <Wrench className="w-6 h-6" />
               </div>
               <div className="text-left">
-                <h3 className="font-bold text-slate-900 text-lg">100% оригинальных деталей с собой</h3>
-                <p className="text-slate-500 text-xs sm:text-sm mt-2 leading-relaxed">
+                <h3 className="font-bold text-slate-900 dark:text-white text-lg">100% деталей с собой</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
                   В каждой из наших сервисных машин всегда в наличии запас фреона (R410A, R22), медных трубок, дренажей и конденсаторов. Устраняем поломку за 1 визит.
                 </p>
               </div>
             </div>
 
             {/* Stat 3 */}
-            <div className="bg-white p-8 rounded-2xl border border-slate-100 shadow-xs flex items-start space-x-5">
-              <div className="w-12 h-12 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center shrink-0">
+            <div className="bg-white dark:bg-[#0f1624] p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
+              <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-955/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
                 <DollarSign className="w-6 h-6" />
               </div>
               <div className="text-left">
-                <h3 className="font-bold text-slate-900 text-lg">0 тенге за выезд и диагностику</h3>
-                <p className="text-slate-500 text-xs sm:text-sm mt-2 leading-relaxed">
+                <h3 className="font-bold text-slate-900 dark:text-white text-lg">0 тенге за выезд и диагностику</h3>
+                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
                   Выезд специалиста и инструментальная диагностика манометрической станцией и течеискателем бесплатны при условии выполнения ремонта.
                 </p>
               </div>
@@ -525,22 +615,22 @@ function App() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-4 mb-12">
-            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
               Интерактивный калькулятор честной стоимости
             </h2>
-            <p className="text-slate-500 text-sm max-w-lg mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto">
               Рассчитайте стоимость услуги за 30 секунд. Итоговая смета фиксируется в WhatsApp до выезда мастера. Никаких доплат после!
             </p>
           </div>
 
-          <div className="bg-white border border-slate-200/80 rounded-2xl shadow-xl shadow-slate-100 overflow-hidden grid md:grid-cols-12">
+          <div className="bg-white dark:bg-[#0f1624]/60 border border-slate-200/80 dark:border-white/5 rounded-2xl shadow-xl shadow-slate-100 dark:shadow-none overflow-hidden grid md:grid-cols-12 transition-colors duration-300">
             
             {/* Calc Controls (Left 7 cols) */}
-            <div className="md:col-span-7 p-6 sm:p-8 space-y-6 text-left border-r border-slate-100">
+            <div className="md:col-span-7 p-6 sm:p-8 space-y-6 text-left border-r border-slate-100 dark:border-white/5">
               
               {/* Step 1: Service Type */}
               <div className="space-y-3">
-                <label className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Шаг 1: Выберите услугу</label>
+                <label className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Шаг 1: Выберите услугу</label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     { id: 'clean', label: 'Чистка' },
@@ -552,8 +642,8 @@ function App() {
                       onClick={() => setCalcService(service.id)}
                       className={`py-3 px-2 text-xs font-bold rounded-xl transition-all cursor-pointer border text-center ${
                         calcService === service.id 
-                          ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100'
-                          : 'bg-white border-slate-200 text-slate-600 hover:border-sky-500'
+                          ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100 dark:shadow-none'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-sky-500 dark:hover:border-sky-500'
                       }`}
                     >
                       {service.label}
@@ -564,7 +654,7 @@ function App() {
 
               {/* Step 2: Area / Power */}
               <div className="space-y-3">
-                <label className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Шаг 2: Площадь помещения (Мощность BTU)</label>
+                <label className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Шаг 2: Площадь помещения (Мощность BTU)</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {[
                     { id: '20', label: 'До 20 м²', btu: '07-09 BTU' },
@@ -577,12 +667,12 @@ function App() {
                       onClick={() => setCalcArea(area.id)}
                       className={`p-3 rounded-xl transition-all cursor-pointer border flex flex-col items-center justify-center text-center ${
                         calcArea === area.id 
-                          ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100'
-                          : 'bg-white border-slate-200 text-slate-600 hover:border-sky-500'
+                          ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100 dark:shadow-none'
+                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-sky-500 dark:hover:border-sky-500'
                       }`}
                     >
                       <span className="text-xs font-bold">{area.label}</span>
-                      <span className={`text-[9px] mt-0.5 ${calcArea === area.id ? 'text-sky-100' : 'text-slate-400'}`}>{area.btu}</span>
+                      <span className={`text-[9px] mt-0.5 ${calcArea === area.id ? 'text-sky-100' : 'text-slate-400 dark:text-slate-500'}`}>{area.btu}</span>
                     </button>
                   ))}
                 </div>
@@ -591,7 +681,7 @@ function App() {
               {/* Step 2.5: Floor (Only for Installation) */}
               {calcService === 'install' && (
                 <div className="space-y-3">
-                  <label className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Шаг 2.5: Укажите этаж установки</label>
+                  <label className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">Шаг 2.5: Укажите этаж установки</label>
                   <div className="grid grid-cols-2 gap-2">
                     {[
                       { id: '1', label: '1-й этаж', note: 'Базовая цена: 10 000 ₸' },
@@ -603,12 +693,12 @@ function App() {
                         onClick={() => setCalcFloor(floor.id)}
                         className={`p-3 rounded-xl transition-all cursor-pointer border flex flex-col items-center justify-center text-center ${
                           calcFloor === floor.id 
-                            ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100'
-                            : 'bg-white border-slate-200 text-slate-600 hover:border-sky-500'
+                            ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100 dark:shadow-none'
+                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-sky-500 dark:hover:border-sky-500'
                         }`}
                       >
                         <span className="text-xs font-bold">{floor.label}</span>
-                        <span className={`text-[9px] mt-0.5 ${calcFloor === floor.id ? 'text-sky-100' : 'text-slate-400'}`}>{floor.note}</span>
+                        <span className={`text-[9px] mt-0.5 ${calcFloor === floor.id ? 'text-sky-100' : 'text-slate-400 dark:text-slate-500'}`}>{floor.note}</span>
                       </button>
                     ))}
                   </div>
@@ -617,7 +707,7 @@ function App() {
 
               {/* Step 3: Add-ons */}
               <div className="space-y-3">
-                <label className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">
+                <label className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
                   {calcService === 'repair' ? 'Шаг 3: Выберите необходимые ремонтные работы' : 'Шаг 3: Дополнительные опции'}
                 </label>
                 <div className="space-y-2">
@@ -626,7 +716,7 @@ function App() {
                   {calcService === 'repair' ? (
                     <>
                       {/* Capacitor Option */}
-                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
                         <div className="flex items-center space-x-3">
                           <input 
                             type="checkbox" 
@@ -635,14 +725,14 @@ function App() {
                             className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
                           />
                           <div>
-                            <span className="text-xs font-bold text-slate-800 block">Замена пускового конденсатора</span>
-                            <span className="text-[10px] text-slate-400">+ 13 000 ₸ (запчасть и гарантия включены)</span>
+                            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">Замена пускового конденсатора</span>
+                            <span className="text-[10px] text-slate-400 dark:text-slate-500">+ 13 000 ₸ (запчасть и гарантия включены)</span>
                           </div>
                         </div>
                       </label>
 
                       {/* Relay Option */}
-                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
                         <div className="flex items-center space-x-3">
                           <input 
                             type="checkbox" 
@@ -651,14 +741,14 @@ function App() {
                             className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
                           />
                           <div>
-                            <span className="text-xs font-bold text-slate-800 block">Замена теплового реле</span>
-                            <span className="text-[10px] text-slate-400">+ 10 000 ₸ (с запчастью, гарантия на нее)</span>
+                            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">Замена теплового реле</span>
+                            <span className="text-[10px] text-slate-400 dark:text-slate-500">+ 10 000 ₸ (с запчастью, гарантия на нее)</span>
                           </div>
                         </div>
                       </label>
 
                       {/* Board Option */}
-                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
                         <div className="flex items-center space-x-3">
                           <input 
                             type="checkbox" 
@@ -667,15 +757,15 @@ function App() {
                             className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
                           />
                           <div>
-                            <span className="text-xs font-bold text-slate-800 block">Ремонт платы управления</span>
-                            <span className="text-[10px] text-slate-400">+ от 20 000 ₸</span>
+                            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">Ремонт платы управления</span>
+                            <span className="text-[10px] text-slate-400 dark:text-slate-500">+ от 20 000 ₸</span>
                           </div>
                         </div>
                       </label>
                     </>
                   ) : (
                     /* Default options (Clean/Install) */
-                    <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                    <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
                       <div className="flex items-center space-x-3">
                         <input 
                           type="checkbox" 
@@ -684,10 +774,10 @@ function App() {
                           className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
                         />
                         <div>
-                          <span className="text-xs font-bold text-slate-800 block">
+                          <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">
                             {calcService === 'clean' ? 'Использовать антибактериальную химию Errecom' : 'Антибактериальная обработка'}
                           </span>
-                          <span className="text-[10px] text-slate-400">
+                          <span className="text-[10px] text-slate-400 dark:text-slate-500">
                             {calcService === 'clean' ? '+ 5 000 ₸ (Чистка с химией)' : '+ 4 000 ₸'}
                           </span>
                         </div>
@@ -696,7 +786,7 @@ function App() {
                   )}
 
                   {/* Freon Option (Universal but with customized descriptions) */}
-                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
                     <div className="flex items-center space-x-3">
                       <input 
                         type="checkbox" 
@@ -705,10 +795,10 @@ function App() {
                         className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
                       />
                       <div>
-                        <span className="text-xs font-bold text-slate-800 block">
+                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">
                           {calcService === 'repair' ? 'Заправка кондиционера фреоном' : 'Дозаправка качественным фреоном'}
                         </span>
-                        <span className="text-[10px] text-slate-400">
+                        <span className="text-[10px] text-slate-400 dark:text-slate-500">
                           {calcService === 'repair' ? '+ 15 000 ₸ (до 500 ml с гарантией)' : '+ 15 000 ₸ (до 500 ml)'}
                         </span>
                       </div>
@@ -716,7 +806,7 @@ function App() {
                   </label>
 
                   {/* Option 3: Universal High Work */}
-                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
                     <div className="flex items-center space-x-3">
                       <input 
                         type="checkbox" 
@@ -725,8 +815,8 @@ function App() {
                         className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
                       />
                       <div>
-                        <span className="text-xs font-bold text-slate-800 block">Высотные работы / Услуги альпиниста</span>
-                        <span className="text-[10px] text-slate-400">+ 15 000 ₸ (для сложных фасадов)</span>
+                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">Высотные работы / Услуги альпиниста</span>
+                        <span className="text-[10px] text-slate-400 dark:text-slate-500">+ 15 000 ₸ (для сложных фасадов)</span>
                       </div>
                     </div>
                   </label>
@@ -736,26 +826,26 @@ function App() {
             </div>
 
             {/* Pricing Summary (Right 5 cols) */}
-            <div className="md:col-span-5 bg-slate-50/80 p-6 sm:p-8 flex flex-col justify-between text-left relative">
+            <div className="md:col-span-5 bg-slate-50/80 dark:bg-[#0c121e] p-6 sm:p-8 flex flex-col justify-between text-left relative transition-colors duration-300">
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-xs font-extrabold text-slate-400 uppercase tracking-wider">Предварительный расчет</h4>
-                  <p className="text-[10px] text-slate-400 mt-1">Окончательная цена сметы гарантирована</p>
+                  <h4 className="text-xs font-extrabold text-slate-400 dark:text-slate-550 uppercase tracking-wider">Предварительный расчет</h4>
+                  <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">Окончательная цена сметы гарантирована</p>
                 </div>
 
-                <div className="py-6 border-y border-slate-200 space-y-3">
-                  <div className="flex justify-between items-center text-xs text-slate-500">
+                <div className="py-6 border-y border-slate-200 dark:border-slate-800 space-y-3">
+                  <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
                     <span>Базовый тариф:</span>
-                    <span className="font-bold text-slate-700">
+                    <span className="font-bold text-slate-700 dark:text-slate-300">
                       {calcService === 'clean' && '10 000 ₸ (без химии)'}
                       {calcService === 'repair' && '10 000 ₸ (диагностика)'}
                       {calcService === 'install' && (calcFloor === '1' ? '10 000 ₸ (1 этаж)' : '20 000 ₸ (2+ этаж)')}
                     </span>
                   </div>
                   {calcArea !== '20' && (
-                    <div className="flex justify-between items-center text-xs text-slate-500">
+                    <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
                       <span>Наценка за мощность:</span>
-                      <span className="font-bold text-slate-700">
+                      <span className="font-bold text-slate-700 dark:text-slate-300">
                         {calcArea === '35' && '+ 3 000 ₸'}
                         {calcArea === '50' && '+ 6 000 ₸'}
                         {calcArea === '50+' && '+ 12 000 ₸'}
@@ -767,30 +857,30 @@ function App() {
                   {calcService === 'repair' ? (
                     <>
                       {repairCapacitor && (
-                        <div className="flex justify-between items-center text-xs text-slate-500">
+                        <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
                           <span>Замена конденсатора:</span>
-                          <span className="font-bold text-slate-700">+ 13 000 ₸</span>
+                          <span className="font-bold text-slate-700 dark:text-slate-300">+ 13 000 ₸</span>
                         </div>
                       )}
                       {repairRelay && (
-                        <div className="flex justify-between items-center text-xs text-slate-500">
+                        <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
                           <span>Замена теплового реле:</span>
-                          <span className="font-bold text-slate-700">+ 10 000 ₸</span>
+                          <span className="font-bold text-slate-700 dark:text-slate-300">+ 10 000 ₸</span>
                         </div>
                       )}
                       {repairBoard && (
-                        <div className="flex justify-between items-center text-xs text-slate-500">
+                        <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
                           <span>Ремонт платы:</span>
-                          <span className="font-bold text-slate-700">+ 20 000 ₸</span>
+                          <span className="font-bold text-slate-700 dark:text-slate-300">+ 20 000 ₸</span>
                         </div>
                       )}
                     </>
                   ) : (
                     /* Default options (Clean/Install) */
                     extraAntibacterial && (
-                      <div className="flex justify-between items-center text-xs text-slate-500">
+                      <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
                         <span>Антибактериальная химия:</span>
-                        <span className="font-bold text-slate-700">
+                        <span className="font-bold text-slate-700 dark:text-slate-300">
                           {calcService === 'clean' ? '+ 5 000 ₸' : '+ 4 000 ₸'}
                         </span>
                       </div>
@@ -798,34 +888,34 @@ function App() {
                   )}
 
                   {extraFreon && (
-                    <div className="flex justify-between items-center text-xs text-slate-500">
+                    <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
                       <span>Заправка фреоном (500 ml):</span>
-                      <span className="font-bold text-slate-700">+ 15 000 ₸</span>
+                      <span className="font-bold text-slate-700 dark:text-slate-300">+ 15 000 ₸</span>
                     </div>
                   )}
                   {extraHighWork && (
-                    <div className="flex justify-between items-center text-xs text-slate-500">
+                    <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
                       <span>Высотные работы:</span>
-                      <span className="font-bold text-slate-700">+ 15 000 ₸</span>
+                      <span className="font-bold text-slate-700 dark:text-slate-300">+ 15 000 ₸</span>
                     </div>
                   )}
 
-                  <div className="pt-4 flex justify-between items-end border-t border-slate-200">
-                    <span className="text-slate-900 font-extrabold text-sm uppercase">Итого к оплате:</span>
+                  <div className="pt-4 flex justify-between items-end border-t border-slate-200 dark:border-slate-800">
+                    <span className="text-slate-900 dark:text-white font-extrabold text-sm uppercase">Итого к оплате:</span>
                     <div className="text-right">
-                      <span className="text-2xl sm:text-3xl font-black text-slate-950 tracking-tight">
+                      <span className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white tracking-tight">
                         {currentPrice.toLocaleString('ru-RU')} ₸
                       </span>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white border border-sky-100 p-3.5 rounded-xl space-y-1">
-                  <div className="flex items-center space-x-2 text-sky-600">
+                <div className="bg-white dark:bg-[#0f1624] border border-sky-100 dark:border-sky-950/40 p-3.5 rounded-xl space-y-1">
+                  <div className="flex items-center space-x-2 text-sky-600 dark:text-sky-400">
                     <ShieldCheck className="w-4 h-4 shrink-0" />
                     <span className="text-xs font-bold">Без скрытых доплат</span>
                   </div>
-                  <p className="text-[10px] text-slate-500 leading-normal">
+                  <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-normal">
                     Мастер зафиксирует эту стоимость в акте до начала работ. Никаких накруток на месте!
                   </p>
                 </div>
@@ -841,20 +931,20 @@ function App() {
                       required
                       value={calcPhone}
                       onChange={(e) => setCalcPhone(e.target.value)}
-                      className="w-full text-xs bg-white border border-slate-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      className="w-full text-xs bg-white dark:bg-slate-950 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     />
                     <button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white text-xs font-bold py-3.5 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer text-center"
+                      className="w-full bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white font-bold py-3.5 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer text-center text-xs"
                     >
                       Зафиксировать цену и отправить смету в WhatsApp
                     </button>
                   </form>
                 ) : (
-                  <div className="bg-emerald-50 border border-emerald-100 p-4 rounded-xl text-center space-y-2">
-                    <Check className="w-8 h-8 text-emerald-600 mx-auto" />
-                    <h5 className="text-xs font-bold text-emerald-950">Смета зафиксирована!</h5>
-                    <p className="text-[10px] text-emerald-700 leading-relaxed">
+                  <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/20 p-4 rounded-xl text-center space-y-2">
+                    <Check className="w-8 h-8 text-emerald-600 dark:text-emerald-400 mx-auto" />
+                    <h5 className="text-xs font-bold text-emerald-950 dark:text-emerald-250">Смета зафиксирована!</h5>
+                    <p className="text-[10px] text-emerald-700 dark:text-emerald-450 leading-relaxed">
                       Перенаправляем в WhatsApp для мгновенного согласования времени выезда...
                     </p>
                   </div>
@@ -869,14 +959,14 @@ function App() {
       </section>
 
       {/* DYNAMIC SERVICES SHOWCASE */}
-      <section id="services" className="py-20 bg-slate-50 border-y border-slate-100">
+      <section id="services" className="py-20 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
               Профессиональные услуги по регламенту
             </h2>
-            <p className="text-slate-500 text-sm max-w-xl mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-xl mx-auto">
               Мы строго следуем внутреннему техническому регламенту «Сервис Кондиционеров», защищая ваш интерьер и оборудование от повреждений.
             </p>
           </div>
@@ -885,24 +975,24 @@ function App() {
             {servicesTabs.map((service) => (
               <div 
                 key={service.id}
-                className="bg-white border border-slate-200/80 rounded-2xl shadow-sm p-6 sm:p-8 flex flex-col justify-between hover:shadow-lg transition-all text-left relative overflow-hidden"
+                className="bg-white dark:bg-[#0f1624] border border-slate-200/80 dark:border-white/5 rounded-2xl shadow-sm p-6 sm:p-8 flex flex-col justify-between hover:shadow-lg transition-all text-left relative overflow-hidden"
               >
                 <div className="space-y-6">
                   {/* Card Header */}
                   <div className="flex justify-between items-start">
-                    <span className="text-xs font-bold text-sky-600 uppercase tracking-wider">{service.duration}</span>
-                    <span className="text-xl font-black text-slate-900">{service.price}</span>
+                    <span className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider">{service.duration}</span>
+                    <span className="text-xl font-black text-slate-900 dark:text-white">{service.price}</span>
                   </div>
 
                   <div>
-                    <h3 className="font-extrabold text-slate-900 text-xl tracking-tight leading-tight">{service.title}</h3>
+                    <h3 className="font-extrabold text-slate-900 dark:text-white text-xl tracking-tight leading-tight">{service.title}</h3>
                   </div>
 
                   {/* Bullets */}
-                  <ul className="space-y-3 border-t border-slate-100 pt-6">
+                  <ul className="space-y-3 border-t border-slate-100 dark:border-slate-800 pt-6">
                     {service.bullets.map((bullet, idx) => (
-                      <li key={idx} className="flex items-start text-xs sm:text-sm text-slate-600 leading-relaxed">
-                        <Check className="w-4 h-4 text-sky-500 shrink-0 mr-2 mt-1" />
+                      <li key={idx} className="flex items-start text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
+                        <Check className="w-4 h-4 text-sky-500 dark:text-sky-400 shrink-0 mr-2 mt-1" />
                         <span>{bullet}</span>
                       </li>
                     ))}
@@ -911,20 +1001,20 @@ function App() {
 
                 <div className="mt-8 space-y-4">
                   {/* Results Badge */}
-                  <div className="bg-sky-50/50 p-4 rounded-xl border border-sky-100/50">
-                    <span className="text-[10px] font-bold text-sky-600 uppercase tracking-wider block">Ожидаемый результат:</span>
-                    <p className="text-xs text-slate-600 mt-1 leading-normal">{service.result}</p>
+                  <div className="bg-sky-50/50 dark:bg-sky-950/20 p-4 rounded-xl border border-sky-100/50 dark:border-sky-900/10">
+                    <span className="text-[10px] font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider block">Ожидаемый результат:</span>
+                    <p className="text-xs text-slate-600 dark:text-slate-400 mt-1 leading-normal">{service.result}</p>
                   </div>
 
                   {/* Objection Closure */}
-                  <div className="flex items-start space-x-2 text-[11px] text-slate-400 italic">
+                  <div className="flex items-start space-x-2 text-[11px] text-slate-400 dark:text-slate-500 italic">
                     <Info className="w-3.5 h-3.5 text-sky-400 shrink-0 mt-0.5" />
                     <span>{service.objectionClose}</span>
                   </div>
 
                   <button 
                     onClick={() => handleWhatsAppClick(`Здравствуйте! Хочу заказать услугу: ${service.title}.`)}
-                    className="w-full bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold py-3.5 rounded-xl transition-all text-center cursor-pointer"
+                    className="w-full bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white text-xs font-bold py-3.5 rounded-xl transition-all text-center cursor-pointer"
                   >
                     Заказать услугу в WhatsApp
                   </button>
@@ -940,15 +1030,15 @@ function App() {
       <section id="guarantees" className="py-20 relative overflow-hidden">
         
         {/* Glow effect */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-50/40 rounded-full filter blur-3xl pointer-events-none"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-50/40 dark:bg-sky-950/5 rounded-full filter blur-3xl pointer-events-none"></div>
 
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
               100% защита ваших прав и безопасности
             </h2>
-            <p className="text-slate-500 text-sm max-w-lg mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto">
               Мы полностью убрали любые финансовые и технические риски для наших клиентов в Атырау.
             </p>
           </div>
@@ -956,54 +1046,54 @@ function App() {
           <div className="space-y-6">
             
             {/* Guarantee 1 */}
-            <div className="bg-white border border-slate-100 p-6 sm:p-8 rounded-2xl shadow-xs grid md:grid-cols-12 gap-6 items-center hover:border-sky-300 transition-all text-left">
+            <div className="bg-white dark:bg-[#0f1624] border border-slate-100 dark:border-white/5 p-6 sm:p-8 rounded-2xl shadow-xs grid md:grid-cols-12 gap-6 items-center hover:border-sky-300 transition-all text-left">
               <div className="md:col-span-3 flex justify-center">
-                <div className="w-20 h-20 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-2xl bg-sky-50 dark:bg-sky-950/40 text-sky-600 dark:text-sky-400 flex items-center justify-center">
                   <ShieldCheck className="w-10 h-10" />
                 </div>
               </div>
               <div className="md:col-span-9 space-y-2">
                 <div className="flex items-center space-x-2">
-                  <span className="bg-sky-100 text-sky-700 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">Гарантия на работу</span>
-                  <h3 className="font-bold text-slate-950 text-lg sm:text-xl">Твердая письменная гарантия от 12 до 36 месяцев</h3>
+                  <span className="bg-sky-100 dark:bg-sky-950/50 text-sky-700 dark:text-sky-400 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">Гарантия на работу</span>
+                  <h3 className="font-bold text-slate-955 dark:text-white text-lg sm:text-xl">Твердая письменная гарантия от 12 до 36 месяцев</h3>
                 </div>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
                   Вы получаете официальный гарантийный талон и акт выполненных работ с печатью ТОО. Если проблема возникнет снова — дежурный мастер приедет и исправит ее за наш счет в течение 24 часов. Без лишних вопросов и доказательств.
                 </p>
               </div>
             </div>
 
             {/* Guarantee 2 */}
-            <div className="bg-white border border-slate-100 p-6 sm:p-8 rounded-2xl shadow-xs grid md:grid-cols-12 gap-6 items-center hover:border-sky-300 transition-all text-left">
+            <div className="bg-white dark:bg-[#0f1624] border border-slate-100 dark:border-white/5 p-6 sm:p-8 rounded-2xl shadow-xs grid md:grid-cols-12 gap-6 items-center hover:border-sky-300 transition-all text-left">
               <div className="md:col-span-3 flex justify-center">
-                <div className="w-20 h-20 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-2xl bg-sky-50 dark:bg-sky-955/40 text-sky-600 dark:text-sky-400 flex items-center justify-center">
                   <ShieldAlert className="w-10 h-10" />
                 </div>
               </div>
               <div className="md:col-span-9 space-y-2">
                 <div className="flex items-center space-x-2">
-                  <span className="bg-indigo-100 text-indigo-700 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">Страхование интерьера</span>
-                  <h3 className="font-bold text-slate-950 text-lg sm:text-xl">Финансовая защита вашего интерьера и мебели</h3>
+                  <span className="bg-indigo-100 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">Страхование интерьера</span>
+                  <h3 className="font-bold text-slate-955 dark:text-white text-lg sm:text-xl">Финансовая защита вашего интерьера и мебели</h3>
                 </div>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
                   Перед началом работ мы бесплатно закрываем стены, мебель и технику защитной пленкой. В случае, если наш мастер случайно повредит отделку или испачкает обои при монтаже — мы компенсируем 100% ущерба по договору. Ваша квартира останется в первозданном виде.
                 </p>
               </div>
             </div>
 
             {/* Guarantee 3 */}
-            <div className="bg-white border border-slate-100 p-6 sm:p-8 rounded-2xl shadow-xs grid md:grid-cols-12 gap-6 items-center hover:border-sky-300 transition-all text-left">
+            <div className="bg-white dark:bg-[#0f1624] border border-slate-100 dark:border-white/5 p-6 sm:p-8 rounded-2xl shadow-xs grid md:grid-cols-12 gap-6 items-center hover:border-sky-300 transition-all text-left">
               <div className="md:col-span-3 flex justify-center">
-                <div className="w-20 h-20 rounded-2xl bg-sky-50 text-sky-600 flex items-center justify-center">
+                <div className="w-20 h-20 rounded-2xl bg-sky-50 dark:bg-sky-955/40 text-sky-600 dark:text-sky-400 flex items-center justify-center">
                   <Sparkles className="w-10 h-10" />
                 </div>
               </div>
               <div className="md:col-span-9 space-y-2">
                 <div className="flex items-center space-x-2">
-                  <span className="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">Чистота 100%</span>
-                  <h3 className="font-bold text-slate-950 text-lg sm:text-xl">Работа по стандарту «Абсолютная чистота»</h3>
+                  <span className="bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-450 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">Чистота 100%</span>
+                  <h3 className="font-bold text-slate-955 dark:text-white text-lg sm:text-xl">Работа по стандарту «Абсолютная чистота»</h3>
                 </div>
-                <p className="text-slate-500 text-xs sm:text-sm leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
                   Наши специалисты работают строго в чистых бахилах. Все сверлильные и бурильные работы проводятся только со сбором пыли промышленным пылесосом. По окончании ремонта мастер собирает и увозит с собой весь крупный строительный мусор.
                 </p>
               </div>
@@ -1015,14 +1105,14 @@ function App() {
       </section>
 
       {/* FREQUENT OBJECTIONS FAQ (ACCORDION) */}
-      <section id="faq" className="py-20 bg-slate-50 border-y border-slate-100">
+      <section id="faq" className="py-20 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight sm:text-4xl">
+            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
               Разбираем ваши сомнения
             </h2>
-            <p className="text-slate-500 text-sm max-w-lg mx-auto">
+            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto">
               Честные ответы на самые частые вопросы и страхи клиентов перед вызовом мастера.
             </p>
           </div>
@@ -1031,22 +1121,22 @@ function App() {
             {faqItems.map((faq, idx) => (
               <div 
                 key={idx}
-                className="bg-white border border-slate-200/60 rounded-2xl overflow-hidden shadow-xs transition-all duration-300"
+                className="bg-white dark:bg-[#0f1624] border border-slate-200/60 dark:border-white/5 rounded-2xl overflow-hidden shadow-xs transition-all duration-300"
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full px-6 py-5 flex items-center justify-between text-left font-bold text-slate-900 hover:text-sky-600 transition-colors cursor-pointer"
+                  className="w-full px-6 py-5 flex items-center justify-between text-left font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors cursor-pointer"
                 >
                   <span className="text-sm sm:text-base pr-4">{faq.q}</span>
                   {faqActive === idx ? (
-                    <ChevronUp className="w-5 h-5 text-sky-600 shrink-0" />
+                    <ChevronUp className="w-5 h-5 text-sky-600 dark:text-sky-400 shrink-0" />
                   ) : (
-                    <ChevronDown className="w-5 h-5 text-slate-400 shrink-0" />
+                    <ChevronDown className="w-5 h-5 text-slate-400 dark:text-slate-500 shrink-0" />
                   )}
                 </button>
                 
                 {faqActive === idx && (
-                  <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-slate-600 leading-relaxed border-t border-slate-100/60">
+                  <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-slate-650 dark:text-slate-450 leading-relaxed border-t border-slate-100/60 dark:border-slate-800">
                     {faq.a}
                   </div>
                 )}
@@ -1095,7 +1185,7 @@ function App() {
                 
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-sky-500 to-cyan-400 hover:from-sky-600 hover:to-cyan-500 text-slate-950 text-xs sm:text-sm font-black py-4 rounded-xl transition-all shadow-lg shadow-sky-500/10 active:scale-98 cursor-pointer uppercase tracking-wider"
+                  className="w-full bg-gradient-to-r from-sky-500 to-cyan-400 hover:from-sky-600 hover:to-cyan-500 text-slate-950 text-xs sm:text-sm font-black py-4 rounded-xl transition-all shadow-lg active:scale-98 cursor-pointer uppercase tracking-wider"
                 >
                   Узнать свободное время и зафиксировать цену
                 </button>
