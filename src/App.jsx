@@ -1179,7 +1179,7 @@ function App() {
             <ul className="space-y-3 text-xs leading-normal">
               <li className="flex items-start space-x-2">
                 <MapPin className="w-4 h-4 text-sky-500 shrink-0" />
-                <span>Республика Казахстан, г. Атырау, мкр. Привокзальный</span>
+                <span>г. Атырау, мкр. Балыкшы, ул. К. Ахмедиярова, д. 28А, офис 9</span>
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-sky-500 shrink-0" />
@@ -1207,6 +1207,26 @@ function App() {
             </div>
           </div>
 
+        </div>
+
+        {/* Official Legal Requisites Box */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-white/5">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 grid md:grid-cols-3 gap-6 text-xs text-slate-400">
+            <div>
+              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest block mb-2">Официальный исполнитель</span>
+              <p className="font-bold text-white text-sm">ИП КЛИМАТ ТЕХ</p>
+              <p className="mt-2 text-slate-500">БИН (ИИН): 530627401271</p>
+            </div>
+            <div>
+              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest block mb-2">Юридический адрес</span>
+              <p className="leading-relaxed">РК, г. Атырау, микрорайон Балыкшы, улица Каршымбай Ахмедияров, дом 28А, кв./офис 9</p>
+            </div>
+            <div>
+              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest block mb-2">Банковские реквизиты (АО "Kaspi Bank")</span>
+              <p className="font-semibold text-slate-300">Счет: KZ18722S000025707913</p>
+              <p className="mt-1 text-slate-500">БИК: CASPKZKA | КБе: 19</p>
+            </div>
+          </div>
         </div>
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 gap-4">
