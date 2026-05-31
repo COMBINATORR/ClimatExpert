@@ -94,7 +94,7 @@ function App() {
   // WhatsApp click triggers
   const handleWhatsAppClick = (message = 'Здравствуйте! Хочу заказать расчет стоимости ремонта кондиционера.') => {
     const encodedText = encodeURIComponent(message);
-    window.open(`https://wa.me/77000000000?text=${encodedText}`, '_blank');
+    window.open(`https://wa.me/77754323561?text=${encodedText}`, '_blank');
   };
 
   const submitBooking = (e, source = 'main') => {
@@ -230,9 +230,9 @@ function App() {
           {/* Contact Details & CTAs */}
           <div className="hidden lg:flex items-center space-x-6">
             <div className="flex flex-col items-end">
-              <a href="tel:+77000000000" className="flex items-center font-bold text-slate-900 hover:text-sky-600 transition-colors">
+              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900 hover:text-sky-600 transition-colors">
                 <Phone className="w-4 h-4 text-sky-500 mr-2 animate-pulse" />
-                +7 (700) 000-00-00
+                +7 (775) 432-35-61
               </a>
               <div className="flex items-center mt-1">
                 <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block animate-ping mr-1.5"></span>
@@ -291,9 +291,9 @@ function App() {
             </a>
             
             <div className="pt-4 border-t border-slate-100 flex flex-col space-y-3 px-3">
-              <a href="tel:+77000000000" className="flex items-center font-bold text-slate-900">
+              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900">
                 <Phone className="w-4 h-4 text-sky-500 mr-2" />
-                +7 (700) 000-00-00
+                +7 (775) 432-35-61
               </a>
               <p className="text-xs text-emerald-600 font-medium">● Свободные мастера готовы к выезду сегодня</p>
               <button 
@@ -1037,7 +1037,7 @@ function App() {
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-sky-500 shrink-0" />
-                <a href="tel:+77000000000" className="hover:text-white transition-colors">+7 (700) 000-00-00</a>
+                <a href="tel:+77754323561" className="hover:text-white transition-colors">+7 (775) 432-35-61</a>
               </li>
               <li>
                 <span className="text-slate-600 block">Время работы:</span>
