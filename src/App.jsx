@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { 
   Clock, 
   ShieldCheck, 
@@ -544,6 +544,41 @@ const TRANSLATIONS = {
   }
 };
 
+// High-performance dynamic count-up component using IntersectionObserver & requestAnimationFrame
+const AnimatedCounter = ({ target, duration = 1200, suffix = "" }) => {
+  const [count, setCount] = useState(0);
+  const elementRef = useRef(null);
+
+  useEffect(() => {
+    let started = false;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && !started) {
+          started = true;
+          let startTimestamp = null;
+          const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            setCount(Math.floor(progress * target));
+            if (progress < 1) {
+              window.requestAnimationFrame(step);
+            }
+          };
+          window.requestAnimationFrame(step);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return <span ref={elementRef}>{count.toLocaleString('ru-RU')}{suffix}</span>;
+};
+
 function App() {
   // Navigation Mobile state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -591,6 +626,31 @@ function App() {
       metaDesc.setAttribute('content', 'Professional repair, antibacterial cleaning, and high-quality installation of air conditioners in Atyrau. Rapid arrival in 2 hours, honest fixed prices, and up to 3 years warranty.');
     }
   }, [lang]);
+
+  // Premium Scroll Progress & Sticky Navbar dynamic shrink
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
+
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        const progress = (window.scrollY / totalHeight) * 100;
+        setScrollProgress(progress);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Interactive Calculator State
   const [calcService, setCalcService] = useState('clean'); // 'clean', 'repair', 'install'
@@ -841,8 +901,20 @@ function App() {
       <div className="absolute bottom-[600px] left-10 w-96 h-96 bg-indigo-50 dark:bg-indigo-950/10 rounded-full gradient-blob opacity-50 pointer-events-none"></div>
 
       {/* HEADER / NAVIGATION */}
-      <header className="sticky top-0 z-50 glass-nav shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <header className={`sticky top-0 z-50 glass-nav transition-all duration-300 ${
+        isScrolled 
+          ? 'shadow-md border-b border-sky-500/20 dark:border-cyan-500/20 shadow-sky-500/5' 
+          : 'shadow-xs'
+      }`}>
+        {/* Horizontal scroll progress bar */}
+        <div 
+          className="scroll-progress-bar" 
+          style={{ width: `${scrollProgress}%` }}
+        />
+
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
+          isScrolled ? 'h-16' : 'h-20'
+        }`}>
           
           {/* Logo & Brand */}
           <div className="flex items-center space-x-3">
@@ -1196,14 +1268,14 @@ function App() {
               <div className="flex flex-col sm:flex-row gap-4 max-w-md sm:max-w-none">
                 <button 
                   onClick={() => handleWhatsAppClick(lang === 'ru' ? 'Здравствуйте! Хочу рассчитать стоимость работ.' : lang === 'kk' ? 'Сәлеметсіз бе! Жұмыс құнын есептегім келеді.' : 'Hello! I want to calculate the cost of works.')}
-                  className="inline-flex items-center justify-center bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer gap-2"
+                  className="inline-flex items-center justify-center bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer gap-2 cta-shimmer"
                 >
                   {t.heroCtaWhatsApp}
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <a 
                   href="#booking-section"
-                  className="inline-flex items-center justify-center bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all hover:shadow-lg active:scale-98 cursor-pointer text-center"
+                  className="inline-flex items-center justify-center bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all hover:shadow-lg active:scale-98 cursor-pointer text-center cta-shimmer"
                 >
                   {t.heroCtaSlot}
                 </a>
@@ -1286,12 +1358,14 @@ function App() {
           <div className="grid md:grid-cols-3 gap-8">
             
             {/* Stat 1 */}
-            <div className="bg-white dark:bg-[#0f1624] p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
+            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
               <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
                 <Sparkles className="w-6 h-6" />
               </div>
               <div className="text-left">
-                <h3 className="font-bold text-slate-900 dark:text-white text-lg">{t.stat1Title}</h3>
+                <h3 className="font-extrabold text-slate-900 dark:text-white text-2xl tracking-tight">
+                  <AnimatedCounter target={8} suffix="+" /> {lang === 'ru' ? 'лет на рынке Атырау' : lang === 'kk' ? 'жыл Атырау нарығында' : 'Years in Atyrau'}
+                </h3>
                 <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
                   {t.stat1Desc}
                 </p>
@@ -1299,12 +1373,14 @@ function App() {
             </div>
 
             {/* Stat 2 */}
-            <div className="bg-white dark:bg-[#0f1624] p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
+            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
               <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
                 <Wrench className="w-6 h-6" />
               </div>
               <div className="text-left">
-                <h3 className="font-bold text-slate-900 dark:text-white text-lg">{t.stat2Title}</h3>
+                <h3 className="font-extrabold text-slate-900 dark:text-white text-2xl tracking-tight">
+                  <AnimatedCounter target={100} suffix="%" /> {lang === 'ru' ? 'деталей с собой' : lang === 'kk' ? 'бөлшектер дайын' : 'Parts in Stock'}
+                </h3>
                 <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
                   {t.stat2Desc}
                 </p>
@@ -1312,7 +1388,7 @@ function App() {
             </div>
 
             {/* Stat 3 */}
-            <div className="bg-white dark:bg-[#0f1624] p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
+            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
               <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
                 <svg 
                   viewBox="0 0 24 24" 
@@ -1329,7 +1405,9 @@ function App() {
                 </svg>
               </div>
               <div className="text-left">
-                <h3 className="font-bold text-slate-900 dark:text-white text-lg">{t.stat3Title}</h3>
+                <h3 className="font-extrabold text-slate-900 dark:text-white text-2xl tracking-tight">
+                  <AnimatedCounter target={0} suffix=" ₸" /> {lang === 'ru' ? 'за выезд и диагностику' : lang === 'kk' ? 'шығу және диагностика' : 'for Visit & Diagnosis'}
+                </h3>
                 <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
                   {t.stat3Desc}
                 </p>
@@ -1705,7 +1783,7 @@ function App() {
             {servicesTabs.map((service) => (
               <div 
                 key={service.id}
-                className="bg-white dark:bg-[#0f1624] border border-slate-200/80 dark:border-white/5 rounded-2xl shadow-sm p-6 sm:p-8 flex flex-col justify-between hover:shadow-lg transition-all text-left relative overflow-hidden"
+                className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 flex flex-col justify-between text-left"
               >
                 <div className="space-y-6">
                   {/* Card Header */}
@@ -1744,7 +1822,7 @@ function App() {
 
                   <button 
                     onClick={() => handleWhatsAppClick(lang === 'ru' ? `Здравствуйте! Хочу заказать услугу: ${service.title}.` : lang === 'kk' ? `Сәлеметсіз бе! Мен ${service.title} қызметіне тапсырыс бергім келеді.` : `Hello! I would like to order: ${service.title}.`)}
-                    className="w-full bg-slate-900 dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 text-white text-xs font-bold py-3.5 rounded-xl transition-all text-center cursor-pointer"
+                    className="w-full bg-slate-900 dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 text-white text-xs font-bold py-3.5 rounded-xl transition-all text-center cursor-pointer cta-shimmer"
                   >
                     {t.serviceTabOrderBtn}
                   </button>
@@ -1776,7 +1854,7 @@ function App() {
           <div className="space-y-6">
             
             {/* Guarantee 1 */}
-            <div className="bg-white dark:bg-[#0f1624] border border-slate-100 dark:border-white/5 p-6 sm:p-8 rounded-2xl shadow-xs grid md:grid-cols-12 gap-6 items-center hover:border-sky-300 transition-all text-left">
+            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 rounded-2xl grid md:grid-cols-12 gap-6 items-center text-left">
               <div className="md:col-span-3 flex justify-center">
                 <div className="w-20 h-20 rounded-2xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center">
                   <ShieldCheck className="w-10 h-10" />
@@ -1794,7 +1872,7 @@ function App() {
             </div>
 
             {/* Guarantee 2 */}
-            <div className="bg-white dark:bg-[#0f1624] border border-slate-100 dark:border-white/5 p-6 sm:p-8 rounded-2xl shadow-xs grid md:grid-cols-12 gap-6 items-center hover:border-sky-300 transition-all text-left">
+            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 rounded-2xl grid md:grid-cols-12 gap-6 items-center text-left">
               <div className="md:col-span-3 flex justify-center">
                 <div className="w-20 h-20 rounded-2xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center">
                   <ShieldAlert className="w-10 h-10" />
@@ -1802,7 +1880,7 @@ function App() {
               </div>
               <div className="md:col-span-9 space-y-2">
                 <div className="flex items-center space-x-2 flex-wrap gap-1">
-                  <span className="bg-indigo-100 dark:bg-indigo-955/50 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">{t.guar2Label}</span>
+                  <span className="bg-indigo-100 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">{t.guar2Label}</span>
                   <h3 className="font-bold text-slate-900 dark:text-white text-lg sm:text-xl">{t.guar2Title}</h3>
                 </div>
                 <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
@@ -1812,7 +1890,7 @@ function App() {
             </div>
 
             {/* Guarantee 3 */}
-            <div className="bg-white dark:bg-[#0f1624] border border-slate-100 dark:border-white/5 p-6 sm:p-8 rounded-2xl shadow-xs grid md:grid-cols-12 gap-6 items-center hover:border-sky-300 transition-all text-left">
+            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 rounded-2xl grid md:grid-cols-12 gap-6 items-center text-left">
               <div className="md:col-span-3 flex justify-center">
                 <div className="w-20 h-20 rounded-2xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center">
                   <Sparkles className="w-10 h-10" />
