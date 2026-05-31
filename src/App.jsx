@@ -13,7 +13,6 @@ import {
   ChevronDown, 
   ChevronUp, 
   Sparkles, 
-  DollarSign, 
   ShieldAlert, 
   Check, 
   Info,
@@ -596,7 +595,19 @@ function App() {
             {/* Stat 3 */}
             <div className="bg-white dark:bg-[#0f1624] p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
               <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-955/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
-                <DollarSign className="w-6 h-6" />
+                <svg 
+                  viewBox="0 0 24 24" 
+                  fill="none" 
+                  stroke="currentColor" 
+                  strokeWidth="2.5" 
+                  strokeLinecap="round" 
+                  strokeLinejoin="round" 
+                  className="w-6 h-6"
+                >
+                  <path d="M6 6h12" />
+                  <path d="M6 10h12" />
+                  <path d="M12 10v10" />
+                </svg>
               </div>
               <div className="text-left">
                 <h3 className="font-bold text-slate-900 dark:text-white text-lg">0 тенге за выезд и диагностику</h3>
