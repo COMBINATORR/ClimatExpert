@@ -39,6 +39,10 @@ function App() {
   const [extraAntibacterial, setExtraAntibacterial] = useState(true);
   const [extraFreon, setExtraFreon] = useState(false);
   const [extraHighWork, setExtraHighWork] = useState(false);
+  // Repair-specific options
+  const [repairCapacitor, setRepairCapacitor] = useState(false);
+  const [repairRelay, setRepairRelay] = useState(false);
+  const [repairBoard, setRepairBoard] = useState(false);
   const [calcSubmitted, setCalcSubmitted] = useState(false);
   const [calcPhone, setCalcPhone] = useState('');
 
@@ -72,7 +76,7 @@ function App() {
     if (calcService === 'clean') {
       basePrice = 10000;
     } else if (calcService === 'repair') {
-      basePrice = 15000;
+      basePrice = 10000; // Repair starts from 10,000 KZT
     } else if (calcService === 'install') {
       basePrice = calcFloor === '1' ? 10000 : 20000;
     }
@@ -83,10 +87,17 @@ function App() {
     else if (calcArea === '50+') basePrice += 12000;
 
     // Extras
-    if (extraAntibacterial) {
-      basePrice += calcService === 'clean' ? 5000 : 4000;
+    if (calcService === 'repair') {
+      if (repairCapacitor) basePrice += 13000;
+      if (repairRelay) basePrice += 10000;
+      if (repairBoard) basePrice += 20000;
+      if (extraFreon) basePrice += 15000; // Freon recharge 15,000 KZT
+    } else {
+      if (extraAntibacterial) {
+        basePrice += calcService === 'clean' ? 5000 : 4000;
+      }
+      if (extraFreon) basePrice += 15000; // Freon recharge 15,000 KZT
     }
-    if (extraFreon) basePrice += 8000;
     if (extraHighWork) basePrice += 15000;
 
     return basePrice;
@@ -108,14 +119,20 @@ function App() {
       const serviceNames = { clean: 'Чистка', repair: 'Ремонт', install: 'Монтаж' };
       const areaNames = { '20': 'До 20 м²', '35': 'До 35 м²', '50': 'До 50 м²', '50+': 'Более 50 м²' };
       let extrasText = [];
-      if (extraFreon) extrasText.push('Фреон');
       if (extraHighWork) extrasText.push('Высотные работы');
       
       let serviceName = serviceNames[calcService];
       if (calcService === 'clean') {
         serviceName = extraAntibacterial ? 'Чистка с химией' : 'Чистка без химии';
+        if (extraFreon) extrasText.push('Заправка фреоном 500ml');
+      } else if (calcService === 'repair') {
+        if (repairCapacitor) extrasText.push('Замена конденсатора (13к)');
+        if (repairRelay) extrasText.push('Замена теплового реле (10к)');
+        if (repairBoard) extrasText.push('Ремонт платы (от 20к)');
+        if (extraFreon) extrasText.push('Заправка фреоном 500ml (15к)');
       } else {
         if (extraAntibacterial) extrasText.push('Антибак');
+        if (extraFreon) extrasText.push('Заправка фреоном 500ml');
       }
       
       const whatsAppMsg = `Привет! Рассчитал цену на сайте Климат Эксперт.\nУслуга: ${serviceName}\nПлощадь: ${areaNames[calcArea]}${calcService === 'install' ? `\nЭтаж: ${calcFloor === '1' ? '1-й' : '2-й и выше'}` : ''}\nОпции: ${extrasText.join(', ') || 'нет'}\nОриентировочная цена: ${currentPrice.toLocaleString('ru-RU')} ₸.\nМой телефон: ${calcPhone}. Жду подтверждения сметы!`;
@@ -149,18 +166,19 @@ function App() {
     },
     {
       id: 'repair',
-      title: 'Инструментальный ремонт и дозаправка',
-      price: 'от 15 000 ₸',
+      title: 'Инструментальный ремонт и заправка',
+      price: 'от 10 000 ₸',
       duration: '30-90 мин',
       bullets: [
-        'Поиск утечек хладагента электронным течеискателем',
-        'Вакуумирование системы перед заправкой (удаление влаги)',
-        'Заправка оригинальным сертифицированным фреоном R410A / R22 строго по весам',
-        'Замена пусковых конденсаторов, датчиков температуры, ремонт плат управления',
-        'Контрольный замер давления манометрической станцией во всех режимах'
+        'Замена пускового конденсатора: 13 000 ₸ (с нас запчасть и гарантия)',
+        'Замена теплового реле: 10 000 ₸ (с запчастью, гарантия на нее)',
+        'Ремонт платы управления: от 20 000 ₸',
+        'Заправка кондиционера фреоном до 500 ml: 15 000 ₸',
+        'Поиск микротрещин электронным течеискателем и вакуумирование',
+        'Контрольный замер давления манометрической станцией после сборки'
       ],
-      result: 'Восстановление заводской холодопроизводительности без переплат. Кондиционер морозит как новый.',
-      objectionClose: 'Сначала находим точную причину поломки манометром и течеискателем. Не предлагаем заправку, если проблема в компрессоре.'
+      result: 'Качественные запчасти в наличии. Гарантия предоставляется на все замененные нами детали.',
+      objectionClose: 'Сначала находим точную причину поломки. Гарантия действует только на замененные нами запчасти.'
     },
     {
       id: 'install',
@@ -599,52 +617,112 @@ function App() {
 
               {/* Step 3: Add-ons */}
               <div className="space-y-3">
-                <label className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Шаг 3: Дополнительные опции</label>
+                <label className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">
+                  {calcService === 'repair' ? 'Шаг 3: Выберите необходимые ремонтные работы' : 'Шаг 3: Дополнительные опции'}
+                </label>
                 <div className="space-y-2">
-                  {/* Option 1 */}
-                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
-                    <div className="flex items-center space-x-3">
-                      <input 
-                        type="checkbox" 
-                        checked={extraAntibacterial}
-                        onChange={(e) => setExtraAntibacterial(e.target.checked)}
-                        className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
-                      />
-                      <div>
-                        <span className="text-xs font-bold text-slate-800 block">
-                          {calcService === 'clean' ? 'Использовать антибактериальную химию Errecom' : 'Антибактериальная обработка'}
-                        </span>
-                        <span className="text-[10px] text-slate-400">
-                          {calcService === 'clean' ? '+ 5 000 ₸ (Чистка с химией)' : '+ 4 000 ₸'}
-                        </span>
-                      </div>
-                    </div>
-                  </label>
+                  
+                  {/* Dynamic Repair Options */}
+                  {calcService === 'repair' ? (
+                    <>
+                      {/* Capacitor Option */}
+                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                        <div className="flex items-center space-x-3">
+                          <input 
+                            type="checkbox" 
+                            checked={repairCapacitor}
+                            onChange={(e) => setRepairCapacitor(e.target.checked)}
+                            className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                          />
+                          <div>
+                            <span className="text-xs font-bold text-slate-800 block">Замена пускового конденсатора</span>
+                            <span className="text-[10px] text-slate-400">+ 13 000 ₸ (запчасть и гарантия включены)</span>
+                          </div>
+                        </div>
+                      </label>
 
-                  {/* Option 2 */}
+                      {/* Relay Option */}
+                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                        <div className="flex items-center space-x-3">
+                          <input 
+                            type="checkbox" 
+                            checked={repairRelay}
+                            onChange={(e) => setRepairRelay(e.target.checked)}
+                            className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                          />
+                          <div>
+                            <span className="text-xs font-bold text-slate-800 block">Замена теплового реле</span>
+                            <span className="text-[10px] text-slate-400">+ 10 000 ₸ (с запчастью, гарантия на нее)</span>
+                          </div>
+                        </div>
+                      </label>
+
+                      {/* Board Option */}
+                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                        <div className="flex items-center space-x-3">
+                          <input 
+                            type="checkbox" 
+                            checked={repairBoard}
+                            onChange={(e) => setRepairBoard(e.target.checked)}
+                            className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                          />
+                          <div>
+                            <span className="text-xs font-bold text-slate-800 block">Ремонт платы управления</span>
+                            <span className="text-[10px] text-slate-400">+ от 20 000 ₸</span>
+                          </div>
+                        </div>
+                      </label>
+                    </>
+                  ) : (
+                    /* Default options (Clean/Install) */
+                    <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
+                      <div className="flex items-center space-x-3">
+                        <input 
+                          type="checkbox" 
+                          checked={extraAntibacterial}
+                          onChange={(e) => setExtraAntibacterial(e.target.checked)}
+                          className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                        />
+                        <div>
+                          <span className="text-xs font-bold text-slate-800 block">
+                            {calcService === 'clean' ? 'Использовать антибактериальную химию Errecom' : 'Антибактериальная обработка'}
+                          </span>
+                          <span className="text-[10px] text-slate-400">
+                            {calcService === 'clean' ? '+ 5 000 ₸ (Чистка с химией)' : '+ 4 000 ₸'}
+                          </span>
+                        </div>
+                      </div>
+                    </label>
+                  )}
+
+                  {/* Freon Option (Universal but with customized descriptions) */}
                   <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
                     <div className="flex items-center space-x-3">
                       <input 
                         type="checkbox" 
                         checked={extraFreon}
                         onChange={(e) => setExtraFreon(e.target.checked)}
-                        className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500"
+                        className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
                       />
                       <div>
-                        <span className="text-xs font-bold text-slate-800 block">Дозаправка качественным фреоном (до 300г)</span>
-                        <span className="text-[10px] text-slate-400">+ 8 000 ₸</span>
+                        <span className="text-xs font-bold text-slate-800 block">
+                          {calcService === 'repair' ? 'Заправка кондиционера фреоном' : 'Дозаправка качественным фреоном'}
+                        </span>
+                        <span className="text-[10px] text-slate-400">
+                          {calcService === 'repair' ? '+ 15 000 ₸ (до 500 ml с гарантией)' : '+ 15 000 ₸ (до 500 ml)'}
+                        </span>
                       </div>
                     </div>
                   </label>
 
-                  {/* Option 3 */}
+                  {/* Option 3: Universal High Work */}
                   <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 hover:bg-slate-50 transition-all cursor-pointer">
                     <div className="flex items-center space-x-3">
                       <input 
                         type="checkbox" 
                         checked={extraHighWork}
                         onChange={(e) => setExtraHighWork(e.target.checked)}
-                        className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500"
+                        className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
                       />
                       <div>
                         <span className="text-xs font-bold text-slate-800 block">Высотные работы / Услуги альпиниста</span>
@@ -670,7 +748,7 @@ function App() {
                     <span>Базовый тариф:</span>
                     <span className="font-bold text-slate-700">
                       {calcService === 'clean' && '10 000 ₸ (без химии)'}
-                      {calcService === 'repair' && '15 000 ₸'}
+                      {calcService === 'repair' && '10 000 ₸ (диагностика)'}
                       {calcService === 'install' && (calcFloor === '1' ? '10 000 ₸ (1 этаж)' : '20 000 ₸ (2+ этаж)')}
                     </span>
                   </div>
@@ -684,18 +762,45 @@ function App() {
                       </span>
                     </div>
                   )}
-                  {extraAntibacterial && (
-                    <div className="flex justify-between items-center text-xs text-slate-500">
-                      <span>Антибактериальная химия:</span>
-                      <span className="font-bold text-slate-700">
-                        {calcService === 'clean' ? '+ 5 000 ₸' : '+ 4 000 ₸'}
-                      </span>
-                    </div>
+                  
+                  {/* Dynamic Repair Summary Items */}
+                  {calcService === 'repair' ? (
+                    <>
+                      {repairCapacitor && (
+                        <div className="flex justify-between items-center text-xs text-slate-500">
+                          <span>Замена конденсатора:</span>
+                          <span className="font-bold text-slate-700">+ 13 000 ₸</span>
+                        </div>
+                      )}
+                      {repairRelay && (
+                        <div className="flex justify-between items-center text-xs text-slate-500">
+                          <span>Замена теплового реле:</span>
+                          <span className="font-bold text-slate-700">+ 10 000 ₸</span>
+                        </div>
+                      )}
+                      {repairBoard && (
+                        <div className="flex justify-between items-center text-xs text-slate-500">
+                          <span>Ремонт платы:</span>
+                          <span className="font-bold text-slate-700">+ 20 000 ₸</span>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    /* Default options (Clean/Install) */
+                    extraAntibacterial && (
+                      <div className="flex justify-between items-center text-xs text-slate-500">
+                        <span>Антибактериальная химия:</span>
+                        <span className="font-bold text-slate-700">
+                          {calcService === 'clean' ? '+ 5 000 ₸' : '+ 4 000 ₸'}
+                        </span>
+                      </div>
+                    )
                   )}
+
                   {extraFreon && (
                     <div className="flex justify-between items-center text-xs text-slate-500">
-                      <span>Дозаправка фреоном:</span>
-                      <span className="font-bold text-slate-700">+ 8 000 ₸</span>
+                      <span>Заправка фреоном (500 ml):</span>
+                      <span className="font-bold text-slate-700">+ 15 000 ₸</span>
                     </div>
                   )}
                   {extraHighWork && (
