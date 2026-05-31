@@ -901,7 +901,7 @@ function App() {
   ];
 
   return (
-    <div className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative transition-colors duration-300">
+    <div className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative overflow-x-hidden w-full transition-colors duration-300">
       
       {/* Decorative Vibrant Accent Blobs */}
       <div className="absolute top-24 -left-48 w-96 h-96 bg-cyan-100 dark:bg-cyan-950/20 rounded-full gradient-blob opacity-60 pointer-events-none"></div>
