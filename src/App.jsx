@@ -35,6 +35,7 @@ function App() {
   // Interactive Calculator State
   const [calcService, setCalcService] = useState('clean'); // 'clean', 'repair', 'install'
   const [calcArea, setCalcArea] = useState('20'); // '20', '35', '50', '50+'
+  const [calcFloor, setCalcFloor] = useState('1'); // '1' (1st floor), '2+' (2nd floor or higher)
   const [extraAntibacterial, setExtraAntibacterial] = useState(true);
   const [extraFreon, setExtraFreon] = useState(false);
   const [extraHighWork, setExtraHighWork] = useState(false);
@@ -73,7 +74,7 @@ function App() {
     } else if (calcService === 'repair') {
       basePrice = 15000;
     } else if (calcService === 'install') {
-      basePrice = 30000;
+      basePrice = calcFloor === '1' ? 10000 : 20000;
     }
 
     // Area coefficient
@@ -109,7 +110,7 @@ function App() {
       if (extraFreon) extrasText.push('Фреон');
       if (extraHighWork) extrasText.push('Высотные работы');
       
-      const whatsAppMsg = `Привет! Рассчитал цену на сайте Климат Эксперт.\nУслуга: ${serviceNames[calcService]}\nПлощадь: ${areaNames[calcArea]}\nОпции: ${extrasText.join(', ') || 'нет'}\nОриентировочная цена: ${currentPrice.toLocaleString('ru-RU')} ₸.\nМой телефон: ${calcPhone}. Жду подтверждения сметы!`;
+      const whatsAppMsg = `Привет! Рассчитал цену на сайте Климат Эксперт.\nУслуга: ${serviceNames[calcService]}\nПлощадь: ${areaNames[calcArea]}${calcService === 'install' ? `\nЭтаж: ${calcFloor === '1' ? '1-й' : '2-й и выше'}` : ''}\nОпции: ${extrasText.join(', ') || 'нет'}\nОриентировочная цена: ${currentPrice.toLocaleString('ru-RU')} ₸.\nМой телефон: ${calcPhone}. Жду подтверждения сметы!`;
       setTimeout(() => {
         handleWhatsAppClick(whatsAppMsg);
       }, 1000);
@@ -156,7 +157,7 @@ function App() {
     {
       id: 'install',
       title: 'Монтаж «Под ключ» по чек-листу',
-      price: 'от 30 000 ₸',
+      price: 'от 10 000 ₸',
       duration: '2-3 часа',
       bullets: [
         'Разметка положения блоков лазерным уровнем (идеальный отвод дренажа)',
@@ -561,6 +562,33 @@ function App() {
                 </div>
               </div>
 
+              {/* Step 2.5: Floor (Only for Installation) */}
+              {calcService === 'install' && (
+                <div className="space-y-3">
+                  <label className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Шаг 2.5: Укажите этаж установки</label>
+                  <div className="grid grid-cols-2 gap-2">
+                    {[
+                      { id: '1', label: '1-й этаж', note: 'Базовая цена: 10 000 ₸' },
+                      { id: '2+', label: '2-й этаж и выше', note: 'Базовая цена: 20 000 ₸' }
+                    ].map(floor => (
+                      <button
+                        key={floor.id}
+                        type="button"
+                        onClick={() => setCalcFloor(floor.id)}
+                        className={`p-3 rounded-xl transition-all cursor-pointer border flex flex-col items-center justify-center text-center ${
+                          calcFloor === floor.id 
+                            ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100'
+                            : 'bg-white border-slate-200 text-slate-600 hover:border-sky-500'
+                        }`}
+                      >
+                        <span className="text-xs font-bold">{floor.label}</span>
+                        <span className={`text-[9px] mt-0.5 ${calcFloor === floor.id ? 'text-sky-100' : 'text-slate-400'}`}>{floor.note}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Step 3: Add-ons */}
               <div className="space-y-3">
                 <label className="text-xs font-extrabold text-slate-900 uppercase tracking-wider">Шаг 3: Дополнительные опции</label>
@@ -632,7 +660,7 @@ function App() {
                     <span className="font-bold text-slate-700">
                       {calcService === 'clean' && '12 000 ₸'}
                       {calcService === 'repair' && '15 000 ₸'}
-                      {calcService === 'install' && '30 000 ₸'}
+                      {calcService === 'install' && (calcFloor === '1' ? '10 000 ₸ (1 этаж)' : '20 000 ₸ (2+ этаж)')}
                     </span>
                   </div>
                   {calcArea !== '20' && (
