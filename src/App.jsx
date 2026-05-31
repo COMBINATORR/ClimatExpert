@@ -631,6 +631,41 @@ function App() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
+  // Tactile mobile elastic horizontal bounce spring states & callbacks
+  const [touchStartX, setTouchStartX] = useState(null);
+  const [touchDiffX, setTouchDiffX] = useState(0);
+  const [isResettingTouch, setIsResettingTouch] = useState(false);
+
+  const handleTouchStart = (e) => {
+    if (e.touches.length === 1) {
+      setTouchStartX(e.touches[0].clientX);
+      setIsResettingTouch(false);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (touchStartX !== null && e.touches.length === 1) {
+      const currentX = e.touches[0].clientX;
+      const rawDiff = currentX - touchStartX;
+      
+      // Multiplier of 0.22 introduces high resistance/tension (spring physics)
+      const resistance = 0.22;
+      let elasticDiff = rawDiff * resistance;
+      
+      // Limit bounds to 45px to prevent breaking layout structure
+      if (elasticDiff > 45) elasticDiff = 45;
+      if (elasticDiff < -45) elasticDiff = -45;
+      
+      setTouchDiffX(elasticDiff);
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setTouchStartX(null);
+    setIsResettingTouch(true);
+    setTouchDiffX(0);
+  };
+
   useEffect(() => {
     let ticking = false;
 
@@ -901,7 +936,19 @@ function App() {
   ];
 
   return (
-    <div className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative overflow-x-hidden w-full transition-colors duration-300">
+    <div 
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+      className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative overflow-x-hidden w-full transition-colors duration-300"
+      style={{ 
+        transform: touchDiffX !== 0 ? `translateX(${touchDiffX}px)` : 'none',
+        // Snaps back with a premium elastic spring bounce on finger release
+        transition: isResettingTouch 
+          ? 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, color 0.3s ease' 
+          : 'background-color 0.3s ease, color 0.3s ease'
+      }}
+    >
       
       {/* Decorative Vibrant Accent Blobs */}
       <div className="absolute top-24 -left-48 w-96 h-96 bg-cyan-100 dark:bg-cyan-950/20 rounded-full gradient-blob opacity-60 pointer-events-none"></div>
