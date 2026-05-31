@@ -856,7 +856,7 @@ function App() {
           </div>
 
           {/* Desktop Nav Items */}
-          <nav className="hidden md:flex items-center space-x-8">
+          <nav className="hidden md:flex items-center space-x-5 xl:space-x-8 shrink-0">
             <a href="#services" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navServices}</a>
             <a href="#calculator" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navCalc}</a>
             <a href="#guarantees" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navGuarantees}</a>
@@ -864,7 +864,7 @@ function App() {
           </nav>
 
           {/* Switchers & CTAs */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-2.5 xl:space-x-4 shrink-0">
             
             {/* Luxury Language Switcher Dropdown */}
             <div className="relative">
@@ -996,14 +996,14 @@ function App() {
               })}
             </div>
 
-            <div className="flex flex-col items-end pl-2">
-              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors">
+            <div className="flex flex-col items-end pl-2 shrink-0">
+              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors whitespace-nowrap">
                 <Phone className="w-4 h-4 text-sky-500 mr-2 animate-pulse" />
                 +7 (775) 432-35-61
               </a>
               <div className="flex items-center mt-1">
-                <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block animate-ping mr-1.5"></span>
-                <span className="text-[11px] text-emerald-600 dark:text-emerald-500 font-semibold uppercase">{t.statusText}</span>
+                <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block animate-ping mr-1.5 shrink-0"></span>
+                <span className="text-[11px] text-emerald-600 dark:text-emerald-500 font-semibold uppercase whitespace-nowrap">{t.statusText}</span>
               </div>
             </div>
             <button 
