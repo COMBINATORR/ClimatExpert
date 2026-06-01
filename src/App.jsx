@@ -2335,7 +2335,7 @@ function App() {
           <div className="flex items-center space-x-3">
             {/* Instagram */}
             <a 
-              href="https://instagram.com/" 
+              href="https://instagram.com/atyrau.remont.kondicionerov06" 
               target="_blank" 
               rel="noopener noreferrer"
               className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 hover:text-pink-400 hover:border-pink-500/30 hover:bg-pink-500/10 transition-all duration-300"
