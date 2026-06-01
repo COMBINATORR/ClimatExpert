@@ -768,6 +768,7 @@ function App() {
   // Premium Scroll Progress & Sticky Navbar dynamic shrink
   const [isScrolled, setIsScrolled] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Tactile mobile elastic horizontal bounce spring states & callbacks
   const [touchStartX, setTouchStartX] = useState(null);
@@ -814,6 +815,12 @@ function App() {
             setIsScrolled(true);
           } else {
             setIsScrolled(false);
+          }
+
+          if (window.scrollY > 400) {
+            setShowScrollTop(true);
+          } else {
+            setShowScrollTop(false);
           }
 
           const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
@@ -1078,7 +1085,7 @@ function App() {
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
-      className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative overflow-x-hidden w-full transition-colors duration-300"
+      className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative w-full transition-colors duration-300"
       style={{ 
         transform: touchDiffX !== 0 ? `translateX(${touchDiffX}px)` : 'none',
         // Snaps back with a premium elastic spring bounce on finger release
@@ -2385,6 +2392,19 @@ function App() {
           </div>
         </div>
       </footer>
+
+      {/* Floating Scroll to Top Button */}
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        className={`fixed bottom-6 right-6 z-45 p-3 rounded-full bg-slate-900/85 dark:bg-white/95 text-white dark:text-slate-950 border border-slate-200/20 dark:border-white/10 shadow-xl backdrop-blur-md cursor-pointer transition-all duration-300 transform hover:scale-110 active:scale-95 flex items-center justify-center hover:shadow-sky-500/20 hover:shadow-2xl ${
+          showScrollTop 
+            ? 'translate-y-0 opacity-100 scale-100' 
+            : 'translate-y-16 opacity-0 scale-75 pointer-events-none'
+        }`}
+        title="Scroll to Top"
+      >
+        <ChevronUp className="w-5 h-5" />
+      </button>
 
     </div>
   );
