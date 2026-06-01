@@ -1114,9 +1114,13 @@ function App() {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-600 to-cyan-400 flex items-center justify-center shadow-md shadow-sky-100 dark:shadow-none">
               <Wind className="w-5 h-5 text-white" />
             </div>
-            <div>
-              <span className="font-bold text-xl tracking-tight text-slate-900 dark:text-white">Климат<span className="text-sky-600">Эксперт</span></span>
-              <p className="text-[10px] text-slate-400 dark:text-slate-500 tracking-wider uppercase font-semibold">Профессиональный сервис</p>
+            <div className="flex flex-col justify-center">
+              <span className="font-extrabold text-[22px] tracking-normal text-slate-900 dark:text-white leading-tight block">
+                Климат<span className="text-sky-600">Эксперт</span>
+              </span>
+              <p className="text-[9.5px] text-slate-400 dark:text-slate-500 tracking-[0.165em] uppercase font-bold leading-none mt-0.5">
+                Профессиональный сервис
+              </p>
             </div>
           </div>
 
