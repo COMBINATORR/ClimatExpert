@@ -1118,7 +1118,7 @@ function App() {
               <span className="font-extrabold text-[22px] tracking-normal text-slate-900 dark:text-white leading-tight block">
                 Климат<span className="text-sky-600">Эксперт</span>
               </span>
-              <p className="text-[9.5px] text-slate-400 dark:text-slate-500 tracking-[0.225em] uppercase font-bold leading-none mt-0.5">
+              <p className="text-[9.5px] text-slate-400 dark:text-slate-500 tracking-[0.11em] uppercase font-bold leading-none mt-0.5">
                 Профессиональный сервис
               </p>
             </div>
