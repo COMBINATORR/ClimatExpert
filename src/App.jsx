@@ -2228,7 +2228,7 @@ function App() {
             <div className="flex items-start space-x-3">
               <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0" />
               <div>
-                <h4 className="text-xs font-bold text-white">{lang === 'ru' ? 'Цена до работ' : lang === 'kk' ? 'Жұмысқа дейінгі баға' : 'Price Lock'}</h4>
+                <h4 className="text-xs font-bold text-white">{lang === 'ru' ? 'Цена до начала работ' : lang === 'kk' ? 'Жұмысқа дейінгі баға' : 'Price Lock'}</h4>
                 <p className="text-[11px] text-slate-400 mt-1 leading-normal">{lang === 'ru' ? 'Никаких непредвиденных доплат за шланги или срочность.' : lang === 'kk' ? 'Түтік немесе шұғылдық үшін ешқандай үстеме төлемсіз.' : 'No sudden surcharges for lines or urgency.'}</p>
               </div>
             </div>
