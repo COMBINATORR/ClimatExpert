@@ -579,6 +579,141 @@ const AnimatedCounter = ({ target, duration = 1200, suffix = "" }) => {
   return <span ref={elementRef}>{count.toLocaleString('ru-RU')}{suffix}</span>;
 };
 
+// Apple-style dynamic scroll reveal text container using IntersectionObserver
+const ScrollRevealHeading = ({ children, className = "" }) => {
+  const [isRevealed, setIsRevealed] = useState(false);
+  const elementRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setIsRevealed(true);
+          }
+        });
+      },
+      { threshold: 0.25 } // Trigger transition when 25% of the heading is visible
+    );
+
+    if (elementRef.current) {
+      observer.observe(elementRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={elementRef}
+      className={`${className} transition-all duration-1000 ease-out ${
+        isRevealed 
+          ? 'opacity-100 translate-y-0 filter-none' 
+          : 'opacity-35 translate-y-5 filter blur-[1px]'
+      }`}
+    >
+      {children}
+    </div>
+  );
+};
+
+// Elite infinite glassmorphic review & trust marquee ticker
+const InfiniteMarquee = ({ lang = 'ru' }) => {
+  const items = [
+    {
+      id: 1,
+      type: 'badge',
+      title: lang === 'ru' ? 'Kaspi QR Оплата' : lang === 'kk' ? 'Kaspi QR Төлем' : 'Kaspi QR Payment',
+      desc: lang === 'ru' ? 'Выдаем официальный фискальный чек после оплаты' : lang === 'kk' ? 'Төлемнен кейін ресми фискалдық чек береміз' : 'Official fiscal receipt issued instantly',
+      icon: (
+        <div className="w-10 h-10 rounded-lg bg-red-500/10 dark:bg-red-500/20 text-red-500 flex items-center justify-center font-bold text-xs shrink-0 select-none">
+          Kaspi
+        </div>
+      )
+    },
+    {
+      id: 2,
+      type: 'review',
+      title: lang === 'ru' ? 'Адильбек, мкр. Авангард' : lang === 'kk' ? 'Әділбек, Авангард мкр.' : 'Adilbek, Avangard dist.',
+      desc: lang === 'ru' ? 'Приехали быстро, отмыли старый сплит дочиста. Пыли вообще не оставили, рекомендую!' : lang === 'kk' ? 'Жылдам келді, ескі сплитті тазалап жуды. Шаң мүлдем қалмады, ұсынамын!' : 'Arrived fast, cleaned the old AC perfectly. Left zero dust, highly recommended!',
+      icon: (
+        <div className="w-10 h-10 rounded-full bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center font-extrabold text-sm shrink-0 select-none">
+          А
+        </div>
+      )
+    },
+    {
+      id: 3,
+      type: 'badge',
+      title: lang === 'ru' ? 'Печать ИП и Договор' : lang === 'kk' ? 'ИП мөрі мен Келісімшарт' : 'IP Stamp & Contract',
+      desc: lang === 'ru' ? 'Официальная юридическая гарантия на работу до 3 лет' : lang === 'kk' ? '3 жылға дейін жұмысқа ресми заңды кепілдік' : 'Official legal warranty for up to 3 years',
+      icon: (
+        <div className="w-10 h-10 rounded-lg bg-emerald-500/10 dark:bg-emerald-500/20 text-emerald-600 dark:text-emerald-450 flex items-center justify-center shrink-0 select-none">
+          <ShieldCheck className="w-5 h-5" />
+        </div>
+      )
+    },
+    {
+      id: 4,
+      type: 'review',
+      title: lang === 'ru' ? 'Айгуль, мкр. Балыкшы' : lang === 'kk' ? 'Айгүл, Балықшы мкр.' : 'Aigul, Balykshy dist.',
+      desc: lang === 'ru' ? 'Кондиционер перестал охлаждать. Мастер заменил конденсатор за 20 минут, дал гарантию на деталь.' : lang === 'kk' ? 'Кондиционер суытпай қалды. Маман 20 минутта конденсаторды ауыстырып, кепілдік берді.' : 'The AC stopped cooling. The master replaced the capacitor in 20 mins, issued a warranty.',
+      icon: (
+        <div className="w-10 h-10 rounded-full bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-extrabold text-sm shrink-0 select-none">
+          А
+        </div>
+      )
+    },
+    {
+      id: 5,
+      type: 'badge',
+      title: lang === 'ru' ? 'ECO Безопасность' : lang === 'kk' ? 'ЭКО Қауіпсіздік' : 'ECO Safety',
+      desc: lang === 'ru' ? 'Используем химию, сертифицированную для квартир с детьми' : lang === 'kk' ? 'Балалары бар пәтерлерге сертификатталған химияны қолданамыз' : 'We use certified chemical solutions safe for households with kids',
+      icon: (
+        <div className="w-10 h-10 rounded-lg bg-teal-500/10 dark:bg-teal-500/20 text-teal-600 dark:text-teal-400 flex items-center justify-center shrink-0 select-none">
+          <Sparkles className="w-5 h-5" />
+        </div>
+      )
+    },
+    {
+      id: 6,
+      type: 'review',
+      title: lang === 'ru' ? 'Дмитрий, мкр. Нурсая' : lang === 'kk' ? 'Дмитрий, Нұрсая мкр.' : 'Dmitry, Nursaya dist.',
+      desc: lang === 'ru' ? 'Установили сплит-систему по уровню. Ни одной пылинки при бурении стены, профессиональный пылесос.' : lang === 'kk' ? 'Сплит-жүйені деңгей бойынша орнатты. Қабырғаны бұрғылағанда ешқандай шаң болмады.' : 'Installed the AC perfectly level. Zero dust when drilling the wall, very professional vacuum.',
+      icon: (
+        <div className="w-10 h-10 rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center font-extrabold text-sm shrink-0 select-none">
+          Д
+        </div>
+      )
+    }
+  ];
+
+  // Duplicate items array to make the infinite scroll perfectly seamless
+  const marqueeItems = [...items, ...items];
+
+  return (
+    <div className="w-full relative overflow-hidden py-10 bg-slate-50/50 dark:bg-[#0b101b]/50 border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
+      {/* Luxury blurred glass gradient side overlays */}
+      <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-slate-50 dark:from-[#0b101b] to-transparent z-10 pointer-events-none" />
+      <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-slate-50 dark:from-[#0b101b] to-transparent z-10 pointer-events-none" />
+
+      <div className="animate-marquee space-x-6 flex items-center">
+        {marqueeItems.map((item, idx) => (
+          <div
+            key={`${item.id}-${idx}`}
+            className="w-[280px] sm:w-[340px] bg-white/60 dark:bg-[#0f1624]/60 backdrop-blur-md border border-slate-200/50 dark:border-white/5 p-4 rounded-2xl shrink-0 flex items-start space-x-3.5 hover:border-sky-500/30 dark:hover:border-sky-500/30 transition-all duration-300 select-none shadow-xs"
+          >
+            {item.icon}
+            <div className="text-left space-y-1">
+              <h4 className="font-extrabold text-slate-900 dark:text-white text-xs sm:text-sm tracking-tight">{item.title}</h4>
+              <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 leading-normal line-clamp-2">{item.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 function App() {
   // Navigation Mobile state
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -1478,9 +1613,11 @@ function App() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-4 mb-12">
-            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
-              {t.calcTitle}
-            </h2>
+            <ScrollRevealHeading>
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
+                {t.calcTitle}
+              </h2>
+            </ScrollRevealHeading>
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto">
               {t.calcSub}
             </p>
@@ -1826,9 +1963,11 @@ function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
-              {t.serviceTitle}
-            </h2>
+            <ScrollRevealHeading>
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
+                {t.serviceTitle}
+              </h2>
+            </ScrollRevealHeading>
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-xl mx-auto">
               {t.serviceSub}
             </p>
@@ -1898,9 +2037,11 @@ function App() {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
-              {t.guaranteesTitle}
-            </h2>
+            <ScrollRevealHeading>
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
+                {t.guaranteesTitle}
+              </h2>
+            </ScrollRevealHeading>
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto">
               {t.guaranteesSub}
             </p>
@@ -1967,14 +2108,19 @@ function App() {
         </div>
       </section>
 
+      {/* INFINITE TRUST MARQUEE */}
+      <InfiniteMarquee lang={lang} />
+
       {/* FREQUENT OBJECTIONS FAQ (ACCORDION) */}
       <section id="faq" className="py-20 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-4 mb-16">
-            <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
-              {t.faqTitle}
-            </h2>
+            <ScrollRevealHeading>
+              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
+                {t.faqTitle}
+              </h2>
+            </ScrollRevealHeading>
             <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto">
               {t.faqSub}
             </p>
