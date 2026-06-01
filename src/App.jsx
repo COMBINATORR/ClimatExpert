@@ -204,7 +204,7 @@ const TRANSLATIONS = {
   },
   kk: {
     navServices: 'Қызметтер',
-    navCalc: 'Смета калькуляторы',
+    navCalc: 'Калькулятор',
     navGuarantees: 'Кепілдіктер',
     navFaq: 'FAQ',
     statusText: 'Атыраудағы бос шеберлер',
