@@ -21,7 +21,8 @@ import {
   AlertCircle,
   Sun,
   Moon,
-  Monitor
+  Monitor,
+  ArrowLeft
 } from 'lucide-react';
 
 // Live mock data for Atyrau current date & slots
@@ -730,6 +731,9 @@ function App() {
   // Theme Dropdown Menu State
   const [themeDropdownOpen, setThemeDropdownOpen] = useState(false);
 
+  // Privacy Policy Page View State
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+
   // Active translation helper and FAQ binding
   const t = TRANSLATIONS[lang] || TRANSLATIONS.ru;
   const faqItems = t.faqItems || [];
@@ -1079,6 +1083,12 @@ function App() {
       objectionClose: lang === 'ru' ? 'Контролируем уклон дренажа по уровню. Даем юридическую гарантию на герметичность стыков трассы — фреон не уйдет за зиму.' : lang === 'kk' ? 'Дренаждың еңісін деңгей бойынша бақылаймыз. Трасса қосылыстарының тығыздығына заңды кепілдік береміз — фреон қыста кетпейді.' : 'We check the drain slope with a level. We give a legal warranty on joint tightness — freon will not leak during winter.'
     }
   ];
+
+  if (showPrivacyPolicy) {
+    return (
+      <PrivacyPolicyPage onClose={() => { setShowPrivacyPolicy(false); window.scrollTo({top: 0}); }} lang={lang} />
+    );
+  }
 
   return (
     <div 
@@ -2241,7 +2251,43 @@ function App() {
                 </button>
                 
                 <p className="text-[10px] text-slate-500 leading-normal text-center">
-                  {t.captureConsent}
+                  {lang === 'ru' ? (
+                    <>
+                      Нажимая кнопку, вы соглашаетесь на мгновенную обработку{' '}
+                      <button
+                        type="button"
+                        onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }}
+                        className="underline text-sky-600 hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300 font-semibold cursor-pointer inline bg-transparent border-none p-0"
+                      >
+                        персональных данных
+                      </button>{' '}
+                      для связи.
+                    </>
+                  ) : lang === 'kk' ? (
+                    <>
+                      Батырманы басу арқылы сіз байланыс үшін{' '}
+                      <button
+                        type="button"
+                        onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }}
+                        className="underline text-sky-600 hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300 font-semibold cursor-pointer inline bg-transparent border-none p-0"
+                      >
+                        дербес деректерді
+                      </button>{' '}
+                      дереу өңдеуге келісесіз.
+                    </>
+                  ) : (
+                    <>
+                      By clicking the button, you consent to the instant processing of{' '}
+                      <button
+                        type="button"
+                        onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }}
+                        className="underline text-sky-600 hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300 font-semibold cursor-pointer inline bg-transparent border-none p-0"
+                      >
+                        personal data
+                      </button>{' '}
+                      for communication.
+                    </>
+                  )}
                 </p>
               </form>
             ) : (
@@ -2387,7 +2433,7 @@ function App() {
           </div>
 
           <div className="flex space-x-6">
-            <a href="#" className="hover:text-slate-400">{t.privacy}</a>
+            <button onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }} className="hover:text-slate-400 cursor-pointer bg-transparent border-none p-0">{t.privacy}</button>
             <a href="#" className="hover:text-slate-400">{t.offer}</a>
           </div>
         </div>
@@ -2405,6 +2451,290 @@ function App() {
       >
         <ChevronUp className="w-5 h-5" />
       </button>
+
+    </div>
+  );
+}
+
+
+// Stands for full-page Privacy Policy with premium visual details
+function PrivacyPolicyPage({ onClose, lang }) {
+  const [scrollProgress, setScrollProgress] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      if (totalHeight > 0) {
+        setScrollProgress((window.scrollY / totalHeight) * 100);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const content = {
+    ru: {
+      title: 'Политика конфиденциальности',
+      company: 'ИП «КЛИМАТ ТЕХ»',
+      backBtn: 'Назад на главную',
+      intro: 'Настоящая Политика конфиденциальности определяет порядок сбора, обработки, хранения и защиты персональных данных пользователей на сайте klimat-expert.kz в соответствии с Законом Республики Казахстан от 21 мая 2013 года № 94-V «О персональных данных и их защите».',
+      sections: [
+        {
+          title: '1. Общие положения',
+          paragraphs: [
+            'Использование сайта означает безоговорочное согласие пользователя с настоящей Политикой и указанными в ней условиями обработки его персональной информации.',
+            'В случае несогласия с условиями Политики пользователь должен воздержаться от использования форм на сайте.',
+            'Настоящая Политика применяется только к сайту klimat-expert.kz. Мы не контролируем и не несем ответственность за сайты третьих лиц, на которые пользователь может перейти по ссылкам, доступным на нашем сайте.'
+          ]
+        },
+        {
+          title: '2. Состав собираемых персональных данных',
+          paragraphs: [
+            'Мы собираем только те персональные данные, которые необходимы для связи с вами и предоставления услуг расчета стоимости или выезда специалиста.',
+            'К собираемым персональным данным относятся: ваше имя и контактный номер телефона.'
+          ]
+        },
+        {
+          title: '3. Цели сбора и обработки персональных данных',
+          paragraphs: [
+            'Сбор и обработка персональных данных осуществляются в целях:',
+            '— Предоставления вам результатов расчета стоимости ремонта или установки кондиционера;',
+            '— Связи с вами для подтверждения заявки, уточнения времени визита мастера и адреса проведения работ;',
+            '— Консультирования по услугам климатического сервиса.'
+          ]
+        },
+        {
+          title: '4. Условия обработки и непередачи третьим лицам',
+          paragraphs: [
+            'В отношении персональной информации пользователя сохраняется ее полная конфиденциальность.',
+            'Мы гарантируем, что ваши персональные данные не будут переданы, проданы или предоставлены третьим лицам без вашего предварительного согласия, за исключением случаев, предусмотренных действующим законодательством Республики Казахстан.'
+          ]
+        },
+        {
+          title: '5. Права пользователя',
+          paragraphs: [
+            'Вы имеете право в любой момент запросить информацию о том, какие ваши данные хранятся у нас, а также потребовать их изменения, обновления или полного удаления.',
+            'Для этого вы можете связаться с нами по официальному телефону, указанному в разделе реквизитов.'
+          ]
+        },
+        {
+          title: '6. Реквизиты оператора персональных данных',
+          paragraphs: [
+            'Индивидуальный предприниматель «КЛИМАТ ТЕХ»',
+            'Адрес: Республика Казахстан, г. Атырау',
+            'ИИК: KZ18722S000025707913 в АО "Kaspi Bank"',
+            'БИК: CASPKZKA | Кбе: 19',
+            'Телефон для связи: +7 (775) 432-35-61'
+          ]
+        }
+      ]
+    },
+    kk: {
+      title: 'Құпиялылық саясаты',
+      company: '«КЛИМАТ ТЕХ» ЖК',
+      backBtn: 'Басты бетке оралу',
+      intro: 'Осы Құпиялылық саясаты «Дербес деректер және оларды қорғау туралы» Қазақстан Республикасының 2013 жылғы 21 мамырдағы № 94-V Заңына сәйкес Климат Эксперт сайтындағы пайдаланушылардың дербес деректерін жинау, өңдеу, сақтау және қорғау тәртібін айқындайды.',
+      sections: [
+        {
+          title: '1. Жалпы ережелер',
+          paragraphs: [
+            'Сайтты пайдалану пайдаланушының осы Саясатпен және онда көрсетілген оның дербес деректерін өңдеу шарттарымен сөзсіз келісімін білдіреді.',
+            'Саясат шарттарымен келіспеген жағдайда пайдаланушы сайттағы формаларды пайдаланудан бас тартуы керек.',
+            'Осы Саясат тек klimat-expert.kz сайтына қолданылады. Пайдаланушы біздің сайтта қолжетімді сілтемелер арқылы өте алатын үшінші тұлғалардың сайттарын бақыламаймыз және олар үшін жауапты болмаймыз.'
+          ]
+        },
+        {
+          title: '2. Жиналатын дербес деректердің құрамы',
+          paragraphs: [
+            'Біз тек сізбен байланысу және бағаны есептеу немесе маманның келу қызметтерін көрсету үшін қажетті дербес деректерді ғана жинаймыз.',
+            'Жиналатын дербес деректерге мыналар жатады: сіздің атыңыз және байланыс телефоныңыз.'
+          ]
+        },
+        {
+          title: '3. Дербес деректерді жинау және өңдеу мақсаттары',
+          paragraphs: [
+            'Дербес деректерді жинау және өңдеу келесі мақсаттарда жүзеге асырылады:',
+            '— Сізге кондиционерді жөндеу немесе орнату құнын есептеу нәтижелерін ұсыну;',
+            '— Өтінімді растау, шебердің келу уақыты мен жұмыс жүргізілетін мекенжайды нақтылау үшін сізбен байланысу;',
+            '— Климаттық қызмет көрсету бойынша кеңес беру.'
+          ]
+        },
+        {
+          title: '4. Өңдеу және үшінші тұлғаларға бермеу шарттары',
+          paragraphs: [
+            'Пайдаланушының дербес ақпаратына қатысты оның толық құпиялылығы сақталады.',
+            'Біз сіздің дербес деректеріңізді Қазақстан Республикасының қолданыстағы заңнамасында көзделген жағдайларды қоспағанда, сіздің алдын ала келісіміңізсіз үшінші тұлғаларға берілмейтініне, сатылмайтынына немесе ұсынылмайтынына кепілдік береміз.'
+          ]
+        },
+        {
+          title: '5. Пайдаланушының құқықтары',
+          paragraphs: [
+            'Сіз кез келген уақытта бізде қандай деректеріңіз сақталып жатқаны туралы ақпаратты сұратуға, сондай-ақ оларды өзгертуді, жаңартуды немесе толық жоюды талап етуге құқылысыз.',
+            'Ол үшін деректемелер бөлімінде көрсетілген ресми телефон арқылы бізге хабарласа аласыз.'
+          ]
+        },
+        {
+          title: '6. Дербес деректер операторының деректемелері',
+          paragraphs: [
+            '«КЛИМАТ ТЕХ» жеке кәсіпкерлігі',
+            'Мекенжайы: Қазақстан Республикасы, Атырау қ.',
+            'ЖЖК: Kaspi Bank АҚ-дағы KZ18722S000025707913',
+            'БИК: CASPKZKA | Кбе: 19',
+            'Байланыс телефоны: +7 (775) 432-35-61'
+          ]
+        }
+      ]
+    },
+    en: {
+      title: 'Privacy Policy',
+      company: 'IP "CLIMAT TECH"',
+      backBtn: 'Back to Main Page',
+      intro: 'This Privacy Policy determines the procedure for collecting, processing, storing, and protecting personal data of users on the klimat-expert.kz website in accordance with the Law of the Republic of Kazakhstan dated May 21, 2013 No. 94-V "On Personal Data and Their Protection".',
+      sections: [
+        {
+          title: '1. General Provisions',
+          paragraphs: [
+            'Use of the website implies unconditional consent of the user to this Policy and the conditions of processing their personal information specified herein.',
+            'In case of disagreement with the terms of the Policy, the user must refrain from using the forms on the website.',
+            'This Policy applies only to the klimat-expert.kz website. We do not control and are not responsible for third-party websites to which the user may navigate via links available on our website.'
+          ]
+        },
+        {
+          title: '2. Scope of Collected Personal Data',
+          paragraphs: [
+            'We collect only those personal data that are necessary to communicate with you and provide services for price calculation or a specialist visit.',
+            'The collected personal data include: your name and contact phone number.'
+          ]
+        },
+        {
+          title: '3. Purposes of Collecting and Processing Personal Data',
+          paragraphs: [
+            'The collection and processing of personal data are carried out for the following purposes:',
+            '— Providing you with the results of the AC repair or installation cost calculation;',
+            '— Contacting you to confirm the request, specify the master\'s visit time, and the address of the work;',
+            '— Consulting on climate services.'
+          ]
+        },
+        {
+          title: '4. Conditions of Processing and Non-Disclosure to Third Parties',
+          paragraphs: [
+            'The complete confidentiality of the user\'s personal information is maintained.',
+            'We guarantee that your personal data will not be transferred, sold, or shared with third parties without your prior consent, except as provided by the applicable legislation of the Republic of Kazakhstan.'
+          ]
+        },
+        {
+          title: '5. User Rights',
+          paragraphs: [
+            'You have the right at any time to request information about what data we store, as well as demand its modification, updating, or complete deletion.',
+            'To do this, you can contact us using the official phone number provided in the company details section.'
+          ]
+        },
+        {
+          title: '6. Company Details',
+          paragraphs: [
+            'Individual Entrepreneur "CLIMAT TECH"',
+            'Address: Atyrau, Republic of Kazakhstan',
+            'Current Account: KZ18722S000025707913 in JSC "Kaspi Bank"',
+            'BIK: CASPKZKA | Kbe: 19',
+            'Contact Phone: +7 (775) 432-35-61'
+          ]
+        }
+      ]
+    }
+  };
+
+  const t = content[lang] || content.ru;
+
+  return (
+    <div className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative w-full transition-colors duration-300">
+      
+      {/* Scroll indicator */}
+      <div 
+        className="scroll-progress-bar" 
+        style={{ transform: `scaleX(${scrollProgress / 100})` }}
+      />
+
+      {/* Decorative Vibrant Accent Blobs */}
+      <div className="absolute top-24 -left-48 w-96 h-96 bg-cyan-100 dark:bg-cyan-950/20 rounded-full gradient-blob opacity-60 pointer-events-none"></div>
+      <div className="absolute bottom-[600px] left-10 w-96 h-96 bg-indigo-50 dark:bg-indigo-950/10 rounded-full gradient-blob opacity-50 pointer-events-none"></div>
+
+      {/* Static sticky header */}
+      <header className="sticky top-0 z-50 glass-nav h-16 transition-all duration-300">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
+          <button 
+            onClick={onClose}
+            className="flex items-center space-x-2 text-xs font-bold text-slate-650 dark:text-slate-350 hover:text-sky-600 dark:hover:text-sky-400 transition-colors cursor-pointer bg-transparent border-none p-0"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>{t.backBtn}</span>
+          </button>
+          
+          <div className="flex items-center space-x-2">
+            <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block animate-ping mr-1"></span>
+            <span className="text-[10px] text-emerald-600 dark:text-emerald-500 font-bold uppercase tracking-wider">{t.company}</span>
+          </div>
+        </div>
+      </header>
+
+      {/* Document Content */}
+      <main className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative z-10">
+        <div className="bg-white/80 dark:bg-[#0f1624]/60 backdrop-blur-xl border border-slate-200/50 dark:border-white/5 p-8 sm:p-12 rounded-3xl shadow-xl shadow-slate-100/50 dark:shadow-none space-y-8">
+          
+          {/* Header Title */}
+          <div className="border-b border-slate-100 dark:border-white/5 pb-6">
+            <h1 className="text-2xl sm:text-3xl font-black text-slate-900 dark:text-white tracking-tight leading-tight">
+              {t.title}
+            </h1>
+            <p className="text-xs font-semibold text-sky-600 dark:text-sky-400 mt-2 tracking-wide uppercase">
+              {t.company}
+            </p>
+          </div>
+
+          {/* Intro paragraph */}
+          <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+            {t.intro}
+          </p>
+
+          {/* Sections List */}
+          <div className="space-y-8 pt-4">
+            {t.sections.map((sect, sIdx) => (
+              <div key={sIdx} className="space-y-3">
+                <h3 className="text-base font-extrabold text-slate-900 dark:text-white tracking-tight">
+                  {sect.title}
+                </h3>
+                <div className="space-y-2.5">
+                  {sect.paragraphs.map((pText, pIdx) => (
+                    <p 
+                      key={pIdx} 
+                      className={`text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed ${
+                        sIdx === 5 ? 'font-semibold text-slate-700 dark:text-slate-300' : ''
+                      }`}
+                    >
+                      {pText}
+                    </p>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Back button at the bottom */}
+          <div className="border-t border-slate-100 dark:border-white/5 pt-8 mt-12 flex justify-center">
+            <button
+              onClick={onClose}
+              className="bg-slate-950 dark:bg-white text-white dark:text-slate-950 text-xs sm:text-sm font-extrabold py-3 px-6 rounded-xl transition-all cursor-pointer shadow-md hover:scale-103 active:scale-97 uppercase tracking-wider border-none"
+            >
+              {t.backBtn}
+            </button>
+          </div>
+
+        </div>
+      </main>
+
+      {/* Mini Footer */}
+      <footer className="py-8 text-center text-[10px] text-slate-500 border-t border-slate-100 dark:border-white/5">
+        <p>© {new Date().getFullYear()} {t.company}. All rights reserved.</p>
+      </footer>
 
     </div>
   );
