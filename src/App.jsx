@@ -1164,7 +1164,7 @@ function App() {
       <header 
         onMouseEnter={() => setIsHeaderHovered(true)}
         onMouseLeave={() => setIsHeaderHovered(false)}
-        className={`sticky top-0 z-50 glass-nav transition-all duration-300 ${
+        className={`fixed top-0 left-0 right-0 z-50 glass-nav transition-all duration-300 ${
           isScrolled 
             ? 'shadow-md border-b border-sky-500/20 dark:border-cyan-500/20 shadow-sky-500/5' 
             : 'shadow-xs'
