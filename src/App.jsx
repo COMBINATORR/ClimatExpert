@@ -1260,7 +1260,7 @@ function App() {
                         className={`w-full px-3 py-2 flex items-center justify-between text-xs transition-colors cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/80 ${
                           lang === item.id 
                             ? 'font-bold text-sky-600 dark:text-sky-400 bg-sky-500/5 dark:bg-sky-500/10' 
-                            : 'text-slate-650 dark:text-slate-350 hover:text-slate-900 dark:hover:text-white'
+                            : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                         }`}
                       >
                         <div className="flex items-center space-x-2">
@@ -1311,7 +1311,7 @@ function App() {
                           className={`w-full px-3 py-2.5 flex items-center justify-between text-xs transition-colors cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-800/80 ${
                             theme === item.id 
                               ? 'font-bold text-sky-600 dark:text-sky-400 bg-sky-500/5 dark:bg-sky-500/10' 
-                              : 'text-slate-650 dark:text-slate-350 hover:text-slate-900 dark:hover:text-white'
+                              : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                           }`}
                         >
                           <div className="flex items-center space-x-2">
@@ -1437,7 +1437,7 @@ function App() {
                       className={`px-2 py-0.5 rounded-md text-[10px] font-bold cursor-pointer flex items-center space-x-1 transition-all ${
                         lang === item.id 
                           ? 'bg-white dark:bg-slate-700 text-sky-600 dark:text-sky-400 shadow-xs' 
-                          : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-350'
+                          : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
                       }`}
                     >
                       {item.flag}
@@ -1477,7 +1477,7 @@ function App() {
       </header>
 
       {/* DYNAMIC URGENCY SLOT BAR */}
-      <div className="bg-amber-500 dark:bg-amber-950/40 border-b border-slate-950 dark:border-slate-800 py-3 font-mono text-slate-950 dark:text-amber-250 transition-colors">
+      <div className="bg-amber-500 dark:bg-amber-950/40 border-b border-slate-950 dark:border-slate-800 py-3 font-mono text-slate-950 dark:text-amber-300 transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
           <div className="flex items-center space-x-2.5">
             <span className="w-2.5 h-2.5 bg-red-600 dark:bg-red-500 rounded-none inline-block animate-ping shrink-0"></span>
@@ -1491,7 +1491,7 @@ function App() {
             </span>
             <a 
               href="#booking-section" 
-              className="font-bold underline hover:text-slate-800 dark:hover:text-amber-400 uppercase tracking-wider"
+              className="font-bold underline text-slate-950 dark:text-amber-300 hover:text-slate-800 dark:hover:text-amber-400 uppercase tracking-wider"
             >
               {t.reserveSlot}
             </a>
@@ -1503,7 +1503,7 @@ function App() {
       <section className="relative pt-6 pb-16 md:py-20 border-b border-slate-950 dark:border-slate-800">
         {/* Section Identifier Header */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
-          <div className="border border-slate-950 dark:border-slate-800 px-4 py-2 flex items-center justify-between font-mono text-[10px] text-slate-550 dark:text-slate-400">
+          <div className="border border-slate-950 dark:border-slate-800 px-4 py-2 flex items-center justify-between font-mono text-[10px] text-slate-500 dark:text-slate-400">
             <div className="flex items-center space-x-2">
               <span className="text-premium font-black">/01__HERO_INTERFACE</span>
               <span>•</span>
@@ -1540,7 +1540,7 @@ function App() {
                 </h1>
                 
                 {/* Subtitle */}
-                <p className="text-sm sm:text-base text-slate-655 dark:text-slate-400 leading-relaxed font-sans max-w-xl border-l-2 border-slate-950 dark:border-slate-800 pl-4 py-1">
+                <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400 leading-relaxed font-sans max-w-xl border-l-2 border-slate-950 dark:border-slate-800 pl-4 py-1">
                   {t.heroSubtitle}
                 </p>
               </div>
@@ -1570,11 +1570,11 @@ function App() {
                 </div>
                 <div className="border border-slate-950 dark:border-slate-800 p-3">
                   <h4 className="text-slate-950 dark:text-white font-black text-base uppercase">// {t.miniStat2Title}</h4>
-                  <p className="text-slate-505 dark:text-slate-450 text-[10px] uppercase mt-1 leading-normal">{t.miniStat2Desc}</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-[10px] uppercase mt-1 leading-normal">{t.miniStat2Desc}</p>
                 </div>
                 <div className="border border-slate-950 dark:border-slate-800 p-3">
                   <h4 className="text-slate-950 dark:text-white font-black text-base uppercase">// {t.miniStat3Title}</h4>
-                  <p className="text-slate-505 dark:text-slate-450 text-[10px] uppercase mt-1 leading-normal">{t.miniStat3Desc}</p>
+                  <p className="text-slate-500 dark:text-slate-400 text-[10px] uppercase mt-1 leading-normal">{t.miniStat3Desc}</p>
                 </div>
               </div>
 
@@ -1592,7 +1592,7 @@ function App() {
                   <div>
                     <span className="text-[9px] text-premium uppercase tracking-widest font-black">SYS.TELEMETRY</span>
                     <h3 className="font-extrabold text-white text-sm uppercase tracking-tight">{t.quickBookingTitle}</h3>
-                    <p className="text-[10px] text-slate-505 uppercase mt-0.5">{t.quickBookingSub}</p>
+                    <p className="text-[10px] text-slate-500 uppercase mt-0.5">{t.quickBookingSub}</p>
                   </div>
                   <div className="text-right">
                     <span className="text-[9px] text-emerald-500 uppercase tracking-widest block font-black">● LIVE</span>
@@ -1638,15 +1638,15 @@ function App() {
                 <div className="relative z-10 pl-6 space-y-2.5 text-[10px] text-slate-400">
                   <div className="flex items-start space-x-2">
                     <span className="text-premium font-black">LOG://</span>
-                    <p className="text-slate-350">{t.quickBookingBullet1}</p>
+                    <p className="text-slate-300">{t.quickBookingBullet1}</p>
                   </div>
                   <div className="flex items-start space-x-2">
                     <span className="text-premium font-black">LOG://</span>
-                    <p className="text-slate-350">{t.quickBookingBullet2}</p>
+                    <p className="text-slate-300">{t.quickBookingBullet2}</p>
                   </div>
                   <div className="flex items-start space-x-2">
                     <span className="text-premium font-black">LOG://</span>
-                    <p className="text-slate-350">{t.quickBookingBullet3}</p>
+                    <p className="text-slate-300">{t.quickBookingBullet3}</p>
                   </div>
                 </div>
 
@@ -1693,7 +1693,7 @@ function App() {
                 <h3 className="font-black text-slate-950 dark:text-white text-2xl tracking-tighter uppercase leading-none">
                   <AnimatedCounter target={8} suffix="+" /> {lang === 'ru' ? 'лет на рынке' : lang === 'kk' ? 'жыл нарықта' : 'Years Active'}
                 </h3>
-                <p className="text-slate-550 dark:text-slate-400 font-sans text-xs leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 font-sans text-xs leading-relaxed">
                   {t.stat1Desc}
                 </p>
               </div>
@@ -1711,7 +1711,7 @@ function App() {
                 <h3 className="font-black text-slate-950 dark:text-white text-2xl tracking-tighter uppercase leading-none">
                   <AnimatedCounter target={100} suffix="%" /> {lang === 'ru' ? 'деталей с собой' : lang === 'kk' ? 'бөлшектер дайын' : 'Parts on Board'}
                 </h3>
-                <p className="text-slate-550 dark:text-slate-400 font-sans text-xs leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 font-sans text-xs leading-relaxed">
                   {t.stat2Desc}
                 </p>
               </div>
@@ -1741,7 +1741,7 @@ function App() {
                 <h3 className="font-black text-slate-950 dark:text-white text-2xl tracking-tighter uppercase leading-none">
                   <AnimatedCounter target={0} suffix=" ₸" /> {lang === 'ru' ? 'выезд и диаг.' : lang === 'kk' ? 'келу және диаг.' : 'Diagnosis fee'}
                 </h3>
-                <p className="text-slate-550 dark:text-slate-400 font-sans text-xs leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 font-sans text-xs leading-relaxed">
                   {t.stat3Desc}
                 </p>
               </div>
@@ -1772,7 +1772,7 @@ function App() {
             <h2 className="text-3xl font-black text-slate-950 dark:text-white tracking-tighter uppercase">
               // {t.calcTitle}
             </h2>
-            <p className="text-slate-505 dark:text-slate-400 text-xs font-sans max-w-xl border-l border-slate-950 dark:border-slate-800 pl-3">
+            <p className="text-slate-500 dark:text-slate-400 text-xs font-sans max-w-xl border-l border-slate-950 dark:border-slate-800 pl-3">
               {t.calcSub}
             </p>
           </div>
@@ -1796,8 +1796,8 @@ function App() {
                       onClick={() => setCalcService(service.id)}
                       className={`py-2.5 px-2 text-xs font-black rounded-none border-2 transition-all cursor-pointer text-center uppercase tracking-wide ${
                         calcService === service.id 
-                          ? 'bg-slate-955 dark:bg-white text-white dark:text-slate-955 border-slate-955 dark:border-white shadow-[2px_2px_0px_0px_rgba(124,61,237,1)]'
-                          : 'bg-transparent border-slate-205 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-955 dark:hover:border-slate-350'
+                          ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 border-slate-950 dark:border-white shadow-[2px_2px_0px_0px_rgba(124,61,237,1)]'
+                          : 'bg-transparent border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-950 dark:hover:border-slate-300'
                       }`}
                     >
                       {service.label}
@@ -1821,8 +1821,8 @@ function App() {
                       onClick={() => setCalcArea(area.id)}
                       className={`p-3 rounded-none border-2 transition-all cursor-pointer flex flex-col items-center justify-center text-center uppercase ${
                         calcArea === area.id 
-                          ? 'bg-slate-955 dark:bg-white text-white dark:text-slate-955 border-slate-955 dark:border-white shadow-[2px_2px_0px_0px_rgba(124,61,237,1)]'
-                          : 'bg-transparent border-slate-205 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-955 dark:hover:border-slate-350'
+                          ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 border-slate-950 dark:border-white shadow-[2px_2px_0px_0px_rgba(124,61,237,1)]'
+                          : 'bg-transparent border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-950 dark:hover:border-slate-300'
                       }`}
                     >
                       <span className="text-xs font-black">{area.label}</span>
@@ -1847,8 +1847,8 @@ function App() {
                         onClick={() => setCalcFloor(floor.id)}
                         className={`p-3 rounded-none border-2 transition-all cursor-pointer flex flex-col items-center justify-center text-center uppercase ${
                           calcFloor === floor.id 
-                            ? 'bg-slate-955 dark:bg-white text-white dark:text-slate-955 border-slate-955 dark:border-white shadow-[2px_2px_0px_0px_rgba(124,61,237,1)]'
-                            : 'bg-transparent border-slate-205 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-955 dark:hover:border-slate-350'
+                            ? 'bg-slate-950 dark:bg-white text-white dark:text-slate-950 border-slate-950 dark:border-white shadow-[2px_2px_0px_0px_rgba(124,61,237,1)]'
+                            : 'bg-transparent border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-950 dark:hover:border-slate-300'
                         }`}
                       >
                         <span className="text-xs font-black">{floor.label}</span>
@@ -1991,7 +1991,7 @@ function App() {
                 </div>
 
                 {/* Receipt Line Items */}
-                <div className="space-y-2.5 text-[10px] text-slate-650 dark:text-slate-400">
+                <div className="space-y-2.5 text-[10px] text-slate-600 dark:text-slate-400">
                   <div className="flex justify-between items-center">
                     <span>{t.summaryBase}</span>
                     <span className="font-extrabold text-slate-950 dark:text-white">
@@ -2147,13 +2147,13 @@ function App() {
                 className="bg-white dark:bg-[#070b12] border-2 border-slate-950 dark:border-slate-800 p-6 flex flex-col justify-between text-left font-mono relative"
               >
                 {/* Number index indicator */}
-                <div className="absolute top-3 right-4 text-[9px] text-slate-450 font-extrabold font-mono">
+                <div className="absolute top-3 right-4 text-[9px] text-slate-400 font-extrabold font-mono">
                   [IDX.0{index + 1}]
                 </div>
 
                 <div className="space-y-6">
                   {/* Card Header */}
-                  <div className="flex flex-col space-y-1 pb-4 border-b border-slate-205 dark:border-slate-800">
+                  <div className="flex flex-col space-y-1 pb-4 border-b border-slate-200 dark:border-slate-800">
                     <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{service.duration}</span>
                     <span className="text-2xl font-black text-premium">{service.price}</span>
                   </div>
@@ -2168,7 +2168,7 @@ function App() {
                   {/* Bullets */}
                   <ul className="space-y-3 font-sans pt-4 border-t border-slate-100 dark:border-slate-800">
                     {service.bullets.map((bullet, idx) => (
-                      <li key={idx} className="flex items-start text-xs text-slate-655 dark:text-slate-400 leading-relaxed">
+                      <li key={idx} className="flex items-start text-xs text-slate-600 dark:text-slate-400 leading-relaxed">
                         <span className="text-premium font-mono mr-2 mt-0.5 shrink-0">→</span>
                         <span>{bullet}</span>
                       </li>
@@ -2180,11 +2180,11 @@ function App() {
                   {/* Results Badge */}
                   <div className="bg-slate-50 dark:bg-slate-950 border border-slate-950 dark:border-slate-800 p-4 rounded-none font-sans">
                     <span className="text-[9px] font-mono font-bold text-premium uppercase tracking-wider block">[EXPECTED_RESULT]</span>
-                    <p className="text-xs text-slate-650 dark:text-slate-350 mt-1.5 leading-normal">{service.result}</p>
+                    <p className="text-xs text-slate-600 dark:text-slate-300 mt-1.5 leading-normal">{service.result}</p>
                   </div>
 
                   {/* Objection Closure */}
-                  <div className="flex items-start space-x-2 text-[10px] text-slate-450 italic font-sans leading-normal">
+                  <div className="flex items-start space-x-2 text-[10px] text-slate-400 italic font-sans leading-normal">
                     <Info className="w-3.5 h-3.5 text-premium shrink-0 mt-0.5" />
                     <span>{service.objectionClose}</span>
                   </div>
@@ -2203,76 +2203,83 @@ function App() {
         </div>
       </section>
 
-      {/* DETAILED GUARANTEES & RISK-REVERSAL */}
-      <section id="guarantees" className="py-20 relative overflow-hidden">
-        
-        {/* Glow effect */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-50/40 dark:bg-sky-950/5 rounded-full filter blur-3xl pointer-events-none"></div>
-
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* DETAILED GUARANTEES & RISK-REVERSAL (/04__RISK_REVERSAL_PROTOCOLS) */}
+      <section id="guarantees" className="py-16 border-b border-slate-950 dark:border-slate-800">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center space-y-4 mb-16">
-            <ScrollRevealHeading>
-              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
-                {t.guaranteesTitle}
-              </h2>
-            </ScrollRevealHeading>
-            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto">
+          {/* Header identifier */}
+          <div className="border border-slate-950 dark:border-slate-800 px-4 py-2 flex items-center justify-between font-mono text-[9px] text-slate-500 dark:text-slate-400 mb-8">
+            <div className="flex items-center space-x-2">
+              <span className="text-premium font-black">/04__RISK_REVERSAL_PROTOCOLS</span>
+              <span>•</span>
+              <span>SECURE_AGREEMENT</span>
+            </div>
+            <span>[VERIFIED]</span>
+          </div>
+
+          <div className="text-left space-y-4 mb-12 font-mono">
+            <h2 className="text-3xl font-black text-slate-950 dark:text-white tracking-tighter uppercase">
+              // {t.guaranteesTitle}
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 text-xs font-sans max-w-xl border-l border-slate-950 dark:border-slate-800 pl-3">
               {t.guaranteesSub}
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             
             {/* Guarantee 1 */}
-            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 rounded-2xl grid md:grid-cols-12 gap-6 items-center text-left">
-              <div className="md:col-span-3 flex justify-center">
-                <div className="w-20 h-20 rounded-2xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center">
-                  <ShieldCheck className="w-10 h-10" />
+            <div className="premium-glow-card bg-white dark:bg-[#070b12] p-6 border-2 border-slate-950 dark:border-slate-800 rounded-none grid md:grid-cols-12 gap-6 items-center text-left font-mono">
+              <div className="md:col-span-2 flex justify-center">
+                <div className="w-16 h-16 border border-slate-950 dark:border-slate-800 rounded-none bg-slate-950/5 dark:bg-slate-950/40 text-premium flex items-center justify-center">
+                  <ShieldCheck className="w-8 h-8" />
                 </div>
               </div>
-              <div className="md:col-span-9 space-y-2">
-                <div className="flex items-center space-x-2 flex-wrap gap-1">
-                  <span className="bg-sky-100 dark:bg-sky-950/40 text-sky-700 dark:text-sky-400 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">{t.guar1Label}</span>
-                  <h3 className="font-bold text-slate-900 dark:text-white text-lg sm:text-xl">{t.guar1Title}</h3>
+              <div className="md:col-span-10 space-y-3">
+                <div className="flex items-center space-x-3 flex-wrap gap-y-1.5">
+                  <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black">/04.1</span>
+                  <span className="border border-premium/50 text-premium text-[9px] font-black px-2 py-0.5 rounded-none uppercase">{t.guar1Label}</span>
+                  <h3 className="font-extrabold text-slate-950 dark:text-white text-base uppercase">{t.guar1Title}</h3>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 text-xs font-sans leading-relaxed">
                   {t.guar1Desc}
                 </p>
               </div>
             </div>
 
             {/* Guarantee 2 */}
-            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 rounded-2xl grid md:grid-cols-12 gap-6 items-center text-left">
-              <div className="md:col-span-3 flex justify-center">
-                <div className="w-20 h-20 rounded-2xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center">
-                  <ShieldAlert className="w-10 h-10" />
+            <div className="premium-glow-card bg-white dark:bg-[#070b12] p-6 border-2 border-slate-950 dark:border-slate-800 rounded-none grid md:grid-cols-12 gap-6 items-center text-left font-mono">
+              <div className="md:col-span-2 flex justify-center">
+                <div className="w-16 h-16 border border-slate-950 dark:border-slate-800 rounded-none bg-slate-950/5 dark:bg-slate-950/40 text-premium flex items-center justify-center">
+                  <ShieldAlert className="w-8 h-8" />
                 </div>
               </div>
-              <div className="md:col-span-9 space-y-2">
-                <div className="flex items-center space-x-2 flex-wrap gap-1">
-                  <span className="bg-indigo-100 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-400 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">{t.guar2Label}</span>
-                  <h3 className="font-bold text-slate-900 dark:text-white text-lg sm:text-xl">{t.guar2Title}</h3>
+              <div className="md:col-span-10 space-y-3">
+                <div className="flex items-center space-x-3 flex-wrap gap-y-1.5">
+                  <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black">/04.2</span>
+                  <span className="border border-premium/50 text-premium text-[9px] font-black px-2 py-0.5 rounded-none uppercase">{t.guar2Label}</span>
+                  <h3 className="font-extrabold text-slate-950 dark:text-white text-base uppercase">{t.guar2Title}</h3>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 text-xs font-sans leading-relaxed">
                   {t.guar2Desc}
                 </p>
               </div>
             </div>
 
             {/* Guarantee 3 */}
-            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 rounded-2xl grid md:grid-cols-12 gap-6 items-center text-left">
-              <div className="md:col-span-3 flex justify-center">
-                <div className="w-20 h-20 rounded-2xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center">
-                  <Sparkles className="w-10 h-10" />
+            <div className="premium-glow-card bg-white dark:bg-[#070b12] p-6 border-2 border-slate-950 dark:border-slate-800 rounded-none grid md:grid-cols-12 gap-6 items-center text-left font-mono">
+              <div className="md:col-span-2 flex justify-center">
+                <div className="w-16 h-16 border border-slate-950 dark:border-slate-800 rounded-none bg-slate-950/5 dark:bg-slate-950/40 text-premium flex items-center justify-center">
+                  <Sparkles className="w-8 h-8" />
                 </div>
               </div>
-              <div className="md:col-span-9 space-y-2">
-                <div className="flex items-center space-x-2 flex-wrap gap-1">
-                  <span className="bg-emerald-100 dark:bg-emerald-950/50 text-emerald-700 dark:text-emerald-450 text-[10px] font-bold px-2 py-0.5 rounded-md uppercase">{t.guar3Label}</span>
-                  <h3 className="font-bold text-slate-900 dark:text-white text-lg sm:text-xl">{t.guar3Title}</h3>
+              <div className="md:col-span-10 space-y-3">
+                <div className="flex items-center space-x-3 flex-wrap gap-y-1.5">
+                  <span className="text-slate-400 dark:text-slate-500 text-[10px] font-black">/04.3</span>
+                  <span className="border border-premium/50 text-premium text-[9px] font-black px-2 py-0.5 rounded-none uppercase">{t.guar3Label}</span>
+                  <h3 className="font-extrabold text-slate-950 dark:text-white text-base uppercase">{t.guar3Title}</h3>
                 </div>
-                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm leading-relaxed">
+                <p className="text-slate-500 dark:text-slate-400 text-xs font-sans leading-relaxed">
                   {t.guar3Desc}
                 </p>
               </div>
@@ -2286,41 +2293,51 @@ function App() {
       {/* INFINITE TRUST MARQUEE */}
       <InfiniteMarquee lang={lang} />
 
-      {/* FREQUENT OBJECTIONS FAQ (ACCORDION) */}
-      <section id="faq" className="py-20 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
+      {/* FREQUENT OBJECTIONS FAQ (/05__SYSTEM_OBJECTIONS) */}
+      <section id="faq" className="py-16 border-b border-slate-950 dark:border-slate-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center space-y-4 mb-16">
-            <ScrollRevealHeading>
-              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
-                {t.faqTitle}
-              </h2>
-            </ScrollRevealHeading>
-            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto">
+          {/* Header identifier */}
+          <div className="border border-slate-950 dark:border-slate-800 px-4 py-2 flex items-center justify-between font-mono text-[9px] text-slate-500 dark:text-slate-400 mb-8">
+            <div className="flex items-center space-x-2">
+              <span className="text-premium font-black">/05__SYSTEM_OBJECTIONS</span>
+              <span>•</span>
+              <span>FAQ_REGISTRY</span>
+            </div>
+            <span>[ACTIVE]</span>
+          </div>
+
+          <div className="text-left space-y-4 mb-12 font-mono">
+            <h2 className="text-3xl font-black text-slate-950 dark:text-white tracking-tighter uppercase">
+              // {t.faqTitle}
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 text-xs font-sans max-w-xl border-l border-slate-950 dark:border-slate-800 pl-3">
               {t.faqSub}
             </p>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3 font-mono">
             {faqItems.map((faq, idx) => (
               <div 
                 key={idx}
-                className="bg-white dark:bg-[#0f1624] border border-slate-200/60 dark:border-white/5 rounded-2xl overflow-hidden shadow-xs transition-all duration-300 text-left"
+                className="bg-white dark:bg-[#070b12] border-2 border-slate-950 dark:border-slate-800 rounded-none overflow-hidden transition-all duration-300 text-left"
               >
                 <button
                   onClick={() => toggleFaq(idx)}
-                  className="w-full px-6 py-5 flex items-center justify-between text-left font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors cursor-pointer"
+                  className="w-full px-6 py-4.5 flex items-center justify-between text-left font-black text-xs uppercase tracking-wide text-slate-950 dark:text-white hover:text-premium transition-colors cursor-pointer"
                 >
-                  <span className="text-sm sm:text-base pr-4">{faq.q}</span>
-                  {faqActive === idx ? (
-                    <ChevronUp className="w-5 h-5 text-sky-600 dark:text-sky-400 shrink-0" />
-                  ) : (
-                    <ChevronDown className="w-5 h-5 text-slate-400 dark:text-slate-500 shrink-0" />
-                  )}
+                  <span className="pr-4">/05.`${idx + 1}` // {faq.q}</span>
+                  <div className="w-6 h-6 flex items-center justify-center border border-slate-950 dark:border-slate-800 rounded-none text-slate-950 dark:text-slate-400 shrink-0">
+                    {faqActive === idx ? (
+                      <ChevronUp className="w-3.5 h-3.5 text-premium" />
+                    ) : (
+                      <ChevronDown className="w-3.5 h-3.5 text-slate-500" />
+                    )}
+                  </div>
                 </button>
                 
                 {faqActive === idx && (
-                  <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-slate-650 dark:text-slate-400 leading-relaxed border-t border-slate-100/60 dark:border-slate-800">
+                  <div className="px-6 pb-5 pt-3.5 text-xs text-slate-500 dark:text-slate-400 leading-relaxed border-t border-slate-950 dark:border-slate-800 font-sans">
                     {faq.a}
                   </div>
                 )}
@@ -2356,7 +2373,7 @@ function App() {
                 <h3 className="text-2xl font-black uppercase tracking-tighter leading-none text-slate-950 dark:text-white">
                   {t.captureTitle}
                 </h3>
-                <p className="text-xs text-slate-650 dark:text-slate-400 font-sans leading-relaxed">
+                <p className="text-xs text-slate-600 dark:text-slate-400 font-sans leading-relaxed">
                   {t.captureDesc}
                 </p>
               </div>
@@ -2565,7 +2582,7 @@ function App() {
               </li>
               <li className="pt-1.5 border-t border-slate-900">
                 <span className="text-slate-600 block text-[9px] uppercase tracking-widest">{t.footerContactsTime}</span>
-                <span className="text-[10px] font-bold text-slate-350">{t.footerContactsDays}</span>
+                <span className="text-[10px] font-bold text-slate-300">{t.footerContactsDays}</span>
               </li>
             </ul>
           </div>
@@ -2856,7 +2873,7 @@ function PrivacyPolicyPage({ onClose, lang }) {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
           <button 
             onClick={onClose}
-            className="flex items-center space-x-2 text-xs font-bold text-slate-650 dark:text-slate-350 hover:text-sky-600 dark:hover:text-sky-400 transition-colors cursor-pointer bg-transparent border-none p-0"
+            className="flex items-center space-x-2 text-xs font-bold text-slate-600 dark:text-slate-300 hover:text-sky-600 dark:hover:text-sky-400 transition-colors cursor-pointer bg-transparent border-none p-0"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{t.backBtn}</span>
