@@ -1144,7 +1144,7 @@ function App() {
       {isScrolled && !isHeaderExpanded && !isHeaderHovered && (
         <button
           onClick={() => setIsHeaderExpanded(true)}
-          className="fixed top-4 right-4 z-40 bg-white/95 dark:bg-slate-900/95 border-2 border-slate-950 dark:border-slate-800 p-3 rounded-none shadow-[2px_2px_0px_0px_rgba(2,132,199,1)] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white transition-all cursor-pointer flex items-center justify-center hidden md:flex"
+          className="fixed top-4 right-4 z-[60] bg-white/95 dark:bg-slate-900/95 border-2 border-slate-950 dark:border-slate-800 p-3 rounded-none shadow-[2px_2px_0px_0px_rgba(2,132,199,1)] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white transition-all cursor-pointer flex items-center justify-center hidden md:flex"
         >
           <Menu className="w-5 h-5" />
         </button>
@@ -1154,7 +1154,7 @@ function App() {
       {isScrolled && (isHeaderExpanded || isHeaderHovered) && (
         <button
           onClick={() => { setIsHeaderExpanded(false); setIsHeaderHovered(false); }}
-          className="fixed top-4 right-4 z-50 bg-white/95 dark:bg-slate-900/95 border-2 border-slate-950 dark:border-slate-800 p-3 rounded-none shadow-[2px_2px_0px_0px_rgba(2,132,199,1)] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white transition-all cursor-pointer flex items-center justify-center hidden md:flex"
+          className="fixed top-4 right-4 z-[60] bg-white/95 dark:bg-slate-900/95 border-2 border-slate-950 dark:border-slate-800 p-3 rounded-none shadow-[2px_2px_0px_0px_rgba(2,132,199,1)] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white transition-all cursor-pointer flex items-center justify-center hidden md:flex"
         >
           <X className="w-5 h-5" />
         </button>
