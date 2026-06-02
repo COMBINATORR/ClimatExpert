@@ -1327,22 +1327,18 @@ function App() {
               )}
             </div>
 
-            <div className="flex flex-col items-end pl-2 shrink-0">
-              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors whitespace-nowrap">
+            <div className="flex items-center space-x-4 pl-2 shrink-0">
+              <a href="tel:+77754323561" className="flex items-center font-extrabold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors whitespace-nowrap text-sm font-mono">
                 <Phone className="w-4 h-4 text-sky-500 mr-2 animate-pulse" />
                 +7 (775) 432-35-61
               </a>
-              <div className="flex items-center mt-1">
-                <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block animate-ping mr-1.5 shrink-0"></span>
-                <span className="text-[11px] text-emerald-600 dark:text-emerald-500 font-semibold uppercase whitespace-nowrap">{t.statusText}</span>
-              </div>
+              <button 
+                onClick={() => handleWhatsAppClick(lang === 'ru' ? 'Здравствуйте! Хочу вызвать мастера на диагностику сегодня.' : lang === 'kk' ? 'Сәлеметсіз бе! Бүгін маман шақыртқым келеді.' : 'Hello! I would like to call a technician today.')}
+                className="bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white text-xs font-bold py-3 px-5 rounded-xl transition-all cursor-pointer shrink-0"
+              >
+                {t.whatsAppBtn}
+              </button>
             </div>
-            <button 
-              onClick={() => handleWhatsAppClick(lang === 'ru' ? 'Здравствуйте! Хочу вызвать мастера на диагностику сегодня.' : lang === 'kk' ? 'Сәлеметсіз бе! Бүгін маман шақыртқым келеді.' : 'Hello! I would like to call a technician today.')}
-              className="bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white text-xs font-bold py-3 px-5 rounded-xl transition-all cursor-pointer shrink-0"
-            >
-              {t.whatsAppBtn}
-            </button>
           </div>
 
           {/* Mobile Menu & Switchers */}
@@ -1582,39 +1578,39 @@ function App() {
 
             {/* Right Interactive Card / Technical Console */}
             <div className="lg:col-span-5 relative z-10 flex">
-              <div className="w-full bg-slate-950 dark:bg-[#070b12] border-2 border-slate-950 dark:border-slate-800 p-6 flex flex-col justify-between space-y-6 relative text-white font-mono text-left">
+              <div className="w-full bg-slate-50 dark:bg-[#070b12] border-2 border-slate-950 dark:border-slate-800 p-6 flex flex-col justify-between space-y-6 relative text-slate-900 dark:text-white font-mono text-left transition-colors duration-300">
                 {/* Tech grid aesthetic line elements */}
-                <div className="absolute top-0 bottom-0 left-[20px] border-l border-slate-900 pointer-events-none"></div>
-                <div className="absolute left-0 right-0 top-[20px] border-t border-slate-900 pointer-events-none"></div>
+                <div className="absolute top-0 bottom-0 left-[20px] border-l border-slate-200 dark:border-slate-900 pointer-events-none"></div>
+                <div className="absolute left-0 right-0 top-[20px] border-t border-slate-200 dark:border-slate-900 pointer-events-none"></div>
                 
                 {/* Blueprint Header */}
-                <div className="relative z-10 pl-6 pt-6 flex justify-between items-start border-b border-slate-900 pb-4">
+                <div className="relative z-10 pl-6 pt-6 flex justify-between items-start border-b border-slate-200 dark:border-slate-900 pb-4">
                   <div>
                     <span className="text-[9px] text-premium uppercase tracking-widest font-black">SYS.TELEMETRY</span>
-                    <h3 className="font-extrabold text-white text-sm uppercase tracking-tight">{t.quickBookingTitle}</h3>
-                    <p className="text-[10px] text-slate-500 uppercase mt-0.5">{t.quickBookingSub}</p>
+                    <h3 className="font-extrabold text-slate-950 dark:text-white text-sm uppercase tracking-tight">{t.quickBookingTitle}</h3>
+                    <p className="text-[10px] text-slate-500 dark:text-slate-400 uppercase mt-0.5">{t.quickBookingSub}</p>
                   </div>
                   <div className="text-right">
-                    <span className="text-[9px] text-emerald-500 uppercase tracking-widest block font-black">● LIVE</span>
-                    <span className="text-[10px] text-slate-400 font-extrabold">LOC: ATYRAU</span>
+                    <span className="text-[9px] text-emerald-600 dark:text-emerald-500 uppercase tracking-widest block font-black">● LIVE</span>
+                    <span className="text-[10px] text-slate-600 dark:text-slate-400 font-extrabold">LOC: ATYRAU</span>
                   </div>
                 </div>
 
                 {/* Animated AC Blueprint graphic */}
-                <div className="relative z-10 pl-6 h-36 flex items-center justify-center bg-slate-900/40 border border-slate-900 py-3">
+                <div className="relative z-10 pl-6 h-36 flex items-center justify-center bg-slate-200/40 dark:bg-slate-900/40 border border-slate-200 dark:border-slate-900 py-3">
                   <svg className="w-full h-full max-w-[280px]" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                     {/* Grid background lines */}
-                    <line x1="0" y1="10" x2="100" y2="10" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
-                    <line x1="0" y1="25" x2="100" y2="25" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
-                    <line x1="0" y1="40" x2="100" y2="40" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
-                    <line x1="25" y1="0" x2="25" y2="50" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
-                    <line x1="50" y1="0" x2="50" y2="50" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
-                    <line x1="75" y1="0" x2="75" y2="50" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="0" y1="10" x2="100" y2="10" stroke="currentColor" className="text-slate-300 dark:text-[#1e293b]" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="0" y1="25" x2="100" y2="25" stroke="currentColor" className="text-slate-300 dark:text-[#1e293b]" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="0" y1="40" x2="100" y2="40" stroke="currentColor" className="text-slate-300 dark:text-[#1e293b]" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="25" y1="0" x2="25" y2="50" stroke="currentColor" className="text-slate-300 dark:text-[#1e293b]" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="50" y1="0" x2="50" y2="50" stroke="currentColor" className="text-slate-300 dark:text-[#1e293b]" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="75" y1="0" x2="75" y2="50" stroke="currentColor" className="text-slate-300 dark:text-[#1e293b]" strokeWidth="0.5" strokeDasharray="2 2" />
                     
                     {/* AC Indoor Unit Box */}
-                    <rect x="20" y="12" width="60" height="18" stroke="#7c3bed" strokeWidth="1.5" fill="#0b1329" />
+                    <rect x="20" y="12" width="60" height="18" stroke="#7c3bed" strokeWidth="1.5" fill="currentColor" className="text-white dark:text-[#0b1329]" />
                     <line x1="25" y1="27" x2="75" y2="27" stroke="#38bdf8" strokeWidth="1" />
-                    <rect x="25" y="16" width="10" height="6" stroke="#334155" strokeWidth="1" />
+                    <rect x="25" y="16" width="10" height="6" stroke="currentColor" className="text-slate-300 dark:text-[#334155]" strokeWidth="1" />
                     
                     {/* Animated air flow waves */}
                     <path d="M 30,34 Q 35,42 30,46" stroke="#38bdf8" strokeWidth="1" strokeLinecap="round" strokeDasharray="2 2" className="animate-pulse" />
@@ -1626,42 +1622,42 @@ function App() {
                   </svg>
                   
                   {/* Status Overlay */}
-                  <div className="absolute top-2 left-8 bg-slate-950/80 px-2 py-0.5 border border-slate-800 text-[8px] text-slate-400">
+                  <div className="absolute top-2 left-8 bg-white/90 dark:bg-slate-950/80 px-2 py-0.5 border border-slate-200 dark:border-slate-800 text-[8px] text-slate-600 dark:text-slate-400">
                     STATUS: OK_FLOW
                   </div>
-                  <div className="absolute bottom-2 right-2 bg-slate-950/80 px-2 py-0.5 border border-slate-800 text-[8px] text-premium font-bold">
+                  <div className="absolute bottom-2 right-2 bg-white/90 dark:bg-slate-950/80 px-2 py-0.5 border border-slate-200 dark:border-slate-800 text-[8px] text-premium font-bold">
                     X:47.1168 | Y:51.8804
                   </div>
                 </div>
 
                 {/* Console Log Lines */}
-                <div className="relative z-10 pl-6 space-y-2.5 text-[10px] text-slate-400">
+                <div className="relative z-10 pl-6 space-y-2.5 text-[10px] text-slate-600 dark:text-slate-400">
                   <div className="flex items-start space-x-2">
                     <span className="text-premium font-black">LOG://</span>
-                    <p className="text-slate-300">{t.quickBookingBullet1}</p>
+                    <p className="text-slate-800 dark:text-slate-300">{t.quickBookingBullet1}</p>
                   </div>
                   <div className="flex items-start space-x-2">
                     <span className="text-premium font-black">LOG://</span>
-                    <p className="text-slate-300">{t.quickBookingBullet2}</p>
+                    <p className="text-slate-800 dark:text-slate-300">{t.quickBookingBullet2}</p>
                   </div>
                   <div className="flex items-start space-x-2">
                     <span className="text-premium font-black">LOG://</span>
-                    <p className="text-slate-300">{t.quickBookingBullet3}</p>
+                    <p className="text-slate-800 dark:text-slate-300">{t.quickBookingBullet3}</p>
                   </div>
                 </div>
 
                 {/* Urgency Alert Block */}
-                <div className="relative z-10 pl-6 border border-slate-900 p-3 bg-slate-900/30 flex items-start space-x-2.5">
-                  <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
+                <div className="relative z-10 pl-6 border border-slate-200 dark:border-slate-900 p-3 bg-amber-500/5 dark:bg-slate-900/30 flex items-start space-x-2.5">
+                  <AlertCircle className="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-[10px] font-black text-amber-500 uppercase">{t.objectionBoxTitle}</h4>
-                    <p className="text-[9px] text-slate-400 mt-1 leading-normal">{t.objectionBoxDesc}</p>
+                    <h4 className="text-[10px] font-black text-amber-600 dark:text-amber-500 uppercase">{t.objectionBoxTitle}</h4>
+                    <p className="text-[9px] text-slate-600 dark:text-slate-400 mt-1 leading-normal">{t.objectionBoxDesc}</p>
                   </div>
                 </div>
 
                 <a 
                   href="#calculator"
-                  className="relative z-10 ml-6 bg-premium text-white hover:bg-white hover:text-slate-950 text-center font-bold py-3.5 px-6 rounded-none transition-all text-xs cursor-pointer uppercase tracking-widest"
+                  className="relative z-10 ml-6 bg-premium text-white hover:bg-slate-950 dark:hover:bg-white hover:text-white dark:hover:text-slate-950 text-center font-bold py-3.5 px-6 rounded-none transition-all text-xs cursor-pointer uppercase tracking-widest border border-premium"
                 >
                   {t.toCalculatorBtn}
                 </a>
