@@ -911,6 +911,24 @@ function App() {
     return () => clearTimeout(timer);
   }, [slotsLeft]);
 
+  // Live ticking clock state for invoice and diagnostic meters
+  const [sysTime, setSysTime] = useState('');
+  useEffect(() => {
+    const updateTime = () => {
+      const options = {
+        timeZone: 'Asia/Atyrau',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      };
+      setSysTime(new Date().toLocaleTimeString('ru-RU', options));
+    };
+    updateTime();
+    const interval = setInterval(updateTime, 1000);
+    return () => clearInterval(interval);
+  }, []);
+
   // Main Booking Form State
   const [bookingPhone, setBookingPhone] = useState('');
   const [bookingSuccess, setBookingSuccess] = useState(false);
