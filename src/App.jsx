@@ -1608,7 +1608,7 @@ function App() {
                     <line x1="75" y1="0" x2="75" y2="50" stroke="currentColor" className="text-slate-300 dark:text-[#1e293b]" strokeWidth="0.5" strokeDasharray="2 2" />
                     
                     {/* AC Indoor Unit Box */}
-                    <rect x="20" y="12" width="60" height="18" stroke="#7c3bed" strokeWidth="1.5" fill="currentColor" className="text-white dark:text-[#0b1329]" />
+                    <rect x="20" y="12" width="60" height="18" stroke="#0284c7" strokeWidth="1.5" fill="currentColor" className="text-white dark:text-[#0b1329]" />
                     <line x1="25" y1="27" x2="75" y2="27" stroke="#38bdf8" strokeWidth="1" />
                     <rect x="25" y="16" width="10" height="6" stroke="currentColor" className="text-slate-300 dark:text-[#334155]" strokeWidth="1" />
                     
