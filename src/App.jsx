@@ -734,6 +734,10 @@ function App() {
   // Privacy Policy Page View State
   const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
+  // Smart Scroll Header Hover/Expand States
+  const [isHeaderHovered, setIsHeaderHovered] = useState(false);
+  const [isHeaderExpanded, setIsHeaderExpanded] = useState(false);
+
   // Active translation helper and FAQ binding
   const t = TRANSLATIONS[lang] || TRANSLATIONS.ru;
   const faqItems = t.faqItems || [];
@@ -1128,12 +1132,47 @@ function App() {
       <div className="absolute top-[800px] -right-48 w-[400px] h-[400px] bg-sky-100 dark:bg-sky-950/10 rounded-full gradient-blob opacity-40 pointer-events-none"></div>
       <div className="absolute bottom-[600px] left-10 w-96 h-96 bg-indigo-50 dark:bg-indigo-950/10 rounded-full gradient-blob opacity-50 pointer-events-none"></div>
 
+      {/* Invisible top hover zone to trigger header appearance */}
+      {isScrolled && !isHeaderHovered && !isHeaderExpanded && (
+        <div 
+          onMouseEnter={() => setIsHeaderHovered(true)}
+          className="fixed top-0 left-0 right-0 h-2.5 z-40 hidden md:block"
+        />
+      )}
+
+      {/* Floating Brutalist Hamburger Menu Button for scrolled state */}
+      {isScrolled && !isHeaderExpanded && !isHeaderHovered && (
+        <button
+          onClick={() => setIsHeaderExpanded(true)}
+          className="fixed top-4 right-4 z-40 bg-white/95 dark:bg-slate-900/95 border-2 border-slate-950 dark:border-slate-800 p-3 rounded-none shadow-[2px_2px_0px_0px_rgba(2,132,199,1)] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white transition-all cursor-pointer flex items-center justify-center hidden md:flex"
+        >
+          <Menu className="w-5 h-5" />
+        </button>
+      )}
+
+      {/* Floating Brutalist Close Button when header is active */}
+      {isScrolled && (isHeaderExpanded || isHeaderHovered) && (
+        <button
+          onClick={() => { setIsHeaderExpanded(false); setIsHeaderHovered(false); }}
+          className="fixed top-4 right-4 z-50 bg-white/95 dark:bg-slate-900/95 border-2 border-slate-950 dark:border-slate-800 p-3 rounded-none shadow-[2px_2px_0px_0px_rgba(2,132,199,1)] hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-950 dark:text-white transition-all cursor-pointer flex items-center justify-center hidden md:flex"
+        >
+          <X className="w-5 h-5" />
+        </button>
+      )}
+
       {/* HEADER / NAVIGATION */}
-      <header className={`sticky top-0 z-50 glass-nav transition-all duration-300 ${
-        isScrolled 
-          ? 'shadow-md border-b border-sky-500/20 dark:border-cyan-500/20 shadow-sky-500/5' 
-          : 'shadow-xs'
-      }`}>
+      <header 
+        onMouseEnter={() => setIsHeaderHovered(true)}
+        onMouseLeave={() => setIsHeaderHovered(false)}
+        className={`sticky top-0 z-50 glass-nav transition-all duration-300 ${
+          isScrolled 
+            ? 'shadow-md border-b border-sky-500/20 dark:border-cyan-500/20 shadow-sky-500/5' 
+            : 'shadow-xs'
+        } ${
+          isScrolled && !isHeaderHovered && !isHeaderExpanded
+            ? 'md:-translate-y-full md:opacity-0 md:pointer-events-none'
+            : 'md:translate-y-0 md:opacity-100 md:pointer-events-auto'
+        }`}>
         {/* Horizontal scroll progress bar */}
         <div 
           className="scroll-progress-bar" 
