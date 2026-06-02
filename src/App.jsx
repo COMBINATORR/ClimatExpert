@@ -1459,21 +1459,21 @@ function App() {
       </header>
 
       {/* DYNAMIC URGENCY SLOT BAR */}
-      <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/10 dark:to-orange-950/10 border-b border-amber-100 dark:border-amber-900/20 py-3 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-2">
-          <div className="flex items-center space-x-2">
-            <Clock className="w-4 h-4 text-amber-600 dark:text-amber-500 shrink-0 animate-pulse" />
-            <span className="text-xs sm:text-sm text-amber-900 dark:text-amber-200 font-medium">
-              {t.urgencyText}
+      <div className="bg-amber-500 dark:bg-amber-950/40 border-b border-slate-950 dark:border-slate-800 py-3 font-mono text-slate-950 dark:text-amber-250 transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-3 text-xs">
+          <div className="flex items-center space-x-2.5">
+            <span className="w-2.5 h-2.5 bg-red-600 dark:bg-red-500 rounded-none inline-block animate-ping shrink-0"></span>
+            <span className="font-bold tracking-tight uppercase">
+              [SYSTEM.WARN] {t.urgencyText}
             </span>
           </div>
-          <div className="flex items-center space-x-3 shrink-0">
-            <span className="text-xs bg-amber-200 dark:bg-amber-900/40 text-amber-900 dark:text-amber-200 px-2 py-0.5 rounded-full font-bold">
+          <div className="flex items-center space-x-4 shrink-0">
+            <span className="bg-slate-950 text-white dark:bg-amber-500 dark:text-slate-950 px-2 py-0.5 font-bold uppercase text-[10px]">
               {t.slotsText.replace('{slotsLeft}', slotsLeft)}
             </span>
             <a 
               href="#booking-section" 
-              className="text-xs text-amber-950 dark:text-amber-400 font-bold underline hover:text-amber-800 transition-colors"
+              className="font-bold underline hover:text-slate-800 dark:hover:text-amber-400 uppercase tracking-wider"
             >
               {t.reserveSlot}
             </a>
@@ -1481,108 +1481,169 @@ function App() {
         </div>
       </div>
 
-      {/* HERO SECTION */}
-      <section className="relative pt-12 pb-20 md:py-28 overflow-hidden">
+      {/* HERO SECTION (/01__HERO_INTERFACE) */}
+      <section className="relative pt-6 pb-16 md:py-20 border-b border-slate-950 dark:border-slate-800">
+        {/* Section Identifier Header */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
+          <div className="border border-slate-950 dark:border-slate-800 px-4 py-2 flex items-center justify-between font-mono text-[10px] text-slate-550 dark:text-slate-400">
+            <div className="flex items-center space-x-2">
+              <span className="text-premium font-black">/01__HERO_INTERFACE</span>
+              <span>•</span>
+              <span>NODE: ATY_CLIMAT_01</span>
+            </div>
+            <div className="flex items-center space-x-4">
+              <span>LAT: 47.1168° N</span>
+              <span>LON: 51.8804° E</span>
+            </div>
+          </div>
+        </div>
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-12 gap-12 items-center">
+          <div className="grid lg:grid-cols-12 gap-8 items-stretch">
             
             {/* Left Content */}
-            <div className="lg:col-span-7 space-y-8 text-left z-10">
-              
-              {/* Trust Badge */}
-              <div className="inline-flex items-center space-x-2 bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400 px-3 py-1.5 rounded-full border border-sky-100 dark:border-sky-900/30 shadow-xs">
-                <ShieldCheck className="w-4 h-4" />
-                <span className="text-xs font-semibold uppercase tracking-wider">{t.trustTitle}</span>
+            <div className="lg:col-span-7 flex flex-col justify-between space-y-8 text-left z-10">
+              <div className="space-y-6">
+                {/* Trust Badge */}
+                <div className="inline-flex items-center space-x-2 bg-premium/10 text-premium border border-premium px-3.5 py-1.5 rounded-none font-mono">
+                  <ShieldCheck className="w-4 h-4 shrink-0" />
+                  <span className="text-xs font-bold uppercase tracking-wider">{t.trustTitle}</span>
+                </div>
+                
+                {/* Brutalist Heading */}
+                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-950 dark:text-white leading-none tracking-tighter uppercase font-mono">
+                  {t.heroTitlePart1}
+                  <span className="text-premium block my-1">
+                    // {t.heroTitlePart2}
+                  </span>
+                  <span className="text-slate-500 dark:text-slate-400 text-3xl sm:text-4xl lg:text-5xl block font-bold tracking-tight lowercase">
+                    {t.heroTitlePart3}
+                  </span>
+                </h1>
+                
+                {/* Subtitle */}
+                <p className="text-sm sm:text-base text-slate-655 dark:text-slate-400 leading-relaxed font-sans max-w-xl border-l-2 border-slate-950 dark:border-slate-800 pl-4 py-1">
+                  {t.heroSubtitle}
+                </p>
               </div>
-              
-              {/* Premium Heading */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight">
-                {t.heroTitlePart1}<span className="bg-gradient-to-r from-sky-600 to-cyan-500 bg-clip-text text-transparent">{t.heroTitlePart2}</span>{t.heroTitlePart3}
-              </h1>
-              
-              {/* Subtitle */}
-              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
-                {t.heroSubtitle}
-              </p>
 
               {/* Call to Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md sm:max-w-none">
+              <div className="flex flex-col sm:flex-row gap-4 max-w-md sm:max-w-none pt-4">
                 <button 
                   onClick={() => handleWhatsAppClick(lang === 'ru' ? 'Здравствуйте! Хочу рассчитать стоимость работ.' : lang === 'kk' ? 'Сәлеметсіз бе! Жұмыс құнын есептегім келеді.' : 'Hello! I want to calculate the cost of works.')}
-                  className="inline-flex items-center justify-center bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer gap-2 cta-shimmer"
+                  className="inline-flex items-center justify-center bg-premium text-white font-mono font-black text-xs py-4 px-8 rounded-none border-2 border-premium hover:bg-transparent hover:text-premium transition-all active:translate-x-1 active:translate-y-1 cursor-pointer gap-2 uppercase tracking-widest shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] dark:shadow-[4px_4px_0px_0px_rgba(255,255,255,0.15)]"
                 >
                   {t.heroCtaWhatsApp}
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <a 
                   href="#booking-section"
-                  className="inline-flex items-center justify-center bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all hover:shadow-lg active:scale-98 cursor-pointer text-center cta-shimmer"
+                  className="inline-flex items-center justify-center bg-slate-950 dark:bg-white dark:text-slate-950 hover:bg-transparent hover:text-slate-950 dark:hover:text-white border-2 border-slate-950 dark:border-white text-white font-mono font-black text-xs py-4 px-8 rounded-none transition-all active:translate-x-1 active:translate-y-1 cursor-pointer text-center uppercase tracking-widest"
                 >
                   {t.heroCtaSlot}
                 </a>
               </div>
 
               {/* Instant Mini Trust Factors Grid */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-100 dark:border-slate-800">
-                <div>
-                  <h4 className="text-slate-900 dark:text-white font-bold text-xl">{t.miniStat1Title}</h4>
-                  <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">{t.miniStat1Desc}</p>
+              <div className="grid grid-cols-3 gap-2 pt-6 border-t border-slate-950 dark:border-slate-800 font-mono">
+                <div className="border border-slate-950 dark:border-slate-800 p-3">
+                  <h4 className="text-slate-950 dark:text-white font-black text-base uppercase">// {t.miniStat1Title}</h4>
+                  <p className="text-slate-500 dark:text-slate-400 text-[10px] uppercase mt-1 leading-normal">{t.miniStat1Desc}</p>
                 </div>
-                <div>
-                  <h4 className="text-slate-900 dark:text-white font-bold text-xl">{t.miniStat2Title}</h4>
-                  <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">{t.miniStat2Desc}</p>
+                <div className="border border-slate-950 dark:border-slate-800 p-3">
+                  <h4 className="text-slate-950 dark:text-white font-black text-base uppercase">// {t.miniStat2Title}</h4>
+                  <p className="text-slate-505 dark:text-slate-450 text-[10px] uppercase mt-1 leading-normal">{t.miniStat2Desc}</p>
                 </div>
-                <div>
-                  <h4 className="text-slate-900 dark:text-white font-bold text-xl">{t.miniStat3Title}</h4>
-                  <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">{t.miniStat3Desc}</p>
+                <div className="border border-slate-950 dark:border-slate-800 p-3">
+                  <h4 className="text-slate-950 dark:text-white font-black text-base uppercase">// {t.miniStat3Title}</h4>
+                  <p className="text-slate-505 dark:text-slate-450 text-[10px] uppercase mt-1 leading-normal">{t.miniStat3Desc}</p>
                 </div>
               </div>
 
             </div>
 
-            {/* Right Interactive Card */}
-            <div className="lg:col-span-5 relative z-10">
-              <div className="bg-white/80 dark:bg-[#0f1624]/80 backdrop-blur-xl border border-slate-100 dark:border-white/5 p-8 rounded-2xl shadow-xl shadow-slate-100 dark:shadow-none space-y-6 relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-full filter blur-xl"></div>
+            {/* Right Interactive Card / Technical Console */}
+            <div className="lg:col-span-5 relative z-10 flex">
+              <div className="w-full bg-slate-950 dark:bg-[#070b12] border-2 border-slate-950 dark:border-slate-800 p-6 flex flex-col justify-between space-y-6 relative text-white font-mono text-left">
+                {/* Tech grid aesthetic line elements */}
+                <div className="absolute top-0 bottom-0 left-[20px] border-l border-slate-900 pointer-events-none"></div>
+                <div className="absolute left-0 right-0 top-[20px] border-t border-slate-900 pointer-events-none"></div>
                 
-                {/* Visual Header */}
-                <div className="flex items-center space-x-3 pb-4 border-b border-slate-100 dark:border-slate-800">
-                  <div className="w-10 h-10 rounded-lg bg-sky-100 dark:bg-sky-950/50 flex items-center justify-center text-sky-600 dark:text-sky-400">
-                    <Thermometer className="w-5 h-5 animate-pulse" />
-                  </div>
+                {/* Blueprint Header */}
+                <div className="relative z-10 pl-6 pt-6 flex justify-between items-start border-b border-slate-900 pb-4">
                   <div>
-                    <h3 className="font-bold text-slate-900 dark:text-white text-sm sm:text-base">{t.quickBookingTitle}</h3>
-                    <p className="text-xs text-slate-400 dark:text-slate-500">{t.quickBookingSub}</p>
+                    <span className="text-[9px] text-premium uppercase tracking-widest font-black">SYS.TELEMETRY</span>
+                    <h3 className="font-extrabold text-white text-sm uppercase tracking-tight">{t.quickBookingTitle}</h3>
+                    <p className="text-[10px] text-slate-505 uppercase mt-0.5">{t.quickBookingSub}</p>
+                  </div>
+                  <div className="text-right">
+                    <span className="text-[9px] text-emerald-500 uppercase tracking-widest block font-black">● LIVE</span>
+                    <span className="text-[10px] text-slate-400 font-extrabold">LOC: ATYRAU</span>
                   </div>
                 </div>
 
-                <div className="space-y-4 text-left">
-                  <div className="flex items-start space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-sky-500 dark:text-sky-400 mt-0.5 shrink-0" />
-                    <p className="text-xs text-slate-600 dark:text-slate-400">{t.quickBookingBullet1}</p>
+                {/* Animated AC Blueprint graphic */}
+                <div className="relative z-10 pl-6 h-36 flex items-center justify-center bg-slate-900/40 border border-slate-900 py-3">
+                  <svg className="w-full h-full max-w-[280px]" viewBox="0 0 100 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    {/* Grid background lines */}
+                    <line x1="0" y1="10" x2="100" y2="10" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="0" y1="25" x2="100" y2="25" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="0" y1="40" x2="100" y2="40" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="25" y1="0" x2="25" y2="50" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="50" y1="0" x2="50" y2="50" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
+                    <line x1="75" y1="0" x2="75" y2="50" stroke="#1e293b" strokeWidth="0.5" strokeDasharray="2 2" />
+                    
+                    {/* AC Indoor Unit Box */}
+                    <rect x="20" y="12" width="60" height="18" stroke="#7c3bed" strokeWidth="1.5" fill="#0b1329" />
+                    <line x1="25" y1="27" x2="75" y2="27" stroke="#38bdf8" strokeWidth="1" />
+                    <rect x="25" y="16" width="10" height="6" stroke="#334155" strokeWidth="1" />
+                    
+                    {/* Animated air flow waves */}
+                    <path d="M 30,34 Q 35,42 30,46" stroke="#38bdf8" strokeWidth="1" strokeLinecap="round" strokeDasharray="2 2" className="animate-pulse" />
+                    <path d="M 50,34 Q 55,42 50,46" stroke="#38bdf8" strokeWidth="1" strokeLinecap="round" strokeDasharray="2 2" className="animate-pulse delay-75" />
+                    <path d="M 70,34 Q 75,42 70,46" stroke="#38bdf8" strokeWidth="1" strokeLinecap="round" strokeDasharray="2 2" className="animate-pulse delay-150" />
+                    
+                    {/* Technical text label inside SVG */}
+                    <text x="38" y="21" fill="#38bdf8" fontSize="4" fontFamily="monospace" fontWeight="bold">AIR_FLOW_SYS</text>
+                  </svg>
+                  
+                  {/* Status Overlay */}
+                  <div className="absolute top-2 left-8 bg-slate-950/80 px-2 py-0.5 border border-slate-800 text-[8px] text-slate-400">
+                    STATUS: OK_FLOW
                   </div>
-                  <div className="flex items-start space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-sky-500 dark:text-sky-400 mt-0.5 shrink-0" />
-                    <p className="text-xs text-slate-600 dark:text-slate-400">{t.quickBookingBullet2}</p>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <CheckCircle2 className="w-4 h-4 text-sky-500 dark:text-sky-400 mt-0.5 shrink-0" />
-                    <p className="text-xs text-slate-600 dark:text-slate-400">{t.quickBookingBullet3}</p>
+                  <div className="absolute bottom-2 right-2 bg-slate-950/80 px-2 py-0.5 border border-slate-800 text-[8px] text-premium font-bold">
+                    X:47.1168 | Y:51.8804
                   </div>
                 </div>
 
-                {/* Urgency Badge */}
-                <div className="bg-amber-50 dark:bg-amber-950/20 border border-amber-100 dark:border-amber-900/20 p-4 rounded-xl flex items-start space-x-3 text-left">
-                  <AlertCircle className="w-5 h-5 text-amber-600 dark:text-amber-500 shrink-0 mt-0.5" />
+                {/* Console Log Lines */}
+                <div className="relative z-10 pl-6 space-y-2.5 text-[10px] text-slate-400">
+                  <div className="flex items-start space-x-2">
+                    <span className="text-premium font-black">LOG://</span>
+                    <p className="text-slate-350">{t.quickBookingBullet1}</p>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-premium font-black">LOG://</span>
+                    <p className="text-slate-350">{t.quickBookingBullet2}</p>
+                  </div>
+                  <div className="flex items-start space-x-2">
+                    <span className="text-premium font-black">LOG://</span>
+                    <p className="text-slate-350">{t.quickBookingBullet3}</p>
+                  </div>
+                </div>
+
+                {/* Urgency Alert Block */}
+                <div className="relative z-10 pl-6 border border-slate-900 p-3 bg-slate-900/30 flex items-start space-x-2.5">
+                  <AlertCircle className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                   <div>
-                    <h4 className="text-xs font-bold text-amber-900 dark:text-amber-200">{t.objectionBoxTitle}</h4>
-                    <p className="text-[11px] text-amber-700 dark:text-amber-400 mt-0.5">{t.objectionBoxDesc}</p>
+                    <h4 className="text-[10px] font-black text-amber-500 uppercase">{t.objectionBoxTitle}</h4>
+                    <p className="text-[9px] text-slate-400 mt-1 leading-normal">{t.objectionBoxDesc}</p>
                   </div>
                 </div>
 
                 <a 
                   href="#calculator"
-                  className="w-full inline-flex items-center justify-center bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-bold py-3.5 px-6 rounded-xl transition-all active:scale-98 text-xs cursor-pointer"
+                  className="relative z-10 ml-6 bg-premium text-white hover:bg-white hover:text-slate-950 text-center font-bold py-3.5 px-6 rounded-none transition-all text-xs cursor-pointer uppercase tracking-widest"
                 >
                   {t.toCalculatorBtn}
                 </a>
@@ -1593,65 +1654,81 @@ function App() {
         </div>
       </section>
 
-      {/* CORE TRUST STATS SECTION */}
-      <section className="py-16 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-3 gap-8">
+      {/* CORE TRUST STATS SECTION (/02__CORE_METRICS) */}
+      <section className="bg-slate-50 dark:bg-[#070a10] border-b border-slate-950 dark:border-slate-800 transition-colors duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-0">
+          
+          {/* Header identifier */}
+          <div className="border-x border-slate-950 dark:border-slate-800 px-4 py-2 flex items-center justify-between font-mono text-[9px] text-slate-500 dark:text-slate-400 border-b border-slate-950 dark:border-slate-800">
+            <span className="text-premium font-black">/02__CORE_METRICS</span>
+            <span className="uppercase">STATUS: VERIFIED</span>
+          </div>
+
+          <div className="grid md:grid-cols-3 border-x border-slate-950 dark:border-slate-800">
             
             {/* Stat 1 */}
-            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
-              <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
-                <Sparkles className="w-6 h-6" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-extrabold text-slate-900 dark:text-white text-2xl tracking-tight">
-                  <AnimatedCounter target={8} suffix="+" /> {lang === 'ru' ? 'лет на рынке Атырау' : lang === 'kk' ? 'жыл Атырау нарығында' : 'Years in Atyrau'}
+            <div className="p-8 border-b md:border-b-0 md:border-r border-slate-950 dark:border-slate-800 text-left font-mono flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="w-10 h-10 border border-slate-950 dark:border-slate-800 flex items-center justify-center text-premium bg-premium/5">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <h3 className="font-black text-slate-950 dark:text-white text-2xl tracking-tighter uppercase leading-none">
+                  <AnimatedCounter target={8} suffix="+" /> {lang === 'ru' ? 'лет на рынке' : lang === 'kk' ? 'жыл нарықта' : 'Years Active'}
                 </h3>
-                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+                <p className="text-slate-550 dark:text-slate-400 font-sans text-xs leading-relaxed">
                   {t.stat1Desc}
                 </p>
+              </div>
+              <div className="pt-6 text-[9px] text-slate-400 uppercase tracking-widest font-black">
+                [METRIC.01 // EXPERIENCE]
               </div>
             </div>
 
             {/* Stat 2 */}
-            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
-              <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
-                <Wrench className="w-6 h-6" />
-              </div>
-              <div className="text-left">
-                <h3 className="font-extrabold text-slate-900 dark:text-white text-2xl tracking-tight">
-                  <AnimatedCounter target={100} suffix="%" /> {lang === 'ru' ? 'деталей с собой' : lang === 'kk' ? 'бөлшектер дайын' : 'Parts in Stock'}
+            <div className="p-8 border-b md:border-b-0 md:border-r border-slate-950 dark:border-slate-800 text-left font-mono flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="w-10 h-10 border border-slate-950 dark:border-slate-800 flex items-center justify-center text-premium bg-premium/5">
+                  <Wrench className="w-5 h-5" />
+                </div>
+                <h3 className="font-black text-slate-950 dark:text-white text-2xl tracking-tighter uppercase leading-none">
+                  <AnimatedCounter target={100} suffix="%" /> {lang === 'ru' ? 'деталей с собой' : lang === 'kk' ? 'бөлшектер дайын' : 'Parts on Board'}
                 </h3>
-                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+                <p className="text-slate-550 dark:text-slate-400 font-sans text-xs leading-relaxed">
                   {t.stat2Desc}
                 </p>
+              </div>
+              <div className="pt-6 text-[9px] text-slate-400 uppercase tracking-widest font-black">
+                [METRIC.02 // AVAILABILITY]
               </div>
             </div>
 
             {/* Stat 3 */}
-            <div className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-8 rounded-2xl border border-slate-100 dark:border-white/5 flex items-start space-x-5 shadow-xs">
-              <div className="w-12 h-12 rounded-xl bg-sky-50 dark:bg-sky-950/30 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
-                <svg 
-                  viewBox="0 0 24 24" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  strokeWidth="2.5" 
-                  strokeLinecap="round" 
-                  strokeLinejoin="round" 
-                  className="w-6 h-6"
-                >
-                  <path d="M6 6h12" />
-                  <path d="M6 10h12" />
-                  <path d="M12 10v10" />
-                </svg>
-              </div>
-              <div className="text-left">
-                <h3 className="font-extrabold text-slate-900 dark:text-white text-2xl tracking-tight">
-                  <AnimatedCounter target={0} suffix=" ₸" /> {lang === 'ru' ? 'за выезд и диагностику' : lang === 'kk' ? 'шығу және диагностика' : 'for Visit & Diagnosis'}
+            <div className="p-8 text-left font-mono flex flex-col justify-between">
+              <div className="space-y-4">
+                <div className="w-10 h-10 border border-slate-950 dark:border-slate-800 flex items-center justify-center text-premium bg-premium/5">
+                  <svg 
+                    viewBox="0 0 24 24" 
+                    fill="none" 
+                    stroke="currentColor" 
+                    strokeWidth="2.5" 
+                    strokeLinecap="round" 
+                    strokeLinejoin="round" 
+                    className="w-5 h-5"
+                  >
+                    <path d="M6 6h12" />
+                    <path d="M6 10h12" />
+                    <path d="M12 10v10" />
+                  </svg>
+                </div>
+                <h3 className="font-black text-slate-950 dark:text-white text-2xl tracking-tighter uppercase leading-none">
+                  <AnimatedCounter target={0} suffix=" ₸" /> {lang === 'ru' ? 'выезд и диаг.' : lang === 'kk' ? 'келу және диаг.' : 'Diagnosis fee'}
                 </h3>
-                <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm mt-2 leading-relaxed">
+                <p className="text-slate-550 dark:text-slate-400 font-sans text-xs leading-relaxed">
                   {t.stat3Desc}
                 </p>
+              </div>
+              <div className="pt-6 text-[9px] text-slate-400 uppercase tracking-widest font-black">
+                [METRIC.03 // TRANSPARENCY]
               </div>
             </div>
 
@@ -1660,28 +1737,36 @@ function App() {
       </section>
 
       {/* INTERACTIVE PRICE CALCULATOR WIDGET */}
-      <section id="calculator" className="py-20">
+      <section id="calculator" className="py-16 border-b border-slate-950 dark:border-slate-800">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center space-y-4 mb-12">
-            <ScrollRevealHeading>
-              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
-                {t.calcTitle}
-              </h2>
-            </ScrollRevealHeading>
-            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-lg mx-auto">
+          {/* Header identifier */}
+          <div className="border border-slate-950 dark:border-slate-800 px-4 py-2 flex items-center justify-between font-mono text-[9px] text-slate-500 dark:text-slate-400 mb-8">
+            <div className="flex items-center space-x-2">
+              <span className="text-premium font-black">/02.5__CALCULATOR_TERMINAL</span>
+              <span>•</span>
+              <span>CALC_SYS_v2.1</span>
+            </div>
+            <span>[ONLINE]</span>
+          </div>
+
+          <div className="text-left space-y-4 mb-12 font-mono">
+            <h2 className="text-3xl font-black text-slate-950 dark:text-white tracking-tighter uppercase">
+              // {t.calcTitle}
+            </h2>
+            <p className="text-slate-505 dark:text-slate-400 text-xs font-sans max-w-xl border-l border-slate-950 dark:border-slate-800 pl-3">
               {t.calcSub}
             </p>
           </div>
 
-          <div className="bg-white dark:bg-[#0f1624]/60 border border-slate-200/80 dark:border-white/5 rounded-2xl shadow-xl shadow-slate-100 dark:shadow-none overflow-hidden grid md:grid-cols-12 transition-colors duration-300">
+          <div className="bg-white dark:bg-[#070b12] border-2 border-slate-950 dark:border-slate-800 grid md:grid-cols-12 transition-colors duration-300 font-mono text-left">
             
             {/* Calc Controls */}
-            <div className="md:col-span-7 p-6 sm:p-8 space-y-6 text-left border-r border-slate-100 dark:border-white/5">
+            <div className="md:col-span-7 p-6 sm:p-8 space-y-6 border-b md:border-b-0 md:border-r border-slate-950 dark:border-slate-800">
               
               {/* Step 1 */}
               <div className="space-y-3">
-                <label className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">{t.calcStep1}</label>
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">[ {t.calcStep1} ]</label>
                 <div className="grid grid-cols-3 gap-2">
                   {[
                     { id: 'clean', label: t.calcClean },
@@ -1691,10 +1776,10 @@ function App() {
                     <button
                       key={service.id}
                       onClick={() => setCalcService(service.id)}
-                      className={`py-3 px-2 text-xs font-bold rounded-xl transition-all cursor-pointer border text-center ${
+                      className={`py-2.5 px-2 text-xs font-black rounded-none border-2 transition-all cursor-pointer text-center uppercase tracking-wide ${
                         calcService === service.id 
-                          ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100 dark:shadow-none'
-                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-sky-500 dark:hover:border-sky-500'
+                          ? 'bg-slate-955 dark:bg-white text-white dark:text-slate-955 border-slate-955 dark:border-white shadow-[2px_2px_0px_0px_rgba(124,61,237,1)]'
+                          : 'bg-transparent border-slate-205 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-955 dark:hover:border-slate-350'
                       }`}
                     >
                       {service.label}
@@ -1705,7 +1790,7 @@ function App() {
 
               {/* Step 2 */}
               <div className="space-y-3">
-                <label className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">{t.calcStep2}</label>
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">[ {t.calcStep2} ]</label>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   {[
                     { id: '20', label: t.calcArea20, btu: '07-09 BTU' },
@@ -1716,14 +1801,14 @@ function App() {
                     <button
                       key={area.id}
                       onClick={() => setCalcArea(area.id)}
-                      className={`p-3 rounded-xl transition-all cursor-pointer border flex flex-col items-center justify-center text-center ${
+                      className={`p-3 rounded-none border-2 transition-all cursor-pointer flex flex-col items-center justify-center text-center uppercase ${
                         calcArea === area.id 
-                          ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100 dark:shadow-none'
-                          : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-sky-500 dark:hover:border-sky-500'
+                          ? 'bg-slate-955 dark:bg-white text-white dark:text-slate-955 border-slate-955 dark:border-white shadow-[2px_2px_0px_0px_rgba(124,61,237,1)]'
+                          : 'bg-transparent border-slate-205 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-955 dark:hover:border-slate-350'
                       }`}
                     >
-                      <span className="text-xs font-bold">{area.label}</span>
-                      <span className={`text-[9px] mt-0.5 ${calcArea === area.id ? 'text-sky-100' : 'text-slate-400 dark:text-slate-500'}`}>{area.btu}</span>
+                      <span className="text-xs font-black">{area.label}</span>
+                      <span className={`text-[8px] font-bold mt-1 ${calcArea === area.id ? 'text-premium' : 'text-slate-400 dark:text-slate-500'}`}>{area.btu}</span>
                     </button>
                   ))}
                 </div>
@@ -1732,7 +1817,7 @@ function App() {
               {/* Step 2.5 (Only for Installation) */}
               {calcService === 'install' && (
                 <div className="space-y-3">
-                  <label className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">{t.calcStep2_5}</label>
+                  <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">[ {t.calcStep2_5} ]</label>
                   <div className="grid grid-cols-2 gap-2">
                     {[
                       { id: '1', label: t.calcFloor1, note: t.calcFloor1Note },
@@ -1742,14 +1827,14 @@ function App() {
                         key={floor.id}
                         type="button"
                         onClick={() => setCalcFloor(floor.id)}
-                        className={`p-3 rounded-xl transition-all cursor-pointer border flex flex-col items-center justify-center text-center ${
+                        className={`p-3 rounded-none border-2 transition-all cursor-pointer flex flex-col items-center justify-center text-center uppercase ${
                           calcFloor === floor.id 
-                            ? 'bg-sky-600 border-sky-600 text-white shadow-md shadow-sky-100 dark:shadow-none'
-                            : 'bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-sky-500 dark:hover:border-sky-500'
+                            ? 'bg-slate-955 dark:bg-white text-white dark:text-slate-955 border-slate-955 dark:border-white shadow-[2px_2px_0px_0px_rgba(124,61,237,1)]'
+                            : 'bg-transparent border-slate-205 dark:border-slate-800 text-slate-600 dark:text-slate-400 hover:border-slate-955 dark:hover:border-slate-350'
                         }`}
                       >
-                        <span className="text-xs font-bold">{floor.label}</span>
-                        <span className={`text-[9px] mt-0.5 ${calcFloor === floor.id ? 'text-sky-100' : 'text-slate-400 dark:text-slate-500'}`}>{floor.note}</span>
+                        <span className="text-xs font-black">{floor.label}</span>
+                        <span className={`text-[8px] font-bold mt-1 ${calcFloor === floor.id ? 'text-premium' : 'text-slate-405 dark:text-slate-500'}`}>{floor.note}</span>
                       </button>
                     ))}
                   </div>
@@ -1758,8 +1843,8 @@ function App() {
 
               {/* Step 3 */}
               <div className="space-y-3">
-                <label className="text-xs font-extrabold text-slate-900 dark:text-white uppercase tracking-wider">
-                  {calcService === 'repair' ? t.calcStep3_Repair : t.calcStep3_Default}
+                <label className="text-[10px] font-black text-slate-500 uppercase tracking-wider block">
+                  [ {calcService === 'repair' ? t.calcStep3_Repair : t.calcStep3_Default} ]
                 </label>
                 <div className="space-y-2">
                   
@@ -1767,68 +1852,68 @@ function App() {
                   {calcService === 'repair' ? (
                     <>
                       {/* Capacitor */}
-                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
-                        <div className="flex items-center space-x-3">
+                      <label className="flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-850 hover:bg-slate-50 dark:hover:bg-[#0c121d] transition-all cursor-pointer">
+                        <div className="flex items-center space-x-3.5">
                           <input 
                             type="checkbox" 
                             checked={repairCapacitor}
                             onChange={(e) => setRepairCapacitor(e.target.checked)}
-                            className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                            className="w-4 h-4 text-premium border-slate-300 rounded-none cursor-pointer focus:ring-0"
                           />
                           <div>
-                            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">{t.calcOptCapacitor}</span>
-                            <span className="text-[10px] text-slate-400 dark:text-slate-500">{t.calcOptCapacitorNote}</span>
+                            <span className="text-xs font-black text-slate-900 dark:text-slate-200 block uppercase tracking-wide">{t.calcOptCapacitor}</span>
+                            <span className="text-[9px] text-slate-500 dark:text-slate-400">{t.calcOptCapacitorNote}</span>
                           </div>
                         </div>
                       </label>
 
                       {/* Relay */}
-                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
-                        <div className="flex items-center space-x-3">
+                      <label className="flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-850 hover:bg-slate-50 dark:hover:bg-[#0c121d] transition-all cursor-pointer">
+                        <div className="flex items-center space-x-3.5">
                           <input 
                             type="checkbox" 
                             checked={repairRelay}
                             onChange={(e) => setRepairRelay(e.target.checked)}
-                            className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                            className="w-4 h-4 text-premium border-slate-300 rounded-none cursor-pointer focus:ring-0"
                           />
                           <div>
-                            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">{t.calcOptRelay}</span>
-                            <span className="text-[10px] text-slate-400 dark:text-slate-500">{t.calcOptRelayNote}</span>
+                            <span className="text-xs font-black text-slate-900 dark:text-slate-200 block uppercase tracking-wide">{t.calcOptRelay}</span>
+                            <span className="text-[9px] text-slate-500 dark:text-slate-400">{t.calcOptRelayNote}</span>
                           </div>
                         </div>
                       </label>
 
                       {/* Board */}
-                      <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
-                        <div className="flex items-center space-x-3">
+                      <label className="flex items-center justify-between p-3.5 border border-slate-200/80 dark:border-slate-850 hover:bg-slate-50 dark:hover:bg-[#0c121d] transition-all cursor-pointer">
+                        <div className="flex items-center space-x-3.5">
                           <input 
                             type="checkbox" 
                             checked={repairBoard}
                             onChange={(e) => setRepairBoard(e.target.checked)}
-                            className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                            className="w-4 h-4 text-premium border-slate-300 rounded-none cursor-pointer focus:ring-0"
                           />
                           <div>
-                            <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">{t.calcOptBoard}</span>
-                            <span className="text-[10px] text-slate-400 dark:text-slate-500">{t.calcOptBoardNote}</span>
+                            <span className="text-xs font-black text-slate-900 dark:text-slate-200 block uppercase tracking-wide">{t.calcOptBoard}</span>
+                            <span className="text-[9px] text-slate-500 dark:text-slate-400">{t.calcOptBoardNote}</span>
                           </div>
                         </div>
                       </label>
                     </>
                   ) : (
                     /* Default options (Clean/Install) */
-                    <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
-                      <div className="flex items-center space-x-3">
+                    <label className="flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-850 hover:bg-slate-50 dark:hover:bg-[#0c121d] transition-all cursor-pointer">
+                      <div className="flex items-center space-x-3.5">
                         <input 
                           type="checkbox" 
                           checked={extraAntibacterial}
                           onChange={(e) => setExtraAntibacterial(e.target.checked)}
-                          className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                          className="w-4 h-4 text-premium border-slate-300 rounded-none cursor-pointer focus:ring-0"
                         />
                         <div>
-                          <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">
+                          <span className="text-xs font-black text-slate-900 dark:text-slate-200 block uppercase tracking-wide">
                             {calcService === 'clean' ? t.calcOptCleanChem : t.calcOptAntibac}
                           </span>
-                          <span className="text-[10px] text-slate-400 dark:text-slate-500">
+                          <span className="text-[9px] text-slate-500 dark:text-slate-400">
                             {calcService === 'clean' ? t.calcOptCleanChemNote : t.calcOptAntibacNote}
                           </span>
                         </div>
@@ -1837,19 +1922,19 @@ function App() {
                   )}
 
                   {/* Freon */}
-                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
-                    <div className="flex items-center space-x-3">
+                  <label className="flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-850 hover:bg-slate-50 dark:hover:bg-[#0c121d] transition-all cursor-pointer">
+                    <div className="flex items-center space-x-3.5">
                       <input 
                         type="checkbox" 
                         checked={extraFreon}
                         onChange={(e) => setExtraFreon(e.target.checked)}
-                        className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                        className="w-4 h-4 text-premium border-slate-300 rounded-none cursor-pointer focus:ring-0"
                       />
                       <div>
-                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">
+                        <span className="text-xs font-black text-slate-900 dark:text-slate-200 block uppercase tracking-wide">
                           {calcService === 'repair' ? t.calcOptFreonRepair : t.calcOptFreonClean}
                         </span>
-                        <span className="text-[10px] text-slate-400 dark:text-slate-500">
+                        <span className="text-[9px] text-slate-500 dark:text-slate-400">
                           {calcService === 'repair' ? t.calcOptFreonRepairNote : t.calcOptFreonCleanNote}
                         </span>
                       </div>
@@ -1857,17 +1942,17 @@ function App() {
                   </label>
 
                   {/* High Work */}
-                  <label className="flex items-center justify-between p-3 rounded-xl border border-slate-100 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 transition-all cursor-pointer">
-                    <div className="flex items-center space-x-3">
+                  <label className="flex items-center justify-between p-3.5 border border-slate-200 dark:border-slate-850 hover:bg-slate-50 dark:hover:bg-[#0c121d] transition-all cursor-pointer">
+                    <div className="flex items-center space-x-3.5">
                       <input 
                         type="checkbox" 
                         checked={extraHighWork}
                         onChange={(e) => setExtraHighWork(e.target.checked)}
-                        className="w-4 h-4 text-sky-600 border-slate-300 rounded-sm focus:ring-sky-500 cursor-pointer"
+                        className="w-4 h-4 text-premium border-slate-300 rounded-none cursor-pointer focus:ring-0"
                       />
                       <div>
-                        <span className="text-xs font-bold text-slate-800 dark:text-slate-200 block">{t.calcOptHigh}</span>
-                        <span className="text-[10px] text-slate-400 dark:text-slate-500">{t.calcOptHighNote}</span>
+                        <span className="text-xs font-black text-slate-900 dark:text-slate-200 block uppercase tracking-wide">{t.calcOptHigh}</span>
+                        <span className="text-[9px] text-slate-500 dark:text-slate-400">{t.calcOptHighNote}</span>
                       </div>
                     </div>
                   </label>
@@ -1876,27 +1961,32 @@ function App() {
 
             </div>
 
-            {/* Pricing Summary */}
-            <div className="md:col-span-5 bg-slate-50/80 dark:bg-[#0c121e] p-6 sm:p-8 flex flex-col justify-between text-left relative transition-colors duration-300">
+            {/* Pricing Summary (Printed System Invoice / Receipt) */}
+            <div className="md:col-span-5 bg-slate-50 dark:bg-[#0a0f18] p-6 sm:p-8 flex flex-col justify-between relative transition-colors duration-300 border-t md:border-t-0 md:border-l border-slate-950 dark:border-slate-800">
               <div className="space-y-6">
-                <div>
-                  <h4 className="text-xs font-extrabold text-slate-400 dark:text-slate-550 uppercase tracking-wider">{t.summaryTitle}</h4>
-                  <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-1">{t.summarySub}</p>
+                
+                {/* Invoice Header */}
+                <div className="text-center border-b border-dashed border-slate-300 dark:border-slate-800 pb-4">
+                  <h4 className="text-[11px] font-black text-slate-950 dark:text-white uppercase tracking-widest">{t.summaryTitle}</h4>
+                  <p className="text-[8px] text-slate-400 uppercase mt-0.5">CLI_SERVICE_INVOICE</p>
+                  <p className="text-[7px] text-slate-500 font-bold mt-1">TIMESTAMP: {sysTime || '00:00:00'} // UTC+5</p>
                 </div>
 
-                <div className="py-6 border-y border-slate-200 dark:border-slate-800 space-y-3">
-                  <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+                {/* Receipt Line Items */}
+                <div className="space-y-2.5 text-[10px] text-slate-650 dark:text-slate-400">
+                  <div className="flex justify-between items-center">
                     <span>{t.summaryBase}</span>
-                    <span className="font-bold text-slate-700 dark:text-slate-300">
+                    <span className="font-extrabold text-slate-950 dark:text-white">
                       {calcService === 'clean' && t.summaryCleanNoChem}
                       {calcService === 'repair' && t.summaryRepairDiag}
                       {calcService === 'install' && (calcFloor === '1' ? t.summaryInstallFloor1 : t.summaryInstallFloor2)}
                     </span>
                   </div>
+                  
                   {calcArea !== '20' && (
-                    <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+                    <div className="flex justify-between items-center">
                       <span>{t.summaryAreaCharge}</span>
-                      <span className="font-bold text-slate-700 dark:text-slate-300">
+                      <span className="font-extrabold text-slate-950 dark:text-white">
                         {calcArea === '35' && '+ 3 000 ₸'}
                         {calcArea === '50' && '+ 6 000 ₸'}
                         {calcArea === '50+' && '+ 12 000 ₸'}
@@ -1904,34 +1994,34 @@ function App() {
                     </div>
                   )}
                   
-                  {/* Dynamic Repair Summary Items */}
+                  {/* Dynamic Repair Items */}
                   {calcService === 'repair' ? (
                     <>
                       {repairCapacitor && (
-                        <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+                        <div className="flex justify-between items-center">
                           <span>{t.summaryCapacitor}</span>
-                          <span className="font-bold text-slate-700 dark:text-slate-300">+ 13 000 ₸</span>
+                          <span className="font-extrabold text-slate-950 dark:text-white">+ 13 005 ₸</span>
                         </div>
                       )}
                       {repairRelay && (
-                        <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+                        <div className="flex justify-between items-center">
                           <span>{t.summaryRelay}</span>
-                          <span className="font-bold text-slate-700 dark:text-slate-300">+ 10 000 ₸</span>
+                          <span className="font-extrabold text-slate-950 dark:text-white">+ 10 000 ₸</span>
                         </div>
                       )}
                       {repairBoard && (
-                        <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+                        <div className="flex justify-between items-center">
                           <span>{t.summaryBoard}</span>
-                          <span className="font-bold text-slate-700 dark:text-slate-300">+ 20 000 ₸</span>
+                          <span className="font-extrabold text-slate-950 dark:text-white">+ 20 000 ₸</span>
                         </div>
                       )}
                     </>
                   ) : (
                     /* Default options (Clean/Install) */
                     extraAntibacterial && (
-                      <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+                      <div className="flex justify-between items-center">
                         <span>{t.summaryChem}</span>
-                        <span className="font-bold text-slate-700 dark:text-slate-300">
+                        <span className="font-extrabold text-slate-950 dark:text-white">
                           {calcService === 'clean' ? '+ 5 000 ₸' : '+ 4 000 ₸'}
                         </span>
                       </div>
@@ -1939,34 +2029,34 @@ function App() {
                   )}
 
                   {extraFreon && (
-                    <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+                    <div className="flex justify-between items-center">
                       <span>{t.summaryFreon}</span>
-                      <span className="font-bold text-slate-700 dark:text-slate-300">+ 15 000 ₸</span>
+                      <span className="font-extrabold text-slate-950 dark:text-white">+ 15 000 ₸</span>
                     </div>
                   )}
                   {extraHighWork && (
-                    <div className="flex justify-between items-center text-xs text-slate-500 dark:text-slate-400">
+                    <div className="flex justify-between items-center">
                       <span>{t.summaryHigh}</span>
-                      <span className="font-bold text-slate-700 dark:text-slate-300">+ 15 000 ₸</span>
+                      <span className="font-extrabold text-slate-950 dark:text-white">+ 15 050 ₸</span>
                     </div>
                   )}
 
-                  <div className="pt-4 flex justify-between items-end border-t border-slate-200 dark:border-slate-800">
-                    <span className="text-slate-900 dark:text-white font-extrabold text-sm uppercase">{t.summaryTotal}</span>
-                    <div className="text-right">
-                      <span className="text-2xl sm:text-3xl font-black text-slate-950 dark:text-white tracking-tight">
-                        {currentPrice.toLocaleString('ru-RU')} ₸
-                      </span>
-                    </div>
+                  {/* Dash Divider */}
+                  <div className="border-t border-dashed border-slate-300 dark:border-slate-800 my-4 pt-4 flex justify-between items-baseline">
+                    <span className="text-slate-950 dark:text-white font-black text-xs uppercase">{t.summaryTotal}</span>
+                    <span className="text-2xl font-black text-premium tracking-tighter">
+                      {currentPrice.toLocaleString('ru-RU')} ₸
+                    </span>
                   </div>
                 </div>
 
-                <div className="bg-white dark:bg-[#0f1624] border border-sky-100 dark:border-sky-950/40 p-3.5 rounded-xl space-y-1">
-                  <div className="flex items-center space-x-2 text-sky-600 dark:text-sky-400">
-                    <ShieldCheck className="w-4 h-4 shrink-0" />
-                    <span className="text-xs font-bold">{t.summaryTrustTitle}</span>
+                {/* Guarantee Note Box */}
+                <div className="border border-slate-950 dark:border-slate-800 p-3 bg-white dark:bg-slate-950 text-[9px] text-slate-500 dark:text-slate-400 space-y-1">
+                  <div className="flex items-center space-x-1.5 text-premium font-black">
+                    <ShieldCheck className="w-3.5 h-3.5 shrink-0" />
+                    <span>[ {t.summaryTrustTitle} ]</span>
                   </div>
-                  <p className="text-[10px] text-slate-500 dark:text-slate-400 leading-normal">
+                  <p className="leading-relaxed font-sans">
                     {t.summaryTrustDesc}
                   </p>
                 </div>
@@ -1982,20 +2072,20 @@ function App() {
                       required
                       value={calcPhone}
                       onChange={(e) => setCalcPhone(e.target.value)}
-                      className="w-full text-xs bg-white dark:bg-slate-950 border border-slate-300 dark:border-white/10 text-slate-900 dark:text-white rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-sky-500"
+                      className="w-full text-xs bg-white dark:bg-slate-950 border-2 border-slate-950 dark:border-slate-800 text-slate-900 dark:text-white rounded-none px-4 py-3.5 focus:outline-none focus:border-premium font-mono"
                     />
                     <button
                       type="submit"
-                      className="w-full bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white font-bold py-3.5 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer text-center text-xs"
+                      className="w-full bg-premium text-white font-mono font-black py-4 px-6 rounded-none border-2 border-premium hover:bg-transparent hover:text-premium transition-all active:translate-x-1 active:translate-y-1 text-center text-xs uppercase tracking-widest cursor-pointer shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)]"
                     >
-                      {t.summarySubmitBtn}
+                      {t.summarySubmitBtn} ↗
                     </button>
                   </form>
                 ) : (
-                  <div className="bg-emerald-50 dark:bg-emerald-950/20 border border-emerald-100 dark:border-emerald-900/20 p-4 rounded-xl text-center space-y-2">
-                    <Check className="w-8 h-8 text-emerald-600 dark:text-emerald-400 mx-auto" />
-                    <h5 className="text-xs font-bold text-emerald-950 dark:text-emerald-250">{t.summarySuccessTitle}</h5>
-                    <p className="text-[10px] text-emerald-700 dark:text-emerald-450 leading-relaxed">
+                  <div className="border-2 border-emerald-500 bg-emerald-500/5 p-4 rounded-none text-center space-y-2 font-mono">
+                    <Check className="w-6 h-6 text-emerald-500 mx-auto" />
+                    <h5 className="text-xs font-black text-emerald-500 uppercase">{t.summarySuccessTitle}</h5>
+                    <p className="text-[10px] text-slate-400 leading-relaxed font-sans">
                       {t.summarySuccessDesc}
                     </p>
                   </div>
@@ -2009,43 +2099,59 @@ function App() {
         </div>
       </section>
 
-      {/* DYNAMIC SERVICES SHOWCASE */}
-      <section id="services" className="py-20 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
+      {/* DYNAMIC SERVICES SHOWCASE (/03__SELECTED_WORK) */}
+      <section id="services" className="py-16 bg-[#f5f5f3] dark:bg-[#06080f] border-b border-slate-950 dark:border-slate-800 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="text-center space-y-4 mb-16">
-            <ScrollRevealHeading>
-              <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight sm:text-4xl">
-                {t.serviceTitle}
-              </h2>
-            </ScrollRevealHeading>
-            <p className="text-slate-500 dark:text-slate-400 text-sm max-w-xl mx-auto">
+          {/* Header identifier */}
+          <div className="border border-slate-950 dark:border-slate-800 px-4 py-2 flex items-center justify-between font-mono text-[9px] text-slate-500 dark:text-slate-400 mb-8">
+            <div className="flex items-center space-x-2">
+              <span className="text-premium font-black">/03__SELECTED_WORK</span>
+              <span>•</span>
+              <span>CATALOG_SYS</span>
+            </div>
+            <span>TOTAL: 03 SERVICES</span>
+          </div>
+
+          <div className="text-left space-y-4 mb-12 font-mono">
+            <h2 className="text-3xl font-black text-slate-950 dark:text-white tracking-tighter uppercase">
+              // {t.serviceTitle}
+            </h2>
+            <p className="text-slate-500 dark:text-slate-400 text-xs font-sans max-w-xl border-l border-slate-950 dark:border-slate-800 pl-3">
               {t.serviceSub}
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {servicesTabs.map((service) => (
+          <div className="grid lg:grid-cols-3 gap-6 items-stretch">
+            {servicesTabs.map((service, index) => (
               <div 
                 key={service.id}
-                className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 flex flex-col justify-between text-left"
+                className="bg-white dark:bg-[#070b12] border-2 border-slate-950 dark:border-slate-800 p-6 flex flex-col justify-between text-left font-mono relative"
               >
+                {/* Number index indicator */}
+                <div className="absolute top-3 right-4 text-[9px] text-slate-450 font-extrabold font-mono">
+                  [IDX.0{index + 1}]
+                </div>
+
                 <div className="space-y-6">
                   {/* Card Header */}
-                  <div className="flex justify-between items-start">
-                    <span className="text-xs font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider">{service.duration}</span>
-                    <span className="text-xl font-black text-slate-900 dark:text-white">{service.price}</span>
+                  <div className="flex flex-col space-y-1 pb-4 border-b border-slate-205 dark:border-slate-800">
+                    <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider">{service.duration}</span>
+                    <span className="text-2xl font-black text-premium">{service.price}</span>
                   </div>
 
                   <div>
-                    <h3 className="font-extrabold text-slate-900 dark:text-white text-xl tracking-tight leading-tight">{service.title}</h3>
+                    <h3 className="font-extrabold text-slate-950 dark:text-white text-lg tracking-tight uppercase leading-tight">{service.title}</h3>
+                    <div className="mt-2 text-[8px] bg-slate-950 text-white dark:bg-slate-800 px-2 py-0.5 inline-block font-black tracking-widest uppercase">
+                      STATUS: OPERATIONAL
+                    </div>
                   </div>
 
                   {/* Bullets */}
-                  <ul className="space-y-3 border-t border-slate-100 dark:border-slate-800 pt-6">
+                  <ul className="space-y-3 font-sans pt-4 border-t border-slate-100 dark:border-slate-800">
                     {service.bullets.map((bullet, idx) => (
-                      <li key={idx} className="flex items-start text-xs sm:text-sm text-slate-600 dark:text-slate-400 leading-relaxed">
-                        <Check className="w-4 h-4 text-sky-500 dark:text-sky-400 shrink-0 mr-2 mt-1" />
+                      <li key={idx} className="flex items-start text-xs text-slate-655 dark:text-slate-400 leading-relaxed">
+                        <span className="text-premium font-mono mr-2 mt-0.5 shrink-0">→</span>
                         <span>{bullet}</span>
                       </li>
                     ))}
@@ -2054,22 +2160,22 @@ function App() {
 
                 <div className="mt-8 space-y-4">
                   {/* Results Badge */}
-                  <div className="bg-sky-50/50 dark:bg-sky-950/20 p-4 rounded-xl border border-sky-100/50 dark:border-sky-900/10">
-                    <span className="text-[10px] font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wider block">{t.serviceTabExpected}</span>
-                    <p className="text-xs text-slate-650 dark:text-slate-200 mt-1 leading-normal">{service.result}</p>
+                  <div className="bg-slate-50 dark:bg-slate-950 border border-slate-950 dark:border-slate-800 p-4 rounded-none font-sans">
+                    <span className="text-[9px] font-mono font-bold text-premium uppercase tracking-wider block">[EXPECTED_RESULT]</span>
+                    <p className="text-xs text-slate-650 dark:text-slate-350 mt-1.5 leading-normal">{service.result}</p>
                   </div>
 
                   {/* Objection Closure */}
-                  <div className="flex items-start space-x-2 text-[11px] text-slate-400 dark:text-slate-500 italic">
-                    <Info className="w-3.5 h-3.5 text-sky-400 shrink-0 mt-0.5" />
+                  <div className="flex items-start space-x-2 text-[10px] text-slate-450 italic font-sans leading-normal">
+                    <Info className="w-3.5 h-3.5 text-premium shrink-0 mt-0.5" />
                     <span>{service.objectionClose}</span>
                   </div>
 
                   <button 
                     onClick={() => handleWhatsAppClick(lang === 'ru' ? `Здравствуйте! Хочу заказать услугу: ${service.title}.` : lang === 'kk' ? `Сәлеметсіз бе! Мен ${service.title} қызметіне тапсырыс бергім келеді.` : `Hello! I would like to order: ${service.title}.`)}
-                    className="w-full bg-slate-900 dark:bg-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 text-white text-xs font-bold py-3.5 rounded-xl transition-all text-center cursor-pointer cta-shimmer"
+                    className="w-full bg-slate-950 dark:bg-white text-white dark:text-slate-950 hover:bg-premium hover:text-white dark:hover:bg-premium dark:hover:text-white border-2 border-slate-950 dark:border-white font-mono font-black py-3 rounded-none transition-all text-center text-xs uppercase tracking-widest cursor-pointer"
                   >
-                    {t.serviceTabOrderBtn}
+                    {t.serviceTabOrderBtn} ↗
                   </button>
                 </div>
               </div>
@@ -2207,123 +2313,189 @@ function App() {
         </div>
       </section>
 
-      {/* FINAL HIGH-CONVERTING CAPTURE FORM */}
-      <section id="booking-section" className="py-24 relative overflow-hidden bg-slate-900 text-white">
-        
-        {/* Dark theme accents */}
-        <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-800 to-slate-950 opacity-90 z-0"></div>
-        <div className="absolute -bottom-48 -left-48 w-96 h-96 bg-sky-600/10 rounded-full filter blur-3xl z-0 pointer-events-none"></div>
-
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center space-y-12">
+      {/* FINAL HIGH-CONVERTING CAPTURE FORM (/04, /05, /06) */}
+      <section id="booking-section" className="py-16 bg-[#f5f5f3] dark:bg-[#06080f] border-b border-slate-950 dark:border-slate-800 text-slate-950 dark:text-white transition-colors duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="space-y-4">
-            <span className="bg-amber-400/15 text-amber-300 border border-amber-400/30 text-[10px] font-extrabold px-3 py-1 rounded-full uppercase tracking-wider inline-block">
-              {t.captureLabel}
-            </span>
-            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
-              {t.captureTitle}
-            </h2>
-            <p className="text-slate-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">
-              {t.captureDesc}
-            </p>
+          {/* Header identifier */}
+          <div className="border border-slate-950 dark:border-slate-800 px-4 py-2 flex items-center justify-between font-mono text-[9px] text-slate-500 dark:text-slate-400 mb-8">
+            <div className="flex items-center space-x-2">
+              <span className="text-premium font-black">/04.05.06__TRANSMISSION_NODE</span>
+              <span>•</span>
+              <span>GATEWAY: CONNECTED</span>
+            </div>
+            <span>SECURE_NODE</span>
           </div>
 
-          <div className="bg-white/5 border border-white/10 p-6 sm:p-10 rounded-3xl max-w-xl mx-auto backdrop-blur-md">
-            {!bookingSuccess ? (
-              <form onSubmit={(e) => submitBooking(e, 'main')} className="space-y-4 text-left">
+          <div className="grid lg:grid-cols-3 border-2 border-slate-950 dark:border-slate-800 text-left font-mono">
+            
+            {/* Column 04: Booking Info */}
+            <div className="p-6 sm:p-8 border-b lg:border-b-0 lg:border-r border-slate-950 dark:border-slate-800 flex flex-col justify-between space-y-6">
+              <div className="space-y-4">
+                <span className="bg-amber-500 text-slate-950 text-[9px] font-black px-2 py-0.5 uppercase tracking-widest inline-block">
+                  /04 [ {t.captureLabel} ]
+                </span>
+                <h3 className="text-2xl font-black uppercase tracking-tighter leading-none text-slate-950 dark:text-white">
+                  {t.captureTitle}
+                </h3>
+                <p className="text-xs text-slate-650 dark:text-slate-400 font-sans leading-relaxed">
+                  {t.captureDesc}
+                </p>
+              </div>
+              <div className="text-[8px] text-slate-500 uppercase tracking-widest font-black pt-4">
+                [INPUT_REQUEST_PENDING]
+              </div>
+            </div>
+
+            {/* Column 05: System Status Telemetry */}
+            <div className="p-6 sm:p-8 border-b lg:border-b-0 lg:border-r border-slate-950 dark:border-slate-800 space-y-6">
+              <span className="bg-slate-950 text-white dark:bg-slate-800 text-[9px] font-black px-2 py-0.5 uppercase tracking-widest inline-block">
+                /05 [ STATUS_MONITOR ]
+              </span>
+              
+              <div className="space-y-4 text-xs">
+                {/* Meter 1 */}
                 <div className="space-y-1.5">
-                  <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">{t.capturePlaceholder}</label>
-                  <input 
-                    type="tel" 
-                    placeholder="+7 (___) ___-__-__" 
-                    required
-                    value={bookingPhone}
-                    onChange={(e) => setBookingPhone(e.target.value)}
-                    className="w-full text-sm bg-slate-950/80 border border-white/10 rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-sky-500 text-white placeholder-slate-600"
-                  />
+                  <div className="flex justify-between font-bold text-[10px]">
+                    <span className="uppercase">ENGINEERS_AVAILABLE:</span>
+                    <span className="text-premium">85%</span>
+                  </div>
+                  <div className="h-2 bg-slate-200 dark:bg-slate-900 border border-slate-950 dark:border-slate-800 rounded-none overflow-hidden">
+                    <div className="h-full bg-premium" style={{ width: '85%' }}></div>
+                  </div>
                 </div>
-                
-                <button
-                  type="submit"
-                  className="w-full bg-gradient-to-r from-sky-500 to-cyan-400 hover:from-sky-600 hover:to-cyan-500 text-slate-950 text-xs sm:text-sm font-black py-4 rounded-xl transition-all shadow-lg active:scale-98 cursor-pointer uppercase tracking-wider"
-                >
-                  {t.captureSubmitBtn}
-                </button>
-                
-                <p className="text-[10px] text-slate-500 leading-normal text-center">
-                  {lang === 'ru' ? (
-                    <>
-                      Нажимая кнопку, вы соглашаетесь на мгновенную обработку{' '}
-                      <button
-                        type="button"
-                        onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }}
-                        className="underline text-sky-600 hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300 font-semibold cursor-pointer inline bg-transparent border-none p-0"
-                      >
-                        персональных данных
-                      </button>{' '}
-                      для связи.
-                    </>
-                  ) : lang === 'kk' ? (
-                    <>
-                      Батырманы басу арқылы сіз байланыс үшін{' '}
-                      <button
-                        type="button"
-                        onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }}
-                        className="underline text-sky-600 hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300 font-semibold cursor-pointer inline bg-transparent border-none p-0"
-                      >
-                        дербес деректерді
-                      </button>{' '}
-                      дереу өңдеуге келісесіз.
-                    </>
-                  ) : (
-                    <>
-                      By clicking the button, you consent to the instant processing of{' '}
-                      <button
-                        type="button"
-                        onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }}
-                        className="underline text-sky-600 hover:text-sky-500 dark:text-sky-400 dark:hover:text-sky-300 font-semibold cursor-pointer inline bg-transparent border-none p-0"
-                      >
-                        personal data
-                      </button>{' '}
-                      for communication.
-                    </>
-                  )}
-                </p>
-              </form>
-            ) : (
-              <div className="py-8 space-y-4 text-center">
-                <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mx-auto border border-emerald-500/20">
-                  <Check className="w-8 h-8" />
+
+                {/* Meter 2 */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between font-bold text-[10px]">
+                    <span className="uppercase">ATYRAU_ROAD_LOAD:</span>
+                    <span className="text-amber-500">40%</span>
+                  </div>
+                  <div className="h-2 bg-slate-200 dark:bg-slate-900 border border-slate-950 dark:border-slate-800 rounded-none overflow-hidden">
+                    <div className="h-full bg-amber-500" style={{ width: '40%' }}></div>
+                  </div>
                 </div>
-                <h4 className="text-lg font-bold text-white">{t.captureSuccessTitle}</h4>
-                <p className="text-xs text-slate-400 leading-relaxed max-w-xs mx-auto">
-                  {t.captureSuccessDesc.replace('{phone}', bookingPhone)}
-                </p>
+
+                {/* Meter 3 */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between font-bold text-[10px]">
+                    <span className="uppercase">SUCCESS_REPAIR_RATE:</span>
+                    <span className="text-emerald-500">98%</span>
+                  </div>
+                  <div className="h-2 bg-slate-200 dark:bg-slate-900 border border-slate-950 dark:border-slate-800 rounded-none overflow-hidden">
+                    <div className="h-full bg-emerald-500" style={{ width: '98%' }}></div>
+                  </div>
+                </div>
               </div>
-            )}
+
+              <div className="text-[8px] text-slate-500 uppercase tracking-widest font-black pt-2">
+                [LOC_COORDS: Atyrau, KZ]
+              </div>
+            </div>
+
+            {/* Column 06: Transmission Request Form */}
+            <div className="p-6 sm:p-8 flex flex-col justify-between space-y-6">
+              <div>
+                <span className="bg-premium text-white text-[9px] font-black px-2 py-0.5 uppercase tracking-widest inline-block mb-4">
+                  /06 [ {lang === 'ru' ? 'ОТПРАВКА ЗАПРОСА' : lang === 'kk' ? 'СҰРАНЫСТЫ ЖІБЕРУ' : 'TRANSMIT REQUEST'} ]
+                </span>
+                
+                {!bookingSuccess ? (
+                  <form onSubmit={(e) => submitBooking(e, 'main')} className="space-y-4 text-left">
+                    <div className="space-y-1.5">
+                      <label className="text-[9px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-widest block">{t.capturePlaceholder}</label>
+                      <input 
+                        type="tel" 
+                        placeholder="+7 (775) 432-35-61" 
+                        required
+                        value={bookingPhone}
+                        onChange={(e) => setBookingPhone(e.target.value)}
+                        className="w-full text-xs bg-white dark:bg-slate-950 border-2 border-slate-950 dark:border-slate-800 text-slate-900 dark:text-white rounded-none px-4 py-3.5 focus:outline-none focus:border-premium font-mono"
+                      />
+                    </div>
+                    
+                    <button
+                      type="submit"
+                      className="w-full bg-premium text-white font-mono font-black py-4 px-6 rounded-none border-2 border-premium hover:bg-transparent hover:text-premium transition-all active:translate-x-1 active:translate-y-1 text-center text-xs uppercase tracking-widest cursor-pointer shadow-[3px_3px_0px_0px_rgba(0,0,0,1)] dark:shadow-[3px_3px_0px_0px_rgba(255,255,255,0.15)]"
+                    >
+                      {t.captureSubmitBtn} ↗
+                    </button>
+                    
+                    <p className="text-[9px] text-slate-500 font-sans leading-normal text-center pt-2">
+                      {lang === 'ru' ? (
+                        <>
+                          Нажимая кнопку, вы соглашаетесь на мгновенную обработку{' '}
+                          <button
+                            type="button"
+                            onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }}
+                            className="underline text-premium hover:text-premium dark:text-premium font-bold cursor-pointer inline bg-transparent border-none p-0"
+                          >
+                            персональных данных
+                          </button>{' '}
+                          для связи.
+                        </>
+                      ) : lang === 'kk' ? (
+                        <>
+                          Батырманы басу арқылы сіз байланыс үшін{' '}
+                          <button
+                            type="button"
+                            onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }}
+                            className="underline text-premium hover:text-premium dark:text-premium font-bold cursor-pointer inline bg-transparent border-none p-0"
+                          >
+                            дербес деректерді
+                          </button>{' '}
+                          дереу өңдеуге келісесіз.
+                        </>
+                      ) : (
+                        <>
+                          By clicking the button, you consent to the instant processing of{' '}
+                          <button
+                            type="button"
+                            onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }}
+                            className="underline text-premium hover:text-premium dark:text-premium font-bold cursor-pointer inline bg-transparent border-none p-0"
+                          >
+                            personal data
+                          </button>{' '}
+                          for communication.
+                        </>
+                      )}
+                    </p>
+                  </form>
+                ) : (
+                  <div className="border-2 border-emerald-500 bg-emerald-500/5 p-6 rounded-none text-center space-y-3 font-mono">
+                    <Check className="w-8 h-8 text-emerald-500 mx-auto" />
+                    <h4 className="text-xs font-black text-emerald-500 uppercase">{t.captureSuccessTitle}</h4>
+                    <p className="text-[10px] text-slate-400 leading-relaxed font-sans">
+                      {t.captureSuccessDesc.replace('{phone}', bookingPhone)}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </div>
+
           </div>
 
-          {/* Core Objections reminder cards */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left pt-8 border-t border-white/5">
-            <div className="flex items-start space-x-3">
-              <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0" />
+          {/* Core Objections flat grid panel */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 border-x border-b border-slate-950 dark:border-slate-800 text-left font-mono">
+            <div className="p-6 border-b sm:border-b-0 sm:border-r border-slate-950 dark:border-slate-800 flex items-start space-x-3.5">
+              <CheckCircle2 className="w-5 h-5 text-premium shrink-0" />
               <div>
-                <h4 className="text-xs font-bold text-white">{lang === 'ru' ? 'Выезд за 0 ₸' : lang === 'kk' ? 'Келуі 0 ₸' : '0 KZT Visit'}</h4>
-                <p className="text-[11px] text-slate-400 mt-1 leading-normal">{lang === 'ru' ? 'При выполнении работ выезд инженера бесплатный.' : lang === 'kk' ? 'Жұмыс жүргізілсе инженердің келуі тегін.' : 'Arrival is free under repair condition.'}</p>
+                <h4 className="text-xs font-black uppercase text-slate-950 dark:text-white">{lang === 'ru' ? 'Выезд за 0 ₸' : lang === 'kk' ? 'Келуі 0 ₸' : '0 KZT Visit'}</h4>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-normal font-sans">{lang === 'ru' ? 'При выполнении работ выезд инженера бесплатный.' : lang === 'kk' ? 'Жұмыс жүргізілсе инженердің келуі тегін.' : 'Arrival is free under repair condition.'}</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3">
-              <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0" />
+            <div className="p-6 border-b sm:border-b-0 sm:border-r border-slate-950 dark:border-slate-800 flex items-start space-x-3.5">
+              <CheckCircle2 className="w-5 h-5 text-premium shrink-0" />
               <div>
-                <h4 className="text-xs font-bold text-white">{lang === 'ru' ? 'Цена до начала работ' : lang === 'kk' ? 'Жұмысқа дейінгі баға' : 'Price Lock'}</h4>
-                <p className="text-[11px] text-slate-400 mt-1 leading-normal">{lang === 'ru' ? 'Никаких непредвиденных доплат за шланги или срочность.' : lang === 'kk' ? 'Түтік немесе шұғылдық үшін ешқандай үстеме төлемсіз.' : 'No sudden surcharges for lines or urgency.'}</p>
+                <h4 className="text-xs font-black uppercase text-slate-950 dark:text-white">{lang === 'ru' ? 'Цена до начала' : lang === 'kk' ? 'Жұмысқа дейінгі баға' : 'Price Lock'}</h4>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-normal font-sans">{lang === 'ru' ? 'Никаких непредвиденных доплат за шланги или срочность.' : lang === 'kk' ? 'Түтік немесе шұғылдық үшін ешқандай үстеме төлемсіз.' : 'No sudden surcharges for lines or urgency.'}</p>
               </div>
             </div>
-            <div className="flex items-start space-x-3">
-              <CheckCircle2 className="w-5 h-5 text-sky-400 shrink-0" />
+            <div className="p-6 flex items-start space-x-3.5">
+              <CheckCircle2 className="w-5 h-5 text-premium shrink-0" />
               <div>
-                <h4 className="text-xs font-bold text-white">{lang === 'ru' ? 'Бахилы и уборка' : lang === 'kk' ? 'Бахила мен тазалау' : 'Shoe Covers & Clean'}</h4>
-                <p className="text-[11px] text-slate-400 mt-1 leading-normal">{lang === 'ru' ? 'Инженер работает в бахилах и вывозит весь строительный мусор.' : lang === 'kk' ? 'Инженер бахиламен жұмыс істейді және қоқысты тазалайды.' : 'Engineer works in shoe covers and cleans up.'}</p>
+                <h4 className="text-xs font-black uppercase text-slate-950 dark:text-white">{lang === 'ru' ? 'Бахилы и уборка' : lang === 'kk' ? 'Бахила мен тазалау' : 'Shoe Covers & Clean'}</h4>
+                <p className="text-[10px] text-slate-500 dark:text-slate-400 mt-1 leading-normal font-sans">{lang === 'ru' ? 'Инженер работает в бахилах и вывозит весь строительный мусор.' : lang === 'kk' ? 'Инженер бахиламен жұмыс істейді және қоқысты тазалайды.' : 'Engineer works in shoe covers and cleans up.'}</p>
               </div>
             </div>
           </div>
@@ -2331,110 +2503,113 @@ function App() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-slate-950 text-slate-400 border-t border-white/5 py-12">
+      {/* FOOTER (/07__SYSTEM_LOGS) */}
+      <footer className="bg-slate-950 text-slate-400 border-t-2 border-slate-900 py-12 font-mono">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-8 text-left">
           
           {/* Footer Logo & Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-8 h-8 rounded-lg bg-sky-600 flex items-center justify-center">
+              <div className="w-8 h-8 bg-premium flex items-center justify-center border border-slate-900">
                 <Wind className="w-4 h-4 text-white" />
               </div>
-              <span className="font-bold text-lg text-white">Климат<span className="text-sky-500">Эксперт</span></span>
+              <span className="font-extrabold text-white text-base tracking-tighter uppercase">
+                CLIMAT_EXPERT_
+              </span>
             </div>
-            <p className="text-xs text-slate-550 leading-normal">
+            <p className="text-[10px] text-slate-500 leading-relaxed font-sans">
               {t.footerBrandDesc}
             </p>
           </div>
 
           {/* Links Quick */}
           <div>
-            <h4 className="text-white font-extrabold text-xs uppercase tracking-wider mb-4">{t.footerNavTitle}</h4>
-            <ul className="space-y-2 text-xs">
-              <li><a href="#services" className="hover:text-white transition-colors">{t.navServices}</a></li>
-              <li><a href="#calculator" className="hover:text-white transition-colors">{t.navCalc}</a></li>
-              <li><a href="#guarantees" className="hover:text-white transition-colors">{t.navGuarantees}</a></li>
-              <li><a href="#faq" className="hover:text-white transition-colors">{t.navFaq}</a></li>
+            <h4 className="text-white font-extrabold text-xs uppercase tracking-wider mb-4">// {t.footerNavTitle}</h4>
+            <ul className="space-y-2.5 text-[11px] uppercase tracking-wide">
+              <li><a href="#services" className="hover:text-premium transition-colors">{t.navServices}</a></li>
+              <li><a href="#calculator" className="hover:text-premium transition-colors">{t.navCalc}</a></li>
+              <li><a href="#guarantees" className="hover:text-premium transition-colors">{t.navGuarantees}</a></li>
+              <li><a href="#faq" className="hover:text-premium transition-colors">{t.navFaq}</a></li>
             </ul>
           </div>
 
           {/* Legal details / address */}
           <div>
-            <h4 className="text-white font-extrabold text-xs uppercase tracking-wider mb-4">{t.footerContactsTitle}</h4>
-            <ul className="space-y-3 text-xs leading-normal">
+            <h4 className="text-white font-extrabold text-xs uppercase tracking-wider mb-4">// {t.footerContactsTitle}</h4>
+            <ul className="space-y-3.5 text-[11px] leading-relaxed">
               <li className="flex items-start space-x-2">
-                <MapPin className="w-4 h-4 text-sky-500 shrink-0" />
-                <span>{t.footerContactsAddress}</span>
+                <MapPin className="w-4 h-4 text-premium shrink-0" />
+                <span className="font-sans text-[10px]">{t.footerContactsAddress}</span>
               </li>
               <li className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-sky-500 shrink-0" />
-                <a href="tel:+77754323561" className="hover:text-white transition-colors">+7 (775) 432-35-61</a>
+                <Phone className="w-4 h-4 text-premium shrink-0" />
+                <a href="tel:+77754323561" className="hover:text-premium transition-colors font-bold">+7 (775) 432-35-61</a>
               </li>
-              <li>
-                <span className="text-slate-600 block">{t.footerContactsTime}</span>
-                <span>{t.footerContactsDays}</span>
+              <li className="pt-1.5 border-t border-slate-900">
+                <span className="text-slate-600 block text-[9px] uppercase tracking-widest">{t.footerContactsTime}</span>
+                <span className="text-[10px] font-bold text-slate-350">{t.footerContactsDays}</span>
               </li>
             </ul>
           </div>
 
           {/* CASPIAN / ALMACOM reference block */}
-          <div>
-            <h4 className="text-white font-extrabold text-xs uppercase tracking-wider mb-4">{t.footerDealerTitle}</h4>
-            <p className="text-xs text-slate-550 leading-normal">
+          <div className="space-y-4">
+            <h4 className="text-white font-extrabold text-xs uppercase tracking-wider">// {t.footerDealerTitle}</h4>
+            <p className="text-[10px] text-slate-500 leading-relaxed font-sans">
               {t.footerDealerDesc}
             </p>
-            <div className="pt-4 flex items-center space-x-3 text-[10px] text-slate-600 uppercase font-bold">
-              <span>almacom</span>
+            <div className="pt-2 flex items-center space-x-3 text-[9px] text-slate-500 font-bold uppercase tracking-widest">
+              <span>ALMACOM</span>
               <span>•</span>
-              <span>aux</span>
+              <span>AUX</span>
               <span>•</span>
-              <span>midea</span>
+              <span>MIDEA</span>
+              <span>•</span>
+              <span>GREE</span>
             </div>
           </div>
 
         </div>
 
         {/* Official Legal Requisites Box */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-white/5">
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 grid md:grid-cols-3 gap-6 text-xs text-slate-400">
-            <div>
-              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest block mb-2">{t.legalExec}</span>
-              <p className="font-bold text-white text-sm">ИП КЛИМАТ ТЕХ</p>
-              <p className="mt-2 text-slate-500">{t.legalBIN} 530627401271</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-slate-900">
+          <div className="bg-[#070b11] border border-slate-900 p-6 grid md:grid-cols-3 gap-6 text-[10px] text-slate-400">
+            <div className="space-y-2">
+              <span className="text-[8px] font-black text-premium uppercase tracking-widest block">[ {t.legalExec} ]</span>
+              <p className="font-bold text-white text-xs uppercase">IP CLIMAT TECH</p>
+              <p className="text-slate-500 font-bold uppercase">{t.legalBIN} 530627401271</p>
             </div>
-            <div>
-              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest block mb-2">{t.legalAddress}</span>
-              <p className="leading-relaxed">{t.legalAddressDetails}</p>
+            <div className="space-y-2">
+              <span className="text-[8px] font-black text-premium uppercase tracking-widest block">[ {t.legalAddress} ]</span>
+              <p className="leading-relaxed text-slate-300 font-sans">{t.legalAddressDetails}</p>
             </div>
-            <div>
-              <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest block mb-2">{t.legalBank}</span>
-              <p className="font-semibold text-slate-300">{t.legalAcc} KZ18722S000025707913</p>
-              <p className="mt-1 text-slate-500">{t.legalBik} CASPKZKA | {t.legalKbe} 19</p>
+            <div className="space-y-2">
+              <span className="text-[8px] font-black text-premium uppercase tracking-widest block">[ {t.legalBank} ]</span>
+              <p className="font-bold text-slate-200">ACC: KZ18722S000025707913</p>
+              <p className="text-slate-500 font-bold">BIC: CASPKZKA | {t.legalKbe} 19</p>
             </div>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-600 gap-4">
-          <p>{t.copyright.replace('{year}', new Date().getFullYear())}</p>
-          
-          {/* Social Media Icons */}
-          <div className="flex items-center space-x-3">
-            {/* Instagram */}
-            <a 
-              href="https://instagram.com/klimat.expert.atyrau" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-slate-500 hover:text-pink-400 hover:border-pink-500/30 hover:bg-pink-500/10 transition-all duration-300"
-              title="Instagram"
-            >
-              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-            </a>
+        {/* Console Logs Footer Bar */}
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-slate-900 flex flex-col md:flex-row items-center justify-between text-[9px] text-slate-600 gap-4">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+            <span>{t.copyright.replace('{year}', new Date().getFullYear())}</span>
+            <span>•</span>
+            <span className="text-emerald-500 font-black">● CONNECTION SECURE [SSL_TLS_v1.3]</span>
+            <span>•</span>
+            <span>NODE: ATY_CLIMAT_01</span>
           </div>
-
-          <div className="flex space-x-6">
-            <button onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }} className="hover:text-slate-400 cursor-pointer bg-transparent border-none p-0">{t.privacy}</button>
-            <a href="#" className="hover:text-slate-400">{t.offer}</a>
+          
+          <div className="flex items-center space-x-6 uppercase tracking-wider">
+            <button 
+              onClick={() => { setShowPrivacyPolicy(true); window.scrollTo({top: 0}); }} 
+              className="hover:text-premium cursor-pointer bg-transparent border-none p-0 text-[9px] font-bold font-mono"
+            >
+              {t.privacy}
+            </button>
+            <span>/</span>
+            <a href="#" className="hover:text-premium text-[9px] font-bold">{t.offer}</a>
           </div>
         </div>
       </footer>
