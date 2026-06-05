@@ -1104,6 +1104,12 @@ function App() {
       }}
     >
       
+      {/* Horizontal scroll progress bar */}
+      <div 
+        className="scroll-progress-bar" 
+        style={{ width: `${scrollProgress}%` }}
+      />
+      
       {/* Decorative Vibrant Accent Blobs */}
       <div className="absolute top-24 -left-48 w-96 h-96 bg-cyan-100 dark:bg-cyan-950/20 rounded-full gradient-blob opacity-60 pointer-events-none"></div>
       <div className="absolute top-[800px] -right-48 w-[400px] h-[400px] bg-sky-100 dark:bg-sky-950/10 rounded-full gradient-blob opacity-40 pointer-events-none"></div>
@@ -1115,11 +1121,6 @@ function App() {
           ? 'shadow-md border-b border-sky-500/20 dark:border-cyan-500/20 shadow-sky-500/5' 
           : 'shadow-xs'
       }`}>
-        {/* Horizontal scroll progress bar */}
-        <div 
-          className="scroll-progress-bar" 
-          style={{ width: `${scrollProgress}%` }}
-        />
 
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
           isScrolled ? 'h-16' : 'h-20'
@@ -2647,17 +2648,18 @@ function PrivacyPolicyPage({ onClose, lang }) {
   return (
     <div className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative w-full transition-colors duration-300">
       
+      {/* Scroll indicator */}
+      <div 
+        className="scroll-progress-bar" 
+        style={{ width: `${scrollProgress}%` }}
+      />
+
       {/* Decorative Vibrant Accent Blobs */}
       <div className="absolute top-24 -left-48 w-96 h-96 bg-cyan-100 dark:bg-cyan-950/20 rounded-full gradient-blob opacity-60 pointer-events-none"></div>
       <div className="absolute bottom-[600px] left-10 w-96 h-96 bg-indigo-50 dark:bg-indigo-950/10 rounded-full gradient-blob opacity-50 pointer-events-none"></div>
 
       {/* Static sticky header */}
       <header className="sticky top-0 z-50 glass-nav h-16 transition-all duration-300">
-        {/* Scroll indicator */}
-        <div 
-          className="scroll-progress-bar" 
-          style={{ width: `${scrollProgress}%` }}
-        />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
           <button 
             onClick={onClose}
