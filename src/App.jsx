@@ -1116,7 +1116,7 @@ function App() {
           
           {/* Logo & Brand */}
           <div className="flex items-center space-x-3">
-            <img src="/logo.png" alt="Климат Эксперт" className="w-10 h-10 rounded-xl object-contain bg-slate-950 border border-slate-200/10 shadow-md" />
+            <img src="/logo.png" alt="Климат Эксперт" className="w-10 h-10 object-contain" />
             <div className="flex flex-col justify-center">
               <span className="logo-title font-extrabold text-slate-900 dark:text-white leading-tight block">
                 Климат<span className="text-sky-600">Эксперт</span>
@@ -2326,7 +2326,7 @@ function App() {
           {/* Footer Logo & Brand */}
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <img src="/logo.png" alt="Климат Эксперт" className="w-8 h-8 rounded-lg object-contain bg-slate-950 border border-white/5" />
+              <img src="/logo.png" alt="Климат Эксперт" className="w-8 h-8 object-contain" />
               <span className="font-bold text-lg text-white">Климат<span className="text-sky-500">Эксперт</span></span>
             </div>
             <p className="text-xs text-slate-550 leading-normal">
