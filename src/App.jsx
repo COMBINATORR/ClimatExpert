@@ -945,7 +945,7 @@ function App() {
   // WhatsApp click triggers
   const handleWhatsAppClick = (message = 'Здравствуйте! Хочу заказать расчет стоимости ремонта кондиционера.') => {
     const encodedText = encodeURIComponent(message);
-    window.open(`https://wa.me/77754323561?text=${encodedText}`, '_blank');
+    window.open(`https://wa.me/77786135769?text=${encodedText}`, '_blank');
   };
 
   const submitBooking = (e, source = 'main') => {
@@ -1299,9 +1299,9 @@ function App() {
             </div>
 
             <div className="flex flex-col items-end pl-2 shrink-0">
-              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors whitespace-nowrap">
+              <a href="tel:+77786135769" className="flex items-center font-bold text-slate-900 dark:text-white hover:text-sky-600 dark:hover:text-sky-400 transition-colors whitespace-nowrap">
                 <Phone className="w-4 h-4 text-sky-500 mr-2 animate-pulse" />
-                +7 (775) 432-35-61
+                +7 (778) 613-57-69
               </a>
               <div className="flex items-center mt-1">
                 <span className="w-2.5 h-2.5 bg-emerald-500 rounded-full inline-block animate-ping mr-1.5 shrink-0"></span>
@@ -1428,9 +1428,9 @@ function App() {
                 </span>
               </div>
 
-              <a href="tel:+77754323561" className="flex items-center font-bold text-slate-900 dark:text-white pt-1">
+              <a href="tel:+77786135769" className="flex items-center font-bold text-slate-900 dark:text-white pt-1">
                 <Phone className="w-4 h-4 text-sky-500 mr-2" />
-                +7 (775) 432-35-61
+                +7 (778) 613-57-69
               </a>
               <p className="text-xs text-emerald-600 dark:text-emerald-500 font-medium">{t.statusMobile}</p>
               <button 
@@ -2360,7 +2360,7 @@ function App() {
               </li>
               <li className="flex items-center space-x-2">
                 <Phone className="w-4 h-4 text-sky-500 shrink-0" />
-                <a href="tel:+77754323561" className="hover:text-white transition-colors">+7 (775) 432-35-61</a>
+                <a href="tel:+77786135769" className="hover:text-white transition-colors">+7 (778) 613-57-69</a>
               </li>
               <li>
                 <span className="text-slate-600 block">{t.footerContactsTime}</span>
@@ -2516,7 +2516,7 @@ function PrivacyPolicyPage({ onClose, lang }) {
             'Адрес: Республика Казахстан, г. Атырау',
             'ИИК: KZ18722S000025707913 в АО "Kaspi Bank"',
             'БИК: CASPKZKA | Кбе: 19',
-            'Телефон для связи: +7 (775) 432-35-61'
+            'Телефон для связи: +7 (778) 613-57-69'
           ]
         }
       ]
@@ -2572,7 +2572,7 @@ function PrivacyPolicyPage({ onClose, lang }) {
             'Мекенжайы: Қазақстан Республикасы, Атырау қ.',
             'ЖЖК: Kaspi Bank АҚ-дағы KZ18722S000025707913',
             'БИК: CASPKZKA | Кбе: 19',
-            'Байланыс телефоны: +7 (775) 432-35-61'
+            'Байланыс телефоны: +7 (778) 613-57-69'
           ]
         }
       ]
@@ -2628,7 +2628,7 @@ function PrivacyPolicyPage({ onClose, lang }) {
             'Address: Atyrau, Republic of Kazakhstan',
             'Current Account: KZ18722S000025707913 in JSC "Kaspi Bank"',
             'BIK: CASPKZKA | Kbe: 19',
-            'Contact Phone: +7 (775) 432-35-61'
+            'Contact Phone: +7 (778) 613-57-69'
           ]
         }
       ]
