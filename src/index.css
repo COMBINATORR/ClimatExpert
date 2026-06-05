@@ -276,11 +276,11 @@
 /* Header Logo alignment for mobile and desktop */
 .logo-title {
   font-size: 21px;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.02em; /* Slightly wider on mobile to align with subtitle */
 }
 .logo-subtitle {
   font-size: 8.5px;
-  letter-spacing: 0.125em;
+  letter-spacing: 0.115em; /* Slightly tighter on mobile to match title */
   white-space: nowrap;
 }
 @media (min-width: 640px) {
