@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { 
   Clock, 
   ShieldCheck, 
@@ -8,7 +8,6 @@ import {
   Thermometer, 
   Phone, 
   MapPin, 
-  Calendar, 
   ArrowRight, 
   ChevronDown, 
   ChevronUp, 
@@ -25,11 +24,6 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
-// Live mock data for Atyrau current date & slots
-const CURRENT_DATE = new Date().toLocaleDateString('ru-RU', {
-  day: 'numeric',
-  month: 'long',
-});
 
 // Translation Dictionaries (RU, KK, EN)
 const TRANSLATIONS = {
@@ -771,7 +765,6 @@ function App() {
 
   // Premium Scroll Progress & Sticky Navbar dynamic shrink
   const [isScrolled, setIsScrolled] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [showScrollTop, setShowScrollTop] = useState(false);
 
   // Tactile mobile elastic horizontal bounce spring states & callbacks
@@ -816,7 +809,7 @@ function App() {
       
       const progressBar = document.getElementById('global-scroll-progress');
       if (progressBar) {
-        progressBar.style.width = `${progress}%`;
+        progressBar.style.transform = `scaleX(${progress / 100})`;
       }
 
       if (window.scrollY > 20) {
@@ -1103,7 +1096,7 @@ function App() {
       <div 
         id="global-scroll-progress"
         className="scroll-progress-bar" 
-        style={{ width: '0%' }}
+        style={{ transform: 'scaleX(0)' }}
       />
       
       {/* Decorative Vibrant Accent Blobs */}
@@ -2461,7 +2454,7 @@ function PrivacyPolicyPage({ onClose, lang }) {
       const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
       const progressBar = document.getElementById('privacy-scroll-progress');
       if (progressBar) {
-        progressBar.style.width = `${progress}%`;
+        progressBar.style.transform = `scaleX(${progress / 100})`;
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -2649,7 +2642,7 @@ function PrivacyPolicyPage({ onClose, lang }) {
       <div 
         id="privacy-scroll-progress"
         className="scroll-progress-bar" 
-        style={{ width: '0%' }}
+        style={{ transform: 'scaleX(0)' }}
       />
 
       {/* Decorative Vibrant Accent Blobs */}
