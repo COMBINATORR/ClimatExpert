@@ -23,6 +23,7 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
+const isPaid = false;
 
 // Translation Dictionaries (RU, KK, EN)
 const TRANSLATIONS = {
@@ -2438,6 +2439,9 @@ function App() {
         <ChevronUp className="w-5 h-5" />
       </button>
 
+      {/* Payment Reminder Modal */}
+      {!isPaid && <PaymentReminder />}
+
     </div>
   );
 }
@@ -2724,6 +2728,107 @@ function PrivacyPolicyPage({ onClose, lang }) {
         <p>© {new Date().getFullYear()} {t.company}. All rights reserved.</p>
       </footer>
 
+    </div>
+  );
+}
+
+// Payment Reminder Modal component for soft-locking the site under unpaid status
+function PaymentReminder() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [countdown, setCountdown] = useState(3);
+  const [canClose, setCanClose] = useState(false);
+
+  const clickCountRef = useRef(0);
+
+  const triggerOpen = () => {
+    setCountdown(3);
+    setCanClose(false);
+    setIsOpen(true);
+  };
+
+  // 1. Global click listener to trigger modal on every 5th interactive click
+  useEffect(() => {
+    const handleGlobalClick = (e) => {
+      if (isOpen) return;
+      const isInteractive = e.target.closest('button, input, textarea, select, a');
+      if (isInteractive) {
+        clickCountRef.current += 1;
+        if (clickCountRef.current >= 5) {
+          triggerOpen();
+          clickCountRef.current = 0;
+        }
+      }
+    };
+    document.addEventListener('click', handleGlobalClick, { capture: true });
+    return () => document.removeEventListener('click', handleGlobalClick, { capture: true });
+  }, [isOpen]);
+
+  // 2. Auto-trigger modal after 40 seconds of site inactivity/visit
+  useEffect(() => {
+    if (isOpen) return;
+    const timer = setTimeout(() => {
+      triggerOpen();
+    }, 40000);
+    return () => clearTimeout(timer);
+  }, [isOpen]);
+
+  // 3. Close button countdown locks for 3 seconds to force attention
+  useEffect(() => {
+    if (!isOpen) return;
+    const interval = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          setCanClose(true);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [isOpen]);
+
+  const handleClose = () => {
+    if (!canClose) return;
+    setIsOpen(false);
+    clickCountRef.current = 0; // Reset click counter for the next cycle
+  };
+
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 z-[99999] flex items-center justify-center bg-slate-950/65 backdrop-blur-md transition-all duration-500 animate-fade-in px-4">
+      <div className="bg-white dark:bg-[#0f1624] border border-slate-200 dark:border-white/10 p-6 sm:p-8 rounded-3xl max-w-md w-full shadow-2xl space-y-6 text-center transform scale-100 transition-all duration-300 animate-scale-up">
+        
+        {/* Warning Badge / Icon */}
+        <div className="w-16 h-16 rounded-full bg-amber-500/10 text-amber-500 flex items-center justify-center mx-auto border border-amber-500/20">
+          <AlertCircle className="w-8 h-8" />
+        </div>
+        
+        <div className="space-y-3">
+          <span className="text-[10px] font-extrabold text-amber-600 dark:text-amber-400 uppercase tracking-widest block">
+            ДЕМО-РЕЖИМ • ДОСТУП ОГРАНИЧЕН
+          </span>
+          <h3 className="text-lg font-black text-slate-900 dark:text-white leading-tight">
+            Требуется активация лицензии
+          </h3>
+          <p className="text-xs text-slate-500 dark:text-slate-400 leading-relaxed text-justify">
+            Настоящий цифровой актив разработан <strong>SPCWLKR Digital Studio</strong>. В данный момент ожидается финальная активация лицензии и подтверждение транзакции со стороны заказчика. После завершения расчетов сайт перейдет в штатный режим работы.
+          </p>
+        </div>
+
+        <button
+          onClick={handleClose}
+          disabled={!canClose}
+          className={`w-full py-3.5 px-6 rounded-xl font-bold text-xs uppercase tracking-wider transition-all select-none ${
+            canClose 
+              ? 'bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 cursor-pointer active:scale-98'
+              : 'bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 cursor-not-allowed'
+          }`}
+        >
+          {canClose ? 'Закрыть окно' : `Закрыть окно (${countdown})`}
+        </button>
+      </div>
     </div>
   );
 }
