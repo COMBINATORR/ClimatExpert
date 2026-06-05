@@ -2424,6 +2424,13 @@ function App() {
             <a href="#" className="hover:text-slate-400">{t.offer}</a>
           </div>
         </div>
+
+        {/* Credits */}
+        <div className="mt-8 text-center">
+          <span className="footer-credit inline-block text-[10px] sm:text-[11px] font-black tracking-widest uppercase select-none">
+            Powered by SPCWLKR Digital Studio
+          </span>
+        </div>
       </footer>
 
       {/* Floating Scroll to Top Button */}

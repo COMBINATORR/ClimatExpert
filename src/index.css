@@ -312,4 +312,26 @@
   animation: scale-up 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
 
+/* Footer credit styles for letterpress & 3D hover effects */
+.footer-credit {
+  color: rgba(255, 255, 255, 0.12); /* subtle text */
+  text-shadow: 
+    -1px -1px 1px rgba(0, 0, 0, 0.8), /* dark bevel top-left */
+    1px 1px 1px rgba(255, 255, 255, 0.05); /* light highlights bottom-right */
+  transition: transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1), 
+              color 300ms ease, 
+              text-shadow 300ms ease;
+}
+
+.footer-credit:hover {
+  color: #f8fafc; /* text-slate-50 */
+  transform: translateY(-2px);
+  text-shadow: 
+    0 1px 0 #64748b, /* first layer of 3D shadow (slate-500) */
+    0 2px 0 #475569, /* second layer of 3D shadow (slate-600) */
+    0 3px 4px rgba(0, 0, 0, 0.6), /* soft drop shadow */
+    0 6px 12px rgba(0, 0, 0, 0.8); /* deep spread shadow */
+}
+
+
 
