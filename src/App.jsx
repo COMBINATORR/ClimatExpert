@@ -828,10 +828,9 @@ function App() {
           }
 
           const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-          if (totalHeight > 0) {
-            const progress = (window.scrollY / totalHeight) * 100;
-            setScrollProgress(progress);
-          }
+          const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+          console.log('[DEBUG] scrollY:', window.scrollY, 'totalHeight:', totalHeight, 'progress:', progress);
+          setScrollProgress(progress);
           ticking = false;
         });
         ticking = true;
