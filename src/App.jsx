@@ -1131,7 +1131,7 @@ function App() {
           </div>
 
           {/* Desktop Nav Items */}
-          <nav className="hidden md:flex items-center space-x-5 xl:space-x-8 shrink-0">
+          <nav className="hidden lg:flex items-center space-x-5 xl:space-x-8 shrink-0">
             <a href="#services" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navServices}</a>
             <a href="#calculator" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navCalc}</a>
             <a href="#guarantees" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navGuarantees}</a>
@@ -1317,7 +1317,7 @@ function App() {
           </div>
 
           {/* Mobile Menu & Switchers */}
-          <div className="md:hidden flex items-center space-x-2">
+          <div className="lg:hidden flex items-center space-x-2">
             
             {/* Quick theme toggler for mobile */}
             <button
@@ -1340,7 +1340,7 @@ function App() {
 
         {/* Mobile Dropdown Nav */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-white dark:bg-[#080c14] border-b border-slate-100 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3 transition-all duration-300 text-left">
+          <div className="lg:hidden bg-white dark:bg-[#080c14] border-b border-slate-100 dark:border-slate-800 px-4 pt-2 pb-6 space-y-3 transition-all duration-300 text-left">
             <a 
               href="#services" 
               onClick={() => setMobileMenuOpen(false)}
@@ -1471,7 +1471,7 @@ function App() {
       </div>
 
       {/* HERO SECTION */}
-      <section className="relative pt-12 pb-20 md:py-28 overflow-hidden">
+      <section className="relative pt-10 pb-16 md:py-24 lg:py-28 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             
@@ -1530,7 +1530,7 @@ function App() {
             </div>
 
             {/* Right Interactive Card */}
-            <div className="lg:col-span-5 relative z-10">
+            <div className="lg:col-span-5 relative z-10 w-full max-w-xl mx-auto lg:max-w-none">
               <div className="bg-white/80 dark:bg-[#0f1624]/80 backdrop-blur-xl border border-slate-100 dark:border-white/5 p-8 rounded-2xl shadow-xl shadow-slate-100 dark:shadow-none space-y-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-full filter blur-xl"></div>
                 
@@ -1649,7 +1649,7 @@ function App() {
       </section>
 
       {/* INTERACTIVE PRICE CALCULATOR WIDGET */}
-      <section id="calculator" className="py-20">
+      <section id="calculator" className="py-12 sm:py-16 md:py-20">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-4 mb-12">
@@ -1666,7 +1666,7 @@ function App() {
           <div className="bg-white dark:bg-[#0f1624]/60 border border-slate-200/80 dark:border-white/5 rounded-2xl shadow-xl shadow-slate-100 dark:shadow-none overflow-hidden grid md:grid-cols-12 transition-colors duration-300">
             
             {/* Calc Controls */}
-            <div className="md:col-span-7 p-6 sm:p-8 space-y-6 text-left border-r border-slate-100 dark:border-white/5">
+            <div className="md:col-span-7 p-6 sm:p-8 space-y-6 text-left border-b md:border-b-0 md:border-r border-slate-100 dark:border-white/5">
               
               {/* Step 1 */}
               <div className="space-y-3">
@@ -1999,7 +1999,7 @@ function App() {
       </section>
 
       {/* DYNAMIC SERVICES SHOWCASE */}
-      <section id="services" className="py-20 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
+      <section id="services" className="py-12 sm:py-16 md:py-20 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-4 mb-16">
@@ -2013,11 +2013,13 @@ function App() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {servicesTabs.map((service) => (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            {servicesTabs.map((service, idx) => (
               <div 
                 key={service.id}
-                className="premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 flex flex-col justify-between text-left"
+                className={`premium-glow-card bg-white dark:bg-[#0f1624]/60 p-6 sm:p-8 flex flex-col justify-between text-left ${
+                  idx === 2 ? 'md:col-span-2 lg:col-span-1' : ''
+                }`}
               >
                 <div className="space-y-6">
                   {/* Card Header */}
@@ -2069,7 +2071,7 @@ function App() {
       </section>
 
       {/* DETAILED GUARANTEES & RISK-REVERSAL */}
-      <section id="guarantees" className="py-20 relative overflow-hidden">
+      <section id="guarantees" className="py-12 sm:py-16 md:py-20 relative overflow-hidden">
         
         {/* Glow effect */}
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-sky-50/40 dark:bg-sky-950/5 rounded-full filter blur-3xl pointer-events-none"></div>
@@ -2152,7 +2154,7 @@ function App() {
       <InfiniteMarquee lang={lang} />
 
       {/* FREQUENT OBJECTIONS FAQ (ACCORDION) */}
-      <section id="faq" className="py-20 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
+      <section id="faq" className="py-12 sm:py-16 md:py-20 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center space-y-4 mb-16">
@@ -2197,7 +2199,7 @@ function App() {
       </section>
 
       {/* FINAL HIGH-CONVERTING CAPTURE FORM */}
-      <section id="booking-section" className="py-24 relative overflow-hidden bg-slate-900 text-white">
+      <section id="booking-section" className="py-14 sm:py-20 md:py-24 relative overflow-hidden bg-slate-900 text-white">
         
         {/* Dark theme accents */}
         <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-slate-800 to-slate-950 opacity-90 z-0"></div>
@@ -2322,7 +2324,7 @@ function App() {
 
       {/* FOOTER */}
       <footer className="bg-slate-950 text-slate-400 border-t border-white/5 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid md:grid-cols-4 gap-8 text-left">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
           
           {/* Footer Logo & Brand */}
           <div className="space-y-4">
@@ -2386,7 +2388,7 @@ function App() {
 
         {/* Official Legal Requisites Box */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 mt-8 border-t border-white/5">
-          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 grid md:grid-cols-3 gap-6 text-xs text-slate-400">
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-slate-400">
             <div>
               <span className="text-[10px] font-extrabold text-slate-500 uppercase tracking-widest block mb-2">{t.legalExec}</span>
               <p className="font-bold text-white text-sm">ИП КЛИМАТ ТЕХ</p>
