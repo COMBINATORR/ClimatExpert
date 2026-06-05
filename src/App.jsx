@@ -810,29 +810,25 @@ function App() {
   };
 
   useEffect(() => {
-    let ticking = false;
-
     const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          if (window.scrollY > 20) {
-            setIsScrolled(true);
-          } else {
-            setIsScrolled(false);
-          }
+      const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+      
+      const progressBar = document.getElementById('global-scroll-progress');
+      if (progressBar) {
+        progressBar.style.width = `${progress}%`;
+      }
 
-          if (window.scrollY > 400) {
-            setShowScrollTop(true);
-          } else {
-            setShowScrollTop(false);
-          }
+      if (window.scrollY > 20) {
+        setIsScrolled(true);
+      } else {
+        setIsScrolled(false);
+      }
 
-          const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-          const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
-          setScrollProgress(progress);
-          ticking = false;
-        });
-        ticking = true;
+      if (window.scrollY > 400) {
+        setShowScrollTop(true);
+      } else {
+        setShowScrollTop(false);
       }
     };
 
@@ -1105,8 +1101,9 @@ function App() {
       
       {/* Horizontal scroll progress bar */}
       <div 
+        id="global-scroll-progress"
         className="scroll-progress-bar" 
-        style={{ width: `${scrollProgress}%` }}
+        style={{ width: '0%' }}
       />
       
       {/* Decorative Vibrant Accent Blobs */}
@@ -2458,16 +2455,17 @@ function App() {
 
 // Stands for full-page Privacy Policy with premium visual details
 function PrivacyPolicyPage({ onClose, lang }) {
-  const [scrollProgress, setScrollProgress] = useState(0);
-
   useEffect(() => {
     const handleScroll = () => {
       const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-      if (totalHeight > 0) {
-        setScrollProgress((window.scrollY / totalHeight) * 100);
+      const progress = totalHeight > 0 ? (window.scrollY / totalHeight) * 100 : 0;
+      const progressBar = document.getElementById('privacy-scroll-progress');
+      if (progressBar) {
+        progressBar.style.width = `${progress}%`;
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -2649,8 +2647,9 @@ function PrivacyPolicyPage({ onClose, lang }) {
       
       {/* Scroll indicator */}
       <div 
+        id="privacy-scroll-progress"
         className="scroll-progress-bar" 
-        style={{ width: `${scrollProgress}%` }}
+        style={{ width: '0%' }}
       />
 
       {/* Decorative Vibrant Accent Blobs */}
