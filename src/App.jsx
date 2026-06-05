@@ -1119,7 +1119,7 @@ function App() {
         {/* Horizontal scroll progress bar */}
         <div 
           className="scroll-progress-bar" 
-          style={{ transform: `scaleX(${scrollProgress / 100})` }}
+          style={{ width: `${scrollProgress}%` }}
         />
 
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between transition-all duration-300 ${
@@ -2657,7 +2657,7 @@ function PrivacyPolicyPage({ onClose, lang }) {
         {/* Scroll indicator */}
         <div 
           className="scroll-progress-bar" 
-          style={{ transform: `scaleX(${scrollProgress / 100})` }}
+          style={{ width: `${scrollProgress}%` }}
         />
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 h-full flex items-center justify-between">
           <button 
