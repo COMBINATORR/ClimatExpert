@@ -1131,10 +1131,10 @@ function App() {
               <Wind className="w-5 h-5 text-white" />
             </div>
             <div className="flex flex-col justify-center">
-              <span className="font-extrabold text-[22px] tracking-normal text-slate-900 dark:text-white leading-tight block">
+              <span className="logo-title font-extrabold text-slate-900 dark:text-white leading-tight block">
                 Климат<span className="text-sky-600">Эксперт</span>
               </span>
-              <p className="text-[9.5px] text-slate-400 dark:text-slate-500 tracking-[0.11em] uppercase font-bold leading-none mt-0.5">
+              <p className="logo-subtitle text-slate-400 dark:text-slate-500 uppercase font-bold leading-none mt-0.5">
                 Профессиональный сервис
               </p>
             </div>
