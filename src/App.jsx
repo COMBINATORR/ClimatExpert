@@ -1485,7 +1485,7 @@ function App() {
               </div>
               
               {/* Premium Heading */}
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-slate-900 dark:text-white leading-tight tracking-tight">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-slate-900 dark:text-white leading-tight tracking-tight">
                 {t.heroTitlePart1}<span className="bg-gradient-to-r from-sky-600 to-cyan-500 bg-clip-text text-transparent">{t.heroTitlePart2}</span>{t.heroTitlePart3}
               </h1>
               
