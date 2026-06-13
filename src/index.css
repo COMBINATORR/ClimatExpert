@@ -333,5 +333,31 @@
     0 6px 12px rgba(0, 0, 0, 0.8); /* deep spread shadow */
 }
 
+/* Container adaptations for large and ultra-wide screens (e.g. 27" FHD and above) */
+@media (min-width: 1536px) {
+  .max-w-7xl {
+    max-width: 1440px !important; /* 90rem - expanded from 1280px */
+  }
+  .max-w-5xl {
+    max-width: 1200px !important; /* 75rem - expanded from 1024px */
+  }
+  .max-w-4xl {
+    max-width: 1100px !important; /* 68.75rem - expanded from 896px */
+  }
+}
+
+@media (min-width: 1900px) {
+  .max-w-7xl {
+    max-width: 1600px !important; /* 100rem - expanded from 1440px */
+  }
+  .max-w-5xl {
+    max-width: 1300px !important; /* 81.25rem - expanded from 1200px */
+  }
+  .max-w-4xl {
+    max-width: 1200px !important; /* 75rem - expanded from 1100px */
+  }
+}
+
+
 
 
