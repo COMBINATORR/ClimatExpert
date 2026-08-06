@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { 
   Clock, 
   ShieldCheck, 
@@ -22,6 +22,17 @@ import {
   Monitor,
   ArrowLeft
 } from 'lucide-react';
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import SplitType from 'split-type';
+import useSmoothScroll from './hooks/useGSAP';
+import useMagnetic from './hooks/useMagnetic';
+import CustomCursor from './components/CustomCursor';
+import Loader from './components/Loader';
+
+const HeroBackground3D = lazy(() => import('./components/HeroBackground3D'));
+
+gsap.registerPlugin(ScrollTrigger);
 
 const isPaid = false;
 
@@ -732,6 +743,237 @@ function App() {
   const t = TRANSLATIONS[lang] || TRANSLATIONS.ru;
   const faqItems = t.faqItems || [];
 
+  // ============================================================
+  //  AWWWARDS-LEVEL ANIMATION INFRASTRUCTURE
+  // ============================================================
+
+  // Lenis smooth scroll + GSAP ScrollTrigger sync
+  const lenisRef = useSmoothScroll();
+
+  // Loading screen state
+  const [isLoading, setIsLoading] = useState(true);
+  const handleLoadComplete = () => {
+    setIsLoading(false);
+    document.body.classList.remove('loading');
+  };
+
+  // Magnetic CTA button refs
+  const ctaMainRef = useRef(null);
+  const ctaBookRef = useRef(null);
+  useMagnetic(ctaMainRef);
+  useMagnetic(ctaBookRef);
+
+  // Desktop check for 3D background
+  const [isDesktop, setIsDesktop] = useState(false);
+  useEffect(() => {
+    setIsDesktop(window.matchMedia('(min-width: 1024px)').matches);
+  }, []);
+
+  // Master GSAP ScrollTrigger Animations
+  useEffect(() => {
+    if (isLoading) return;
+
+    // Small delay to ensure DOM is fully painted
+    const timer = setTimeout(() => {
+      const ctx = gsap.context(() => {
+
+        // --- HERO SECTION: Dramatic text reveal ---
+        const heroH1 = document.querySelector('h1');
+        if (heroH1) {
+          const split = new SplitType(heroH1, { types: 'words' });
+          gsap.from(split.words, {
+            y: 80,
+            opacity: 0,
+            rotateX: -10,
+            stagger: 0.035,
+            duration: 1,
+            ease: 'power4.out',
+            delay: 0.1,
+          });
+        }
+
+        // Hero supporting elements cascade
+        gsap.from('[data-hero-cascade]', {
+          y: 40,
+          opacity: 0,
+          stagger: 0.1,
+          duration: 0.8,
+          ease: 'power3.out',
+          delay: 0.5,
+        });
+
+        // Hero card slide from right
+        gsap.from('[data-hero-card]', {
+          x: 80,
+          opacity: 0,
+          rotateY: -8,
+          duration: 1.2,
+          ease: 'power4.out',
+          delay: 0.7,
+          transformPerspective: 800,
+        });
+
+        // --- TRUST STATS: Staggered cards ---
+        const statCards = gsap.utils.toArray('[data-stats] .premium-glow-card');
+        if (statCards.length) {
+          gsap.from(statCards, {
+            scrollTrigger: { trigger: '[data-stats]', start: 'top 85%' },
+            y: 60,
+            opacity: 0,
+            scale: 0.92,
+            stagger: 0.15,
+            duration: 0.9,
+            ease: 'power3.out',
+          });
+        }
+
+        // --- CALCULATOR: Fade up ---
+        const calcSection = document.querySelector('#calculator');
+        if (calcSection) {
+          gsap.from(calcSection.children, {
+            scrollTrigger: { trigger: '#calculator', start: 'top 80%' },
+            y: 50,
+            opacity: 0,
+            stagger: 0.15,
+            duration: 0.9,
+            ease: 'power3.out',
+          });
+        }
+
+        // --- SERVICES: 3D perspective stagger ---
+        const serviceCards = gsap.utils.toArray('#services .premium-glow-card');
+        if (serviceCards.length) {
+          gsap.from(serviceCards, {
+            scrollTrigger: { trigger: '#services', start: 'top 80%' },
+            y: 80,
+            opacity: 0,
+            rotateY: 5,
+            stagger: 0.12,
+            duration: 1,
+            ease: 'power3.out',
+            transformPerspective: 800,
+          });
+        }
+
+        // --- GUARANTEES: Slide from left ---
+        const guarCards = gsap.utils.toArray('#guarantees .premium-glow-card');
+        if (guarCards.length) {
+          gsap.from(guarCards, {
+            scrollTrigger: { trigger: '#guarantees', start: 'top 80%' },
+            x: -60,
+            opacity: 0,
+            stagger: 0.18,
+            duration: 0.9,
+            ease: 'power3.out',
+          });
+        }
+
+        // --- FAQ: Fade up ---
+        const faqSection = document.querySelector('#faq');
+        if (faqSection) {
+          gsap.from(faqSection.children, {
+            scrollTrigger: { trigger: '#faq', start: 'top 80%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.8,
+            ease: 'power3.out',
+          });
+        }
+
+        // --- BOOKING CTA: Scale up ---
+        const bookingSection = document.querySelector('#booking-section');
+        if (bookingSection) {
+          gsap.from(bookingSection.children, {
+            scrollTrigger: { trigger: '#booking-section', start: 'top 85%' },
+            y: 60,
+            opacity: 0,
+            scale: 0.95,
+            duration: 1,
+            ease: 'power3.out',
+          });
+        }
+
+        // --- FOOTER: Stagger columns ---
+        const footerGrid = document.querySelector('[data-footer] .grid');
+        if (footerGrid) {
+          gsap.from(footerGrid.children, {
+            scrollTrigger: { trigger: '[data-footer]', start: 'top 90%' },
+            y: 40,
+            opacity: 0,
+            stagger: 0.1,
+            duration: 0.7,
+            ease: 'power3.out',
+          });
+        }
+
+        // --- PARALLAX BLOBS ---
+        gsap.utils.toArray('.gradient-blob').forEach((blob) => {
+          gsap.to(blob, {
+            yPercent: -40,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: blob,
+              start: 'top bottom',
+              end: 'bottom top',
+              scrub: 1.5,
+            },
+          });
+        });
+
+        // --- 3D CARD HOVER TILT MICRO-INTERACTION ---
+        const cards = gsap.utils.toArray('.premium-glow-card');
+        cards.forEach((card) => {
+          const onMouseMove = (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            const xc = rect.width / 2;
+            const yc = rect.height / 2;
+            const dx = (x - xc) / xc;
+            const dy = (y - yc) / yc;
+
+            // Tilt rotation (max 6 degrees)
+            const rotX = -dy * 6;
+            const rotY = dx * 6;
+
+            gsap.to(card, {
+              rotateX: rotX,
+              rotateY: rotY,
+              transformPerspective: 800,
+              ease: 'power1.out',
+              duration: 0.3,
+              overwrite: 'auto'
+            });
+            
+            card.style.setProperty('--mouse-x', `${(x / rect.width) * 100}%`);
+            card.style.setProperty('--mouse-y', `${(y / rect.height) * 100}%`);
+          };
+
+          const onMouseLeave = () => {
+            gsap.to(card, {
+              rotateX: 0,
+              rotateY: 0,
+              ease: 'power2.out',
+              duration: 0.5,
+              overwrite: 'auto'
+            });
+          };
+
+          card.addEventListener('mousemove', onMouseMove);
+          card.addEventListener('mouseleave', onMouseLeave);
+        });
+
+      });
+
+      // Store context for cleanup
+      return () => ctx.revert();
+    }, 100);
+
+    return () => clearTimeout(timer);
+  }, [isLoading]);
+
   // Developer Console Easter Egg
   useEffect(() => {
     console.log(
@@ -1087,19 +1329,22 @@ function App() {
   }
 
   return (
-    <div 
-      onTouchStart={handleTouchStart}
-      onTouchMove={handleTouchMove}
-      onTouchEnd={handleTouchEnd}
-      className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative w-full transition-colors duration-300"
-      style={{ 
-        transform: touchDiffX !== 0 ? `translateX(${touchDiffX}px)` : 'none',
-        // Snaps back with a premium elastic spring bounce on finger release
-        transition: isResettingTouch 
-          ? 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, color 0.3s ease' 
-          : 'background-color 0.3s ease, color 0.3s ease'
-      }}
-    >
+    <>
+      <Loader onComplete={handleLoadComplete} />
+      <CustomCursor />
+      <div 
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        className="bg-white dark:bg-[#080c14] min-h-screen text-slate-800 dark:text-slate-200 font-sans antialiased bg-grid-pattern relative w-full transition-colors duration-300"
+        style={{ 
+          transform: touchDiffX !== 0 ? `translateX(${touchDiffX}px)` : 'none',
+          // Snaps back with a premium elastic spring bounce on finger release
+          transition: isResettingTouch 
+            ? 'transform 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.3s ease, color 0.3s ease' 
+            : 'background-color 0.3s ease, color 0.3s ease'
+        }}
+      >
       
       {/* Horizontal scroll progress bar */}
       <div 
@@ -1139,10 +1384,10 @@ function App() {
 
           {/* Desktop Nav Items */}
           <nav className="hidden lg:flex items-center space-x-5 xl:space-x-8 shrink-0">
-            <a href="#services" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navServices}</a>
-            <a href="#calculator" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navCalc}</a>
-            <a href="#guarantees" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navGuarantees}</a>
-            <a href="#faq" className="text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navFaq}</a>
+            <a href="#services" className="nav-link text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navServices}</a>
+            <a href="#calculator" className="nav-link text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navCalc}</a>
+            <a href="#guarantees" className="nav-link text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navGuarantees}</a>
+            <a href="#faq" className="nav-link text-sm font-medium text-slate-600 dark:text-slate-400 hover:text-sky-600 dark:hover:text-sky-400 transition-colors">{t.navFaq}</a>
           </nav>
 
           {/* Switchers & CTAs */}
@@ -1479,14 +1724,23 @@ function App() {
 
       {/* HERO SECTION */}
       <section className="relative pt-10 pb-16 md:py-24 lg:py-28 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Subtle 3D background only on desktop screens */}
+        {isDesktop && (
+          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+            <Suspense fallback={null}>
+              <HeroBackground3D />
+            </Suspense>
+          </div>
+        )}
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid lg:grid-cols-12 gap-12 items-center">
             
             {/* Left Content */}
             <div className="lg:col-span-7 space-y-8 text-left z-10">
               
               {/* Trust Badge */}
-              <div className="inline-flex items-center space-x-2 bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400 px-3 py-1.5 rounded-full border border-sky-100 dark:border-sky-900/30 shadow-xs">
+              <div data-hero-cascade className="inline-flex items-center space-x-2 bg-sky-50 dark:bg-sky-950/30 text-sky-700 dark:text-sky-400 px-3 py-1.5 rounded-full border border-sky-100 dark:border-sky-900/30 shadow-xs">
                 <ShieldCheck className="w-4 h-4" />
                 <span className="text-xs font-semibold uppercase tracking-wider">{t.trustTitle}</span>
               </div>
@@ -1497,29 +1751,31 @@ function App() {
               </h1>
               
               {/* Subtitle */}
-              <p className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
+              <p data-hero-cascade className="text-lg text-slate-600 dark:text-slate-400 leading-relaxed max-w-xl">
                 {t.heroSubtitle}
               </p>
 
               {/* Call to Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 max-w-md sm:max-w-none">
+              <div data-hero-cascade className="flex flex-col sm:flex-row gap-4 max-w-md sm:max-w-none">
                 <button 
+                  ref={ctaMainRef}
                   onClick={() => handleWhatsAppClick(lang === 'ru' ? 'Здравствуйте! Хочу рассчитать стоимость работ.' : lang === 'kk' ? 'Сәлеметсіз бе! Жұмыс құнын есептегім келеді.' : 'Hello! I want to calculate the cost of works.')}
-                  className="inline-flex items-center justify-center bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer gap-2 cta-shimmer"
+                  className="btn-magnetic inline-flex items-center justify-center bg-gradient-to-r from-sky-600 to-cyan-500 hover:from-sky-700 hover:to-cyan-600 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all shadow-md active:scale-98 cursor-pointer gap-2 cta-shimmer"
                 >
                   {t.heroCtaWhatsApp}
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <a 
+                  ref={ctaBookRef}
                   href="#booking-section"
-                  className="inline-flex items-center justify-center bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all hover:shadow-lg active:scale-98 cursor-pointer text-center cta-shimmer"
+                  className="btn-magnetic inline-flex items-center justify-center bg-slate-900 dark:bg-white dark:text-slate-950 hover:bg-slate-800 dark:hover:bg-slate-100 text-white font-bold text-sm py-4 px-8 rounded-xl transition-all hover:shadow-lg active:scale-98 cursor-pointer text-center cta-shimmer"
                 >
                   {t.heroCtaSlot}
                 </a>
               </div>
 
               {/* Instant Mini Trust Factors Grid */}
-              <div className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-100 dark:border-slate-800">
+              <div data-hero-cascade className="grid grid-cols-3 gap-4 pt-6 border-t border-slate-100 dark:border-slate-800">
                 <div>
                   <h4 className="text-slate-900 dark:text-white font-bold text-xl">{t.miniStat1Title}</h4>
                   <p className="text-slate-400 dark:text-slate-500 text-xs mt-1">{t.miniStat1Desc}</p>
@@ -1537,7 +1793,7 @@ function App() {
             </div>
 
             {/* Right Interactive Card */}
-            <div className="lg:col-span-5 relative z-10 w-full max-w-xl mx-auto lg:max-w-none">
+            <div data-hero-card className="lg:col-span-5 relative z-10 w-full max-w-xl mx-auto lg:max-w-none">
               <div className="bg-white/80 dark:bg-[#0f1624]/80 backdrop-blur-xl border border-slate-100 dark:border-white/5 p-8 rounded-2xl shadow-xl shadow-slate-100 dark:shadow-none space-y-6 relative overflow-hidden">
                 <div className="absolute top-0 right-0 w-24 h-24 bg-sky-500/5 rounded-full filter blur-xl"></div>
                 
@@ -1590,7 +1846,7 @@ function App() {
       </section>
 
       {/* CORE TRUST STATS SECTION */}
-      <section className="py-16 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
+      <section data-stats className="py-16 bg-slate-50 dark:bg-[#0b101b] border-y border-slate-100 dark:border-white/5 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             
@@ -2330,7 +2586,7 @@ function App() {
       </section>
 
       {/* FOOTER */}
-      <footer className="bg-slate-950 text-slate-400 border-t border-white/5 py-12">
+      <footer data-footer className="bg-slate-950 text-slate-400 border-t border-white/5 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid sm:grid-cols-2 lg:grid-cols-4 gap-8 text-left">
           
           {/* Footer Logo & Brand */}
@@ -2459,6 +2715,7 @@ function App() {
       {!isPaid && <PaymentReminder />}
 
     </div>
+    </>
   );
 }
 
